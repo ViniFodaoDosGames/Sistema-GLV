@@ -84,6 +84,44 @@ function Navbar(props) {
               href='/listagem-lavajato'
               label='Parametros Lavajato'
             />
+            {
+              //
+            }
+            <NavbarItem
+              render='true'
+              href='/listagem-tempo'
+              label='Tempo de Serviço'
+            />
+            <NavbarItem
+              render='true'
+              href='/listagem-servico'
+              label='Serviços'
+            />
+            <NavbarItem
+              render='true'
+              href='/listagem-pagamento'
+              label='Pagamentos'
+            />
+            <NavbarItem
+              render='true'
+              href='/listagem-notificacao'
+              label='Notificações'
+            />
+            <NavbarItem
+              render='true'
+              href='/listagem-funcionario'
+              label='Funcionários'
+            />
+            <NavbarItem
+              render='true'
+              href='/listagem-bloqueio'
+              label='Bloqueios'
+            />
+            <NavbarItem
+              render='true'
+              href='/listagem-agendamento'
+              label='Agendamentos'
+            />
           </ul>
         </div>
       </div>
