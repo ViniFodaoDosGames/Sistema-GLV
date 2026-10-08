@@ -14,9 +14,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
+import api, { BASE_URL } from '../config/axios';
+const baseURL = `${BASE_URL}/Marcas`;
 
-const baseURL = `${BASE_URL}/marca`;
 
 function ListagemMarca() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ function ListagemMarca() {
     navigate(`/cadastro-marca/${id}`);
   };
 
-  const [dados, setDados] = React.useState(null);
+  const [dados, setDados] = React.useState([]);
 
   async function excluir(id) {
     let data = JSON.stringify({ id });
@@ -40,7 +40,7 @@ function ListagemMarca() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        //mensagemSucesso(`Marrca excluída com sucesso!`);
+        mensagemSucesso(`Marrca excluída com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,21 +48,20 @@ function ListagemMarca() {
         );
       })
       .catch(function (error) {
-        //mensagemErro(`Erro ao excluir o usuário`);
+        mensagemErro(`Erro ao excluir o usuário`);
       });
   }
 
-  React.useEffect(() => {
-    axios.get(baseURL).then((response) => {
-      setDados(response.data);
-    });
-  }, []);
+ React.useEffect(() => {
+   api.get('/Marcas').then((response) => {
+     setDados(response.data);
+   });
+ }, []);
 
   if (!dados) return null;
-
   return (
     <div className='container'>
-      <Card title='Listagem de Usuários'>
+      <Card title='Listagem de Marcas'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -73,7 +72,7 @@ function ListagemMarca() {
               >
                 Nova Marca
               </button>
-              <table className='table table-hover'>
+              <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
                     <th scope='col'>Nome</th>
@@ -84,10 +83,10 @@ function ListagemMarca() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td>{dado.nome}</td>
-                      <td>{dado.ativo ? 'Sim' : 'Não'}</td>
+                      <td className='justify-content-center'>{dado.nome}</td>
+                      <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
                       <td>
-                        <Stack spacing={1} padding={0} direction='row'>
+                        <Stack spacing={1} padding={0} direction='row' className='justify-content-center'>
                           <IconButton
                             aria-label='edit'
                             onClick={() => editar(dado.id)}
