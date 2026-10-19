@@ -1,0 +1,507 @@
+{
+  "Usuarios": [
+    {
+      "id": "1",
+      "nome": "usuario-01",
+      "cpf": "11111111101",
+      "email": "usuario01@email.com",
+      "celular": "32999999901",
+      "senha": "hash_01"
+    },
+    {
+      "id": "2",
+      "nome": "usuario-02",
+      "cpf": "11111111102",
+      "email": "usuario02@email.com",
+      "celular": "32999999902",
+      "senha": "hash_02"
+    },
+    {
+      "id": "3",
+      "nome": "usuario-03",
+      "cpf": "11111111103",
+      "email": "usuario03@email.com",
+      "celular": "32999999903",
+      "senha": "hash_03"
+    },
+    {
+      "id": "4",
+      "nome": "usuario-04",
+      "cpf": "11111111104",
+      "email": "usuario04@email.com",
+      "celular": "32999999904",
+      "senha": "hash_04"
+    },
+    {
+      "id": "5",
+      "nome": "usuario-05",
+      "cpf": "11111111105",
+      "email": "usuario05@email.com",
+      "celular": "32999999905",
+      "senha": "hash_05"
+    },
+    {
+      "id": "6",
+      "nome": "usuario-06",
+      "cpf": "11111111106",
+      "email": "usuario06@email.com",
+      "celular": "32999999906",
+      "senha": "hash_06"
+    }
+  ],
+  "Funcionarios": [
+    {
+      "id": "1",
+      "idUsuario": 1
+    },
+    {
+      "id": "2",
+      "idUsuario": 2
+    },
+    {
+      "id": "3",
+      "idUsuario": 5
+    },
+    {
+      "id": "4",
+      "idUsuario": 6
+    }
+  ],
+  "Administradores": [
+    {
+      "id": "1",
+      "idFuncionario": 3
+    },
+    {
+      "id": "2",
+      "idFuncionario": 4
+    }
+  ],
+  "Clientes": [
+    {
+      "id": "1",
+      "dataAceiteTermos": "2026-09-01 10:00:00",
+      "idUsuario": 3
+    },
+    {
+      "id": "2",
+      "dataAceiteTermos": "2026-09-02 14:30:00",
+      "idUsuario": 4
+    }
+  ],
+  "Cores": [
+    {
+      "id": "1",
+      "nome": "preto",
+      "ativo": true
+    },
+    {
+      "id": "2",
+      "nome": "branco",
+      "ativo": true
+    },
+    {
+      "id": "3",
+      "nome": "prata",
+      "ativo": true
+    }
+  ],
+  "Marcas": [],
+  "Modelos": [
+    {
+      "id": "1",
+      "nome": "Uno",
+      "ativo": true,
+      "idMarca": 1
+    },
+    {
+      "id": "2",
+      "nome": "Gol",
+      "ativo": true,
+      "idMarca": 2
+    },
+    {
+      "id": "3",
+      "nome": "Amarok",
+      "ativo": true,
+      "idMarca": 2
+    }
+  ],
+  "CategoriasVeiculo": [
+    {
+      "id": "1",
+      "nome": "hatch",
+      "ativo": true
+    },
+    {
+      "id": "2",
+      "nome": "caminhonete",
+      "ativo": true
+    }
+  ],
+  "Veiculos": [
+    {
+      "id": "1",
+      "placa": "ABC1D23",
+      "ano": 2018,
+      "ativo": true,
+      "idCor": 1,
+      "idModelo": 1,
+      "idCategoriaVeiculo": 1
+    },
+    {
+      "id": "2",
+      "placa": "DEF4G56",
+      "ano": 2021,
+      "ativo": true,
+      "idCor": 2,
+      "idModelo": 2,
+      "idCategoriaVeiculo": 1
+    },
+    {
+      "id": "3",
+      "placa": "HIJ7K89",
+      "ano": 2023,
+      "ativo": true,
+      "idCor": 3,
+      "idModelo": 3,
+      "idCategoriaVeiculo": 2
+    }
+  ],
+  "ClientesVeiculos": [
+    {
+      "id": "1",
+      "idCliente": 1,
+      "idVeiculo": 1
+    },
+    {
+      "id": "2",
+      "idCliente": 1,
+      "idVeiculo": 2
+    },
+    {
+      "id": "3",
+      "idCliente": 2,
+      "idVeiculo": 3
+    }
+  ],
+  "LavaJatos": [
+    {
+      "id": "1",
+      "totalPosicoes": 3,
+      "fatorFidelidade": 10,
+      "validadePontosFidelidade": 180,
+      "validadePontosCompensacao": 90
+    }
+  ],
+  "HorariosFuncionamento": [
+    {
+      "id": "1",
+      "diaSemana": "DOMINGO",
+      "aberto": false,
+      "horaAbertura": null,
+      "horaFechamento": null,
+      "idLavaJato": 1
+    },
+    {
+      "id": "2",
+      "diaSemana": "SEGUNDA",
+      "aberto": true,
+      "horaAbertura": "08:00:00",
+      "horaFechamento": "18:00:00",
+      "idLavaJato": 1
+    },
+    {
+      "id": "3",
+      "diaSemana": "TERCA",
+      "aberto": true,
+      "horaAbertura": "08:00:00",
+      "horaFechamento": "18:00:00",
+      "idLavaJato": 1
+    },
+    {
+      "id": "4",
+      "diaSemana": "QUARTA",
+      "aberto": true,
+      "horaAbertura": "08:00:00",
+      "horaFechamento": "18:00:00",
+      "idLavaJato": 1
+    },
+    {
+      "id": "5",
+      "diaSemana": "QUINTA",
+      "aberto": true,
+      "horaAbertura": "08:00:00",
+      "horaFechamento": "18:00:00",
+      "idLavaJato": 1
+    },
+    {
+      "id": "6",
+      "diaSemana": "SEXTA",
+      "aberto": true,
+      "horaAbertura": "08:00:00",
+      "horaFechamento": "18:00:00",
+      "idLavaJato": 1
+    },
+    {
+      "id": "7",
+      "diaSemana": "SABADO",
+      "aberto": true,
+      "horaAbertura": "08:00:00",
+      "horaFechamento": "12:00:00",
+      "idLavaJato": 1
+    }
+  ],
+  "IntervalosAlmoco": [
+    {
+      "id": "1",
+      "horaInicio": "12:00:00",
+      "horaFim": "13:00:00",
+      "aplicaFimDeSemana": false,
+      "idLavaJato": 1
+    }
+  ],
+  "TiposFeriado": [
+    {
+      "id": "1",
+      "nome": "nacional",
+      "ativo": true
+    },
+    {
+      "id": "2",
+      "nome": "municipal",
+      "ativo": true
+    }
+  ],
+  "Feriados": [
+    {
+      "id": "1",
+      "nome": "Proclamacao da Republica",
+      "data": "2026-11-15",
+      "ativo": true,
+      "idTipoFeriado": 1,
+      "idLavaJato": 1
+    },
+    {
+      "id": "2",
+      "nome": "Aniversario da cidade",
+      "data": "2026-06-10",
+      "ativo": true,
+      "idTipoFeriado": 2,
+      "idLavaJato": 1
+    }
+  ],
+  "Tempos": [
+    {
+      "id": "1",
+      "minutos": 15,
+      "ativo": true
+    },
+    {
+      "id": "2",
+      "minutos": 30,
+      "ativo": true
+    },
+    {
+      "id": "3",
+      "minutos": 60,
+      "ativo": true
+    }
+  ],
+  "Servicos": [
+    {
+      "id": "1",
+      "nome": "Lavagem simples",
+      "preco": 40,
+      "pontosGerados": 40,
+      "vagas": 2,
+      "descricao": "Lavagem externa",
+      "notificaConclusao": true,
+      "ativo": true,
+      "idTempoDuracao": 2,
+      "idTempoIntervalo": 1,
+      "idLavaJato": 1
+    },
+    {
+      "id": "2",
+      "nome": "Lavagem completa",
+      "preco": 80,
+      "pontosGerados": 80,
+      "vagas": 1,
+      "descricao": "Lavagem externa e interna",
+      "notificaConclusao": true,
+      "ativo": true,
+      "idTempoDuracao": 3,
+      "idTempoIntervalo": 1,
+      "idLavaJato": 1
+    }
+  ],
+  "Bloqueios": [
+    {
+      "id": "1",
+      "data": "2026-10-05",
+      "diaInteiro": false,
+      "horaInicio": "14:00:00",
+      "horaFim": "16:00:00",
+      "motivo": "Manutencao",
+      "ativo": true,
+      "idServico": 1
+    },
+    {
+      "id": "2",
+      "data": "2026-10-12",
+      "diaInteiro": true,
+      "horaInicio": null,
+      "horaFim": null,
+      "motivo": "Evento",
+      "ativo": true,
+      "idServico": 2
+    }
+  ],
+  "Agendamentos": [
+    {
+      "id": "1",
+      "dataHora": "2026-10-01 09:00:00",
+      "status": "CONCLUIDO",
+      "valor": 40,
+      "walkIn": false,
+      "posicaoFila": 1,
+      "idCliente": 1,
+      "idVeiculo": 1,
+      "idServico": 1
+    },
+    {
+      "id": "2",
+      "dataHora": "2026-10-01 10:00:00",
+      "status": "CONFIRMADO",
+      "valor": 80,
+      "walkIn": false,
+      "posicaoFila": 2,
+      "idCliente": 2,
+      "idVeiculo": 3,
+      "idServico": 2
+    },
+    {
+      "id": "3",
+      "dataHora": "2026-10-02 11:00:00",
+      "status": "AGUARDANDO_PAGAMENTO",
+      "valor": 40,
+      "walkIn": true,
+      "posicaoFila": 1,
+      "idCliente": 1,
+      "idVeiculo": 2,
+      "idServico": 1
+    }
+  ],
+  "Pagamentos": [
+    {
+      "id": "1",
+      "forma": "PIX",
+      "status": "APROVADO",
+      "valor": 40,
+      "dataHora": "2026-09-30 18:00:00",
+      "codigoGateway": "GW-0001",
+      "justificativaEstorno": null,
+      "idAgendamento": 1,
+      "idFuncionario": null
+    },
+    {
+      "id": "2",
+      "forma": "CARTAO",
+      "status": "APROVADO",
+      "valor": 80,
+      "dataHora": "2026-09-30 19:00:00",
+      "codigoGateway": "GW-0002",
+      "justificativaEstorno": null,
+      "idAgendamento": 2,
+      "idFuncionario": 1
+    },
+    {
+      "id": "3",
+      "forma": "PONTOS",
+      "status": "PENDENTE",
+      "valor": 40,
+      "dataHora": "2026-10-02 11:00:00",
+      "codigoGateway": null,
+      "justificativaEstorno": null,
+      "idAgendamento": 3,
+      "idFuncionario": 2
+    }
+  ],
+  "LotesPontos": [
+    {
+      "id": "1",
+      "tipo": "FIDELIDADE",
+      "quantidade": 40,
+      "saldo": 0,
+      "geradoEm": "2026-10-01",
+      "expiraEm": "2027-03-30",
+      "idCliente": 1,
+      "idAgendamento": 1
+    },
+    {
+      "id": "2",
+      "tipo": "COMPENSACAO",
+      "quantidade": 20,
+      "saldo": 20,
+      "geradoEm": "2026-09-20",
+      "expiraEm": "2026-12-19",
+      "idCliente": 2,
+      "idAgendamento": null
+    }
+  ],
+  "PagamentosLotesPontos": [
+    {
+      "id": "1",
+      "idPagamento": 3,
+      "idLotePontos": 1
+    }
+  ],
+  "LogsMovimentacao": [
+    {
+      "id": "1",
+      "tipo": "ENTRADA",
+      "dataHora": "2026-10-01 09:00:00",
+      "observacao": "Veiculo recebido",
+      "idAgendamento": 1,
+      "idFuncionario": 1
+    },
+    {
+      "id": "2",
+      "tipo": "SAIDA",
+      "dataHora": "2026-10-01 09:35:00",
+      "observacao": "Veiculo entregue",
+      "idAgendamento": 1,
+      "idFuncionario": 1
+    },
+    {
+      "id": "3",
+      "tipo": "AJUSTE",
+      "dataHora": "2026-10-01 10:05:00",
+      "observacao": "Ajuste de posicao na fila",
+      "idAgendamento": 2,
+      "idFuncionario": 2
+    }
+  ],
+  "Notificacoes": [
+    {
+      "id": "1",
+      "canal": "WHATSAPP",
+      "mensagem": "Seu veiculo esta pronto",
+      "dataHora": "2026-10-01 09:35:00",
+      "statusEnvio": "ENVIADO",
+      "idCliente": 1,
+      "idAgendamento": 1
+    },
+    {
+      "id": "2",
+      "canal": "EMAIL",
+      "mensagem": "Voce recebeu pontos de compensacao",
+      "dataHora": "2026-09-20 12:00:00",
+      "statusEnvio": "ENVIADO",
+      "idCliente": 2,
+      "idAgendamento": null
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

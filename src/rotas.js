@@ -26,7 +26,7 @@ function Rotas(props) {
     <BrowserRouter>
       <Routes>
         <Route
-          path='/listagem-marca/:idParam?'
+          path='/listagem-marcas/:idParam?'
           element={<ListagemMarcas />}
         />
         <Route
