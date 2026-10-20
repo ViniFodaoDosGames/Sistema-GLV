@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/Tempos`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/Funcionarios`;
 
 
-function ListagemTempo() {
+function ListagemFuncionario() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-tempo`);
+    navigate(`/cadastro-funcionario`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-tempo/${id}`);
+    navigate(`/cadastro-funcionario/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemTempo() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Tempo excluído com sucesso!`);
+        mensagemSucesso(`Funcionario excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemTempo() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o tempo`);
+        mensagemErro(`Erro ao excluir o funcionario`);
       });
   }
 
@@ -61,7 +61,7 @@ function ListagemTempo() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Tempos'>
+      <Card title='Listagem de Funcionarios'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,21 +70,19 @@ function ListagemTempo() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Novo Tempo
+                Novo Funcionario
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Minutos</th>
-                    <th scope='col'>Ativo</th>
+                    <th scope='col'>Matricula</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.minutos}</td>
-                      <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
+                      <td className='justify-content-center'>{dado.id}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
@@ -113,4 +111,6 @@ function ListagemTempo() {
   );
 }
 
-export default ListagemTempo;
+export default ListagemFuncionario;
+
+//listagem de funcionario está esquisito

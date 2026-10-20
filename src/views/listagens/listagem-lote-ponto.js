@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/HorariosFuncionamento`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/LotesPontos`;
 
 
-function ListagemHorarioFuncionamento() {
+function ListagemLotePontos() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-horario-funcionamento`);
+    navigate(`/cadastro-lote-ponto`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-intervalo-almoco/${id}`);
+    navigate(`/cadastro-lote-ponto/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemHorarioFuncionamento() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Horário excluído com sucesso!`);
+        mensagemSucesso(`Lote de Pontos excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemHorarioFuncionamento() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o horário`);
+        mensagemErro(`Erro ao excluir o lote de pontos`);
       });
   }
 
@@ -58,12 +58,10 @@ function ListagemHorarioFuncionamento() {
    });
  }, []);
 
-// precisa de status?
-
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Horario de Funcionamento'>
+      <Card title='Listagem de Lote de Pontos'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -72,25 +70,27 @@ function ListagemHorarioFuncionamento() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Novo Horario de Funcionamento
+                Novo Lote de Pontos
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Dia da Semana</th>
-                    <th scope='col'>Horario de Abertura</th>
-                    <th scope='col'>Horario de Fechamento</th>
-                    <th scope='col'>Disponivel</th>
+                    <th scope='col'>Tipo</th>
+                    <th scope='col'>Quantidade</th>
+                    <th scope='col'>Saldo</th>
+                    <th scope='col'>Gerado Em</th>
+                    <th scope='col'>Expira Em</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.diaSemana}</td>
-                      <td className='justify-content-center'>{dado.horaAbertura}</td>
-                      <td className='justify-content-center'>{dado.horaFechamento}</td>
-                      <td className='justify-content-center'>{dado.aberto ? 'Sim' : 'Não'}</td>
+                      <td className='justify-content-center'>{dado.tipo}</td>
+                    <td className='justify-content-center'>{dado.quantidade}</td>
+                      <td className='justify-content-center'>{dado.saldo}</td>
+                      <td className='justify-content-center'>{dado.geradoEm}</td>
+                      <td className='justify-content-center'>{dado.expiraEm}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
@@ -119,4 +119,4 @@ function ListagemHorarioFuncionamento() {
   );
 }
 
-export default ListagemHorarioFuncionamento;
+export default ListagemLotePontos;

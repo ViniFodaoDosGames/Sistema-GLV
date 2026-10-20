@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/Bloqueios`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/Usuarios`;
 
 
-function ListagemBloqueio() {
+function ListagemUsuario() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-bloqueio`);
+    navigate(`/cadastro-usuario`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-bloqueio/${id}`);
+    navigate(`/cadastro-usuario/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemBloqueio() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Bloqueio excluído com sucesso!`);
+        mensagemSucesso(`Usuário excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemBloqueio() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o bloqueio`);
+        mensagemErro(`Erro ao excluir o usuário`);
       });
   }
 
@@ -58,10 +58,13 @@ function ListagemBloqueio() {
    });
  }, []);
 
+//seria uma boa anonimizar email e cpf
+// não colocamos uma flag dizendo se eçe é admin ou não
+
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Bloqueio'>
+      <Card title='Listagem de Usuarios'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,16 +73,15 @@ function ListagemBloqueio() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Novo Bloqueio
+                Nova Usuário
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Data</th>
-                    <th scope='col'>Horário de Inicio</th>
-                    <th scope='col'>Horário de Termino</th>
-                    <th scope='col'>Motivo</th>
-                    <th scope='col'>Dia Todo</th>
+                    <th scope='col'>Nome</th>
+                    <th scope='col'>CPF</th>
+                    <th scope='col'>Email</th>
+                    <th scope='col'>Celular</th>
                     <th scope='col'>Ativo</th>
                     <th scope='col'>Ações</th>
                   </tr>
@@ -87,11 +89,10 @@ function ListagemBloqueio() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.data}</td>
-                      <td className='justify-content-center'>{dado.horaInicio}</td>
-                      <td className='justify-content-center'>{dado.horaFim}</td>
-                      <td className='justify-content-center'>{dado.motivo}</td>
-                      <td className='justify-content-center'>{dado.diaInteiro ? 'Sim' : 'Não'}</td>
+                      <td className='justify-content-center'>{dado.nome}</td>
+                      <td className='justify-content-center'>{dado.cpf}</td>
+                      <td className='justify-content-center'>{dado.email}</td>
+                      <td className='justify-content-center'>{dado.celular}</td>
                       <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
@@ -120,5 +121,5 @@ function ListagemBloqueio() {
     </div>
   );
 }
-
-export default ListagemBloqueio;
+//Usuário não tem tipo
+export default ListagemUsuario;

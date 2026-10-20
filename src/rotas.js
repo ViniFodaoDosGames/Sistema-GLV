@@ -1,25 +1,30 @@
 import React from 'react';
-import ListagemAdministrador from "./views/listagem-administrador"
-import ListagemMarcas from "./views/listagem-marcas"
-import ListagemModelo from "./views/listagem-modelo"
-import ListagemCor from "./views/listagem-cor"
-import ListagemCategoriaveiculo from "./views/listagem-categoria-veiculo"
-import ListagemUsuario from "./views/listagem-usuario"
-import ListagemCliente from "./views/listagem-cliente"
-import ListagemVeiculo from "./views/listagem-veiculo"
-import ListagemLavajato from "./views/listagem-lavajato"
-import ListagemHorarioFuncionamento from "./views/listagem-horario-funcionamento"
-import ListagemIntervaloAlmoco from "./views/listagem-intervalo-almoço"
-import ListagemTipoFeriado from "./views/listagem-tipo-feriado"
-import ListagemFeriado from "./views/listagem-feriado"
-import ListagemNotificacao from "./views/listagem-notificacao"
-import ListagemServico from "./views/listagem-servico"
-import ListagemTempo from "./views/listagem-tempo"
-import ListagemPagamento from "./views/listagem-pagamento"
-import ListagemLotePonto from "./views/listagem-lote-ponto"
-import ListagemBloqueio from "./views/listagem-bloqueio"
-import ListagemAgendamento from "./views/listagem-agendamento"
-import ListagemFuncionario from "./views/listagem-funcionario"
+import ListagemAdministrador from "./views/listagens/listagem-administrador"
+import ListagemMarcas from "./views/listagens/listagem-marca"
+import ListagemModelo from "./views/listagens/listagem-modelo"
+import ListagemCor from "./views/listagens/listagem-cor"
+import ListagemCategoriaveiculo from "./views/listagens/listagem-categoria-veiculo"
+import ListagemUsuario from "./views/listagens/listagem-usuario"
+import ListagemCliente from "./views/listagens/listagem-cliente"
+import ListagemVeiculo from "./views/listagens/listagem-veiculo"
+import ListagemLavajato from "./views/listagens/listagem-lavajato"
+import ListagemHorarioFuncionamento from "./views/listagens/listagem-horario-funcionamento"
+import ListagemIntervaloAlmoco from "./views/listagens/listagem-intervalo-almoço"
+import ListagemTipoFeriado from "./views/listagens/listagem-tipo-feriado"
+import ListagemFeriado from "./views/listagens/listagem-feriado"
+import ListagemNotificacao from "./views/listagens/listagem-notificacao"
+import ListagemServico from "./views/listagens/listagem-servico"
+import ListagemTempo from "./views/listagens/listagem-tempo"
+import ListagemPagamento from "./views/listagens/listagem-pagamento"
+import ListagemLotePonto from "./views/listagens/listagem-lote-ponto"
+import ListagemBloqueio from "./views/listagens/listagem-bloqueio"
+import ListagemAgendamento from "./views/listagens/listagem-agendamento"
+import ListagemFuncionario from "./views/listagens/listagem-funcionario"
+
+
+import CadastroMarca from './views/cadastros/cadastro-marca';
+
+
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
 function Rotas(props) {
@@ -112,6 +117,13 @@ function Rotas(props) {
         <Route
           path='/listagem-administrador/:idParam?'
           element={<ListagemAdministrador />}
+        />
+
+
+        {/**Rotas de Cadastro**/}
+        <Route
+          path='/cadastro-marca/:idParam?'
+          element={<CadastroMarca />}
         />
       </Routes>
     </BrowserRouter>

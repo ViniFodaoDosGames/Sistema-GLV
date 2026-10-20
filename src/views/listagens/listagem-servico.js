@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/IntervalosAlmoco`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/Servicos`;
 
 
-function ListagemIntervaloAlmoco() {
+function ListagemServico() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-intervalo-almoco`);
+    navigate(`/cadastro-servico`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-intervalo-almoco/${id}`);
+    navigate(`/cadastro-servico/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemIntervaloAlmoco() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Intervalo excluído com sucesso!`);
+        mensagemSucesso(`Serviço excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemIntervaloAlmoco() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o intervalo`);
+        mensagemErro(`Erro ao excluir o serviço`);
       });
   }
 
@@ -58,12 +58,10 @@ function ListagemIntervaloAlmoco() {
    });
  }, []);
 
-// precisa de status?
-
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Intevalos de Almoço'>
+      <Card title='Listagem de Serviços'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -72,23 +70,31 @@ function ListagemIntervaloAlmoco() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Novo Intervalo de Almoço
+                Novo Serviço
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Horario de Inicio</th>
-                    <th scope='col'>Horario de Termino</th>
-                    <th scope='col'>Fim de Semana Aplicável</th>
+                    <th scope='col'>Nome</th>
+                    <th scope='col'>Perço</th>
+                    <th scope='col'>Pontos Gerados</th>
+                    <th scope='col'>Vagas</th>
+                    <th scope='col'>Descrição</th>
+                    <th scope='col'>Notificação Pós Conclusão</th>
+                    <th scope='col'>Ativo</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.horaInicio}</td>
-                      <td className='justify-content-center'>{dado.horaFim}</td>
-                      <td className='justify-content-center'>{dado.aplicaFimDeSemana ? 'Sim' : 'Não'}</td>
+                      <td className='justify-content-center'>{dado.nome}</td>
+                      <td className='justify-content-center'>{dado.preco}</td>
+                      <td className='justify-content-center'>{dado.pontosGerados}</td>
+                      <td className='justify-content-center'>{dado.vagas}</td>
+                      <td className='justify-content-center'>{dado.descricao}</td>
+                      <td className='justify-content-center'>{dado.notificaConclusao ? 'Sim' : 'Não'}</td>
+                      <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
@@ -117,4 +123,4 @@ function ListagemIntervaloAlmoco() {
   );
 }
 
-export default ListagemIntervaloAlmoco;
+export default ListagemServico;

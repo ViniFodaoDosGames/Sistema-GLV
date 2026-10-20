@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/LavaJatos`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/TiposFeriado`;
 
 
-function ListagemParametrosLavaJato() {
+function ListagemTipoFeriado() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-lava-jato`);
+    navigate(`/cadastro-tipo-feriado`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-lava-jato/${id}`);
+    navigate(`/cadastro-tipo-feriado/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemParametrosLavaJato() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Parametro excluído com sucesso!`);
+        mensagemSucesso(`Tipo Feriado excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemParametrosLavaJato() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o parâmetro`);
+        mensagemErro(`Erro ao excluir o tipo de feriado`);
       });
   }
 
@@ -61,7 +61,7 @@ function ListagemParametrosLavaJato() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Parametros do LavaJato'>
+      <Card title='Listagem de Tipo Feriado'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,15 +70,12 @@ function ListagemParametrosLavaJato() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Novo Parametro do LavaJato
+                Novo Tipo Feriado
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Total Posições</th>
-                    <th scope='col'>Fator Fidelidade</th>
-                    <th scope='col'>Validade dos Pontos de Fidelidade</th>
-                    <th scope='col'>Validade dos Pontos de Compensação</th>
+                    <th scope='col'>Nome</th>
                     <th scope='col'>Ativo</th>
                     <th scope='col'>Ações</th>
                   </tr>
@@ -86,10 +83,7 @@ function ListagemParametrosLavaJato() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.totalPosicoes}</td>
-                      <td className='justify-content-center'>{dado.fatorFidelidade}</td>
-                      <td className='justify-content-center'>{dado.validadePontosFidelidade}</td>
-                      <td className='justify-content-center'>{dado.validadePontosCompensacao}</td>
+                      <td className='justify-content-center'>{dado.nome}</td>
                       <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
@@ -119,4 +113,4 @@ function ListagemParametrosLavaJato() {
   );
 }
 
-export default ListagemParametrosLavaJato;
+export default ListagemTipoFeriado;

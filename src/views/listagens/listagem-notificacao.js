@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/Pagamentos`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/Notificacoes`;
 
 
-function ListagemPagamento() {
+function ListagemNotificacao() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-pagamento`);
+    navigate(`/cadastro-notificacao`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-pagamento/${id}`);
+    navigate(`/cadastro-notificacao/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemPagamento() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Pagamento excluído com sucesso!`);
+        mensagemSucesso(`Notificacao excluída com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemPagamento() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o pagamento`);
+        mensagemErro(`Erro ao excluir a notificacao`);
       });
   }
 
@@ -58,10 +58,12 @@ function ListagemPagamento() {
    });
  }, []);
 
+//status de ativo?
+
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Pagamentos'>
+      <Card title='Listagem de Notificacaos'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,29 +72,25 @@ function ListagemPagamento() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Novo Pagamento
+                Nova Notificacao
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Forma</th>
-                    <th scope='col'>Status</th>
-                    <th scope='col'>Valor</th>
+                    <th scope='col'>Canal</th>
+                    <th scope='col'>Mensagem</th>
                     <th scope='col'>Data e Hora</th>
-                    <th scope='col'>Código Gateway</th>
-                    <th scope='col'>Justificativa do Estorno</th>
+                    <th scope='col'>Status do Envio</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.forma}</td>
-                      <td className='justify-content-center'>{dado.stadus}</td>
-                      <td className='justify-content-center'>{dado.valor}</td>
+                      <td className='justify-content-center'>{dado.canal}</td>
+                      <td className='justify-content-center'>{dado.mensagem}</td>
                       <td className='justify-content-center'>{dado.dataHora}</td>
-                      <td className='justify-content-center'>{dado.codigoGateway}</td>
-                      <td className='justify-content-center'>{dado.justificativaEstorno}</td>
+                      <td className='justify-content-center'>{dado.statusEnvio}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
@@ -121,4 +119,4 @@ function ListagemPagamento() {
   );
 }
 
-export default ListagemPagamento;
+export default ListagemNotificacao;

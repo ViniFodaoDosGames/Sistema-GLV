@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/Notificacoes`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/HorariosFuncionamento`;
 
 
-function ListagemNotificacao() {
+function ListagemHorarioFuncionamento() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-notificacao`);
+    navigate(`/cadastro-horario-funcionamento`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-notificacao/${id}`);
+    navigate(`/cadastro-intervalo-almoco/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemNotificacao() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Notificacao excluída com sucesso!`);
+        mensagemSucesso(`Horário excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemNotificacao() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir a notificacao`);
+        mensagemErro(`Erro ao excluir o horário`);
       });
   }
 
@@ -58,12 +58,12 @@ function ListagemNotificacao() {
    });
  }, []);
 
-//status de ativo?
+// precisa de status?
 
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Notificacaos'>
+      <Card title='Listagem de Horario de Funcionamento'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -72,25 +72,25 @@ function ListagemNotificacao() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Nova Notificacao
+                Novo Horario de Funcionamento
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Canal</th>
-                    <th scope='col'>Mensagem</th>
-                    <th scope='col'>Data e Hora</th>
-                    <th scope='col'>Status do Envio</th>
+                    <th scope='col'>Dia da Semana</th>
+                    <th scope='col'>Horario de Abertura</th>
+                    <th scope='col'>Horario de Fechamento</th>
+                    <th scope='col'>Disponivel</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.canal}</td>
-                      <td className='justify-content-center'>{dado.mensagem}</td>
-                      <td className='justify-content-center'>{dado.dataHora}</td>
-                      <td className='justify-content-center'>{dado.statusEnvio}</td>
+                      <td className='justify-content-center'>{dado.diaSemana}</td>
+                      <td className='justify-content-center'>{dado.horaAbertura}</td>
+                      <td className='justify-content-center'>{dado.horaFechamento}</td>
+                      <td className='justify-content-center'>{dado.aberto ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
@@ -119,4 +119,4 @@ function ListagemNotificacao() {
   );
 }
 
-export default ListagemNotificacao;
+export default ListagemHorarioFuncionamento;

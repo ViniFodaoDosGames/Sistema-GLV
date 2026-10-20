@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/Usuarios`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/LavaJatos`;
 
 
-function ListagemUsuario() {
+function ListagemParametrosLavaJato() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-usuario`);
+    navigate(`/cadastro-lava-jato`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-usuario/${id}`);
+    navigate(`/cadastro-lava-jato/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemUsuario() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Usuário excluído com sucesso!`);
+        mensagemSucesso(`Parametro excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemUsuario() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o usuário`);
+        mensagemErro(`Erro ao excluir o parâmetro`);
       });
   }
 
@@ -58,13 +58,10 @@ function ListagemUsuario() {
    });
  }, []);
 
-//seria uma boa anonimizar email e cpf
-// não colocamos uma flag dizendo se eçe é admin ou não
-
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Usuarios'>
+      <Card title='Listagem de Parametros do LavaJato'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -73,15 +70,15 @@ function ListagemUsuario() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Nova Usuário
+                Novo Parametro do LavaJato
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Nome</th>
-                    <th scope='col'>CPF</th>
-                    <th scope='col'>Email</th>
-                    <th scope='col'>Celular</th>
+                    <th scope='col'>Total Posições</th>
+                    <th scope='col'>Fator Fidelidade</th>
+                    <th scope='col'>Validade dos Pontos de Fidelidade</th>
+                    <th scope='col'>Validade dos Pontos de Compensação</th>
                     <th scope='col'>Ativo</th>
                     <th scope='col'>Ações</th>
                   </tr>
@@ -89,10 +86,10 @@ function ListagemUsuario() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.nome}</td>
-                      <td className='justify-content-center'>{dado.cpf}</td>
-                      <td className='justify-content-center'>{dado.email}</td>
-                      <td className='justify-content-center'>{dado.celular}</td>
+                      <td className='justify-content-center'>{dado.totalPosicoes}</td>
+                      <td className='justify-content-center'>{dado.fatorFidelidade}</td>
+                      <td className='justify-content-center'>{dado.validadePontosFidelidade}</td>
+                      <td className='justify-content-center'>{dado.validadePontosCompensacao}</td>
                       <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
@@ -121,5 +118,5 @@ function ListagemUsuario() {
     </div>
   );
 }
-//Usuário não tem tipo
-export default ListagemUsuario;
+
+export default ListagemParametrosLavaJato;

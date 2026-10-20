@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/Funcionarios`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/Administradores`;
 
 
-function ListagemFuncionario() {
+function ListagemAdministrador() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-funcionario`);
+    navigate(`/cadastro-administrador`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-funcionario/${id}`);
+    navigate(`/cadastro-administrador/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemFuncionario() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Funcionario excluído com sucesso!`);
+        mensagemSucesso(`Administrador excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemFuncionario() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o funcionario`);
+        mensagemErro(`Erro ao excluir o administrador`);
       });
   }
 
@@ -61,7 +61,7 @@ function ListagemFuncionario() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Funcionarios'>
+      <Card title='Listagem de Administradors'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,7 +70,7 @@ function ListagemFuncionario() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Novo Funcionario
+                Novo Administrador
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
@@ -111,6 +111,6 @@ function ListagemFuncionario() {
   );
 }
 
-export default ListagemFuncionario;
+export default ListagemAdministrador;
 
-//listagem de funcionario está esquisito
+//listagem de Administrador está esquisito

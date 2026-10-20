@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/Cores`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/IntervalosAlmoco`;
 
 
-function ListagemCor() {
+function ListagemIntervaloAlmoco() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-cor`);
+    navigate(`/cadastro-intervalo-almoco`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-cor/${id}`);
+    navigate(`/cadastro-intervalo-almoco/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemCor() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Cor excluída com sucesso!`);
+        mensagemSucesso(`Intervalo excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemCor() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir a cor`);
+        mensagemErro(`Erro ao excluir o intervalo`);
       });
   }
 
@@ -58,10 +58,12 @@ function ListagemCor() {
    });
  }, []);
 
+// precisa de status?
+
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Cor'>
+      <Card title='Listagem de Intevalos de Almoço'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,21 +72,23 @@ function ListagemCor() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Nova Cor
+                Novo Intervalo de Almoço
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Nome</th>
-                    <th scope='col'>Ativo</th>
+                    <th scope='col'>Horario de Inicio</th>
+                    <th scope='col'>Horario de Termino</th>
+                    <th scope='col'>Fim de Semana Aplicável</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.nome}</td>
-                      <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
+                      <td className='justify-content-center'>{dado.horaInicio}</td>
+                      <td className='justify-content-center'>{dado.horaFim}</td>
+                      <td className='justify-content-center'>{dado.aplicaFimDeSemana ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
@@ -113,4 +117,4 @@ function ListagemCor() {
   );
 }
 
-export default ListagemCor;
+export default ListagemIntervaloAlmoco;

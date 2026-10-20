@@ -1,15 +1,6 @@
 {
   "Usuarios": [
     {
-      "id": "1",
-      "nome": "usuario-01",
-      "cpf": "11111111101",
-      "email": "usuario01@email.com",
-      "celular": "32999999901",
-      "senha": "hash_01",
-      "status": true
-    },
-    {
       "id": "2",
       "nome": "usuario-02",
       "cpf": "11111111102",
@@ -122,6 +113,11 @@
       "id": "2",
       "nome": "marca_2",
       "ativo": true
+    },
+    {
+      "id": "YXi_IAmx30Q",
+      "nome": "teste",
+      "ativo": "on"
     }
   ],
   "Modelos": [

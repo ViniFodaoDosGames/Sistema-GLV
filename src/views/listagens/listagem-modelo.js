@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/Veiculos`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/Modelos`;
 
 
-function ListagemVeiculo() {
+function ListagemModelo() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-veiculo`);
+    navigate(`/cadastro-modelo`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-veiculo/${id}`);
+    navigate(`/cadastro-modelo/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemVeiculo() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Veículo excluído com sucesso!`);
+        mensagemSucesso(`Modelo excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemVeiculo() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o veiculo`);
+        mensagemErro(`Erro ao excluir o modelo`);
       });
   }
 
@@ -61,7 +61,7 @@ function ListagemVeiculo() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Veiculos'>
+      <Card title='Listagem de Modelos'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,23 +70,23 @@ function ListagemVeiculo() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Novo Veiculo
+                Novo modelo
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Placa</th>
-                    <th scope='col'>Ano</th>
+                    <th scope='col'>Nome</th>
                     <th scope='col'>Ativo</th>
+                    <th scope='col'>Marcas</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.placa}</td>
-                      <td className='justify-content-center'>{dado.ano}</td>
+                      <td className='justify-content-center'>{dado.nome}</td>
                       <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
+                      <td className='justify-content-center'>{dado.idMarca}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
@@ -115,4 +115,4 @@ function ListagemVeiculo() {
   );
 }
 
-export default ListagemVeiculo;
+export default ListagemModelo;

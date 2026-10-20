@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/LotesPontos`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/CategoriasVeiculo`;
 
 
-function ListagemLotePontos() {
+function ListagemCategoriaVeiculo() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-lote-ponto`);
+    navigate(`/cadastro-categoria-veiculo`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-lote-ponto/${id}`);
+    navigate(`/cadastro-categoria-veiculo/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemLotePontos() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Lote de Pontos excluído com sucesso!`);
+        mensagemSucesso(`Categoria excluída com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemLotePontos() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o lote de pontos`);
+        mensagemErro(`Erro ao excluir a Categoria`);
       });
   }
 
@@ -61,7 +61,7 @@ function ListagemLotePontos() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Lote de Pontos'>
+      <Card title='Listagem de Categoria de Veiculos'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,27 +70,21 @@ function ListagemLotePontos() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Novo Lote de Pontos
+                Nova Categoria de Veiculo
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Tipo</th>
-                    <th scope='col'>Quantidade</th>
-                    <th scope='col'>Saldo</th>
-                    <th scope='col'>Gerado Em</th>
-                    <th scope='col'>Expira Em</th>
+                    <th scope='col'>Nome</th>
+                    <th scope='col'>Ativo</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.tipo}</td>
-                    <td className='justify-content-center'>{dado.quantidade}</td>
-                      <td className='justify-content-center'>{dado.saldo}</td>
-                      <td className='justify-content-center'>{dado.geradoEm}</td>
-                      <td className='justify-content-center'>{dado.expiraEm}</td>
+                      <td className='justify-content-center'>{dado.nome}</td>
+                      <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
@@ -119,4 +113,4 @@ function ListagemLotePontos() {
   );
 }
 
-export default ListagemLotePontos;
+export default ListagemCategoriaVeiculo;

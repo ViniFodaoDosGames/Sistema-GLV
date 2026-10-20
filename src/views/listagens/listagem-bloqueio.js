@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/Marcas`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/Bloqueios`;
 
 
-function ListagemMarca() {
+function ListagemBloqueio() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-marca`);
+    navigate(`/cadastro-bloqueio`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-marca/${id}`);
+    navigate(`/cadastro-bloqueio/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemMarca() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Marca excluída com sucesso!`);
+        mensagemSucesso(`Bloqueio excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemMarca() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir a marca`);
+        mensagemErro(`Erro ao excluir o bloqueio`);
       });
   }
 
@@ -61,7 +61,7 @@ function ListagemMarca() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Marcas'>
+      <Card title='Listagem de Bloqueio'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,12 +70,16 @@ function ListagemMarca() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Nova Marca
+                Novo Bloqueio
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Nome</th>
+                    <th scope='col'>Data</th>
+                    <th scope='col'>Horário de Inicio</th>
+                    <th scope='col'>Horário de Termino</th>
+                    <th scope='col'>Motivo</th>
+                    <th scope='col'>Dia Todo</th>
                     <th scope='col'>Ativo</th>
                     <th scope='col'>Ações</th>
                   </tr>
@@ -83,7 +87,11 @@ function ListagemMarca() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.nome}</td>
+                      <td className='justify-content-center'>{dado.data}</td>
+                      <td className='justify-content-center'>{dado.horaInicio}</td>
+                      <td className='justify-content-center'>{dado.horaFim}</td>
+                      <td className='justify-content-center'>{dado.motivo}</td>
+                      <td className='justify-content-center'>{dado.diaInteiro ? 'Sim' : 'Não'}</td>
                       <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
@@ -113,4 +121,4 @@ function ListagemMarca() {
   );
 }
 
-export default ListagemMarca;
+export default ListagemBloqueio;

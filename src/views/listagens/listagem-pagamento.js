@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/Servicos`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/Pagamentos`;
 
 
-function ListagemServico() {
+function ListagemPagamento() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-servico`);
+    navigate(`/cadastro-pagamento`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-servico/${id}`);
+    navigate(`/cadastro-pagamento/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemServico() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Serviço excluído com sucesso!`);
+        mensagemSucesso(`Pagamento excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemServico() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o serviço`);
+        mensagemErro(`Erro ao excluir o pagamento`);
       });
   }
 
@@ -61,7 +61,7 @@ function ListagemServico() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Serviços'>
+      <Card title='Listagem de Pagamentos'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,31 +70,29 @@ function ListagemServico() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Novo Serviço
+                Novo Pagamento
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Nome</th>
-                    <th scope='col'>Perço</th>
-                    <th scope='col'>Pontos Gerados</th>
-                    <th scope='col'>Vagas</th>
-                    <th scope='col'>Descrição</th>
-                    <th scope='col'>Notificação Pós Conclusão</th>
-                    <th scope='col'>Ativo</th>
+                    <th scope='col'>Forma</th>
+                    <th scope='col'>Status</th>
+                    <th scope='col'>Valor</th>
+                    <th scope='col'>Data e Hora</th>
+                    <th scope='col'>Código Gateway</th>
+                    <th scope='col'>Justificativa do Estorno</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.nome}</td>
-                      <td className='justify-content-center'>{dado.preco}</td>
-                      <td className='justify-content-center'>{dado.pontosGerados}</td>
-                      <td className='justify-content-center'>{dado.vagas}</td>
-                      <td className='justify-content-center'>{dado.descricao}</td>
-                      <td className='justify-content-center'>{dado.notificaConclusao ? 'Sim' : 'Não'}</td>
-                      <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
+                      <td className='justify-content-center'>{dado.forma}</td>
+                      <td className='justify-content-center'>{dado.stadus}</td>
+                      <td className='justify-content-center'>{dado.valor}</td>
+                      <td className='justify-content-center'>{dado.dataHora}</td>
+                      <td className='justify-content-center'>{dado.codigoGateway}</td>
+                      <td className='justify-content-center'>{dado.justificativaEstorno}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
@@ -123,4 +121,4 @@ function ListagemServico() {
   );
 }
 
-export default ListagemServico;
+export default ListagemPagamento;

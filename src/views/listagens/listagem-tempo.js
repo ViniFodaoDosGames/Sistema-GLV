@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Card from '../components/card';
+import Card from '../../components/card.js';
 
-import { mensagemSucesso, mensagemErro } from '../components/toastr.js';
+import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
 
-import '../custom.css';
+import '../../custom.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/Modelos`;
+import { BASE_URL } from '../../config/axios.js';
+const baseURL = `${BASE_URL}/Tempos`;
 
 
-function ListagemModelo() {
+function ListagemTempo() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-modelo`);
+    navigate(`/cadastro-tempo`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-modelo/${id}`);
+    navigate(`/cadastro-tempo/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemModelo() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Modelo excluído com sucesso!`);
+        mensagemSucesso(`Tempo excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemModelo() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o modelo`);
+        mensagemErro(`Erro ao excluir o tempo`);
       });
   }
 
@@ -61,7 +61,7 @@ function ListagemModelo() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Modelos'>
+      <Card title='Listagem de Tempos'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,23 +70,21 @@ function ListagemModelo() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Novo modelo
+                Novo Tempo
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Nome</th>
+                    <th scope='col'>Minutos</th>
                     <th scope='col'>Ativo</th>
-                    <th scope='col'>Marcas</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.nome}</td>
+                      <td className='justify-content-center'>{dado.minutos}</td>
                       <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
-                      <td className='justify-content-center'>{dado.idMarca}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
@@ -115,4 +113,4 @@ function ListagemModelo() {
   );
 }
 
-export default ListagemModelo;
+export default ListagemTempo;
