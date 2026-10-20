@@ -14,7 +14,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import api, { BASE_URL } from '../config/axios';
+import { BASE_URL } from '../config/axios';
 const baseURL = `${BASE_URL}/Marcas`;
 
 
@@ -40,7 +40,7 @@ function ListagemMarca() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Marrca excluída com sucesso!`);
+        mensagemSucesso(`Marca excluída com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,12 +48,12 @@ function ListagemMarca() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o usuário`);
+        mensagemErro(`Erro ao excluir a marca`);
       });
   }
 
  React.useEffect(() => {
-   api.get('/Marcas').then((response) => {
+   axios.get(baseURL).then((response) => {
      setDados(response.data);
    });
  }, []);
@@ -86,7 +86,7 @@ function ListagemMarca() {
                       <td className='justify-content-center'>{dado.nome}</td>
                       <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
                       <td>
-                        <Stack spacing={1} padding={0} direction='row' className='justify-content-center'>
+                        <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
                             aria-label='edit'
                             onClick={() => editar(dado.id)}

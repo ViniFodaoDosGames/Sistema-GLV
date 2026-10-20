@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bootswatch/dist/morph/bootstrap.css';
+import 'bootswatch/dist/flatly/bootstrap.css';
 
 import NavbarItem from './navbarItem';
 
@@ -26,6 +26,11 @@ function Navbar(props) {
           <ul className='navbar-nav'>
             <NavbarItem
               render='true'
+              href='/listagem-administrador'
+              label='Administradores'
+            />
+            <NavbarItem
+              render='true'
               href='/listagem-marcas'
               label='Marcas'
             />
@@ -33,6 +38,11 @@ function Navbar(props) {
               render='true'
               href='/listagem-modelo'
               label='Modelos'
+            />
+            <NavbarItem
+              render='true'
+              href='/listagem-lote-ponto'
+              label='Lote de Pontos'
             />
             <NavbarItem
               render='true'

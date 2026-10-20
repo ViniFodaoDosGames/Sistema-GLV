@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import api, { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/Marcas`;
+import { BASE_URL } from '../config/axios';
+const baseURL = `${BASE_URL}/Modelos`;
 
 
-function ListageModelo() {
+function ListagemModelo() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-marca`);
+    navigate(`/cadastro-modelo`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-marca/${id}`);
+    navigate(`/cadastro-modelo/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListageModelo() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Marrca excluída com sucesso!`);
+        mensagemSucesso(`Modelo excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,12 +48,12 @@ function ListageModelo() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o usuário`);
+        mensagemErro(`Erro ao excluir o modelo`);
       });
   }
 
  React.useEffect(() => {
-   api.get('/Modelos').then((response) => {
+   axios.get(baseURL).then((response) => {
      setDados(response.data);
    });
  }, []);
@@ -61,7 +61,7 @@ function ListageModelo() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Usuários'>
+      <Card title='Listagem de Modelos'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,23 +70,25 @@ function ListageModelo() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Nova Marca
+                Novo modelo
               </button>
-              <table className='table table-hover'>
+              <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
                     <th scope='col'>Nome</th>
                     <th scope='col'>Ativo</th>
+                    <th scope='col'>Marcas</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td>{dado.nome}</td>
-                      <td>{dado.ativo ? 'Sim' : 'Não'}</td>
+                      <td className='justify-content-center'>{dado.nome}</td>
+                      <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
+                      <td className='justify-content-center'>{dado.idMarca}</td>
                       <td>
-                        <Stack spacing={1} padding={0} direction='row'>
+                        <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
                             aria-label='edit'
                             onClick={() => editar(dado.id)}
@@ -113,4 +115,4 @@ function ListageModelo() {
   );
 }
 
-export default ListageModelo;
+export default ListagemModelo;

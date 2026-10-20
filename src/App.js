@@ -1,14 +1,19 @@
-import Rotas from "./rotas"
-import NavBar from "./components/navbar"
-import './App.css';
+import React from 'react';
+import 'bootswatch/dist/flatly/bootstrap.css';
+import 'toastr/build/toastr.min';
+import 'toastr/build/toastr.css';
+import Navbar from './components/navbar.js';
+import Rotas from './rotas.js';
 
-function App() {
-  return (
-    <div className="App">
-      <Rotas/>
-      <NavBar/>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <div className='container'>
+        <Rotas />
+        <Navbar />
+      </div>
+    );
+  }
 }
 
 export default App;

@@ -1,4 +1,5 @@
 import React from 'react';
+import ListagemAdministrador from "./views/listagem-administrador"
 import ListagemMarcas from "./views/listagem-marcas"
 import ListagemModelo from "./views/listagem-modelo"
 import ListagemCor from "./views/listagem-cor"
@@ -107,6 +108,10 @@ function Rotas(props) {
         <Route
           path='/listagem-agendamento/:idParam?'
           element={<ListagemAgendamento />}
+        />
+        <Route
+          path='/listagem-administrador/:idParam?'
+          element={<ListagemAdministrador />}
         />
       </Routes>
     </BrowserRouter>

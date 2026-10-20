@@ -14,19 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
-import api, { BASE_URL } from '../config/axios';
-const baseURL = `${BASE_URL}/Marcas`;
+import { BASE_URL } from '../config/axios';
+const baseURL = `${BASE_URL}/Cores`;
 
 
 function ListagemCor() {
   const navigate = useNavigate();
 
   const cadastrar = () => {
-    navigate(`/cadastro-marca`);
+    navigate(`/cadastro-cor`);
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-marca/${id}`);
+    navigate(`/cadastro-cor/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);
@@ -40,7 +40,7 @@ function ListagemCor() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Marrca excluída com sucesso!`);
+        mensagemSucesso(`Cor excluída com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,12 +48,12 @@ function ListagemCor() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o usuário`);
+        mensagemErro(`Erro ao excluir a cor`);
       });
   }
 
  React.useEffect(() => {
-   api.get('/Cores').then((response) => {
+   axios.get(baseURL).then((response) => {
      setDados(response.data);
    });
  }, []);
@@ -61,18 +61,18 @@ function ListagemCor() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Usuários'>
+      <Card title='Listagem de Cor'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
               <button
                 type='button'
-                className='btn btn-warning m-111'
+                className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Nova Marca
+                Nova Cor
               </button>
-              <table className='table table-hover'>
+              <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
                     <th scope='col'>Nome</th>
@@ -83,10 +83,10 @@ function ListagemCor() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td>{dado.nome}</td>
-                      <td>{dado.ativo ? 'Sim' : 'Não'}</td>
+                      <td className='justify-content-center'>{dado.nome}</td>
+                      <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
                       <td>
-                        <Stack spacing={1} padding={0} direction='row'>
+                        <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
                             aria-label='edit'
                             onClick={() => editar(dado.id)}
