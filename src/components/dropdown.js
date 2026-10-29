@@ -43,7 +43,10 @@ function DropDown({ render, id, label, links, icon, iconName, setDropdownOpen, i
                         <span className={icon || 'material-symbols-outlined'}>
                             {iconName}
                         </span>
-                        {label}
+                        <span>{label}</span>
+                        <span class="material-symbols-outlined arrow-icon">
+                            stat_minus_1
+                        </span>
                     </button> /*cria o botão do dropdown se for verdadeiro*/
                 ) : (
                     <a //! os comentarios anteriores são vailidos aqui também, mas esse é um link e não um botão
@@ -58,7 +61,7 @@ function DropDown({ render, id, label, links, icon, iconName, setDropdownOpen, i
                         <span className={icon || 'material-symbols-outlined'}>
                             {iconName}
                         </span>
-                        {label}
+                        <span>{label}</span>
                     </a> /* cria um link se for falso*/
                 )}
 
@@ -73,7 +76,7 @@ function DropDown({ render, id, label, links, icon, iconName, setDropdownOpen, i
                         inert={!isOpen} //* define se o menu dropdown está interativo ou não (leitor de tela) - !mt bacana esses negócios, mas vou dar uma olhada melhor depois
                     >
                         <ul className='list-unstyled sidebar-dropdown'>
-                            {renderLinks} 
+                            {renderLinks}
                         </ul>
                     </div>
                 ) : (
