@@ -44,7 +44,7 @@ function DropDown({ render, id, label, links, icon, iconName, setDropdownOpen, i
                             {iconName}
                         </span>
                         <span>{label}</span>
-                        <span class="material-symbols-outlined arrow-icon">
+                        <span class={`material-symbols-outlined arrow-icon${isOpen ? ' is-open' : ''}`}>
                             stat_minus_1
                         </span>
                     </button> /*cria o botão do dropdown se for verdadeiro*/
