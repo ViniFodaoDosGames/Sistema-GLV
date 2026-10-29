@@ -7,7 +7,7 @@ function NavbarItem({ render, ...props }) {
 
   return (
     <li>
-      <a onClick={props.onClick} className='dropdown-item' href={props.href}>
+      <a onClick={props.onClick} className='sidebar-link' href={props.href}>
         {props.label}
       </a>
     </li>

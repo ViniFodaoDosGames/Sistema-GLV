@@ -2,35 +2,51 @@
     "dropDownTitulos": [
         {
             "label": "Agendamentos",
-            "id": "1"
+            "id": "1",
+            "icon": "material-symbols-outlined",
+            "iconName": "calendar_month"
         },
         {
             "label": "Veículos",
-            "id": "2"
+            "id": "2",
+            "icon": "material-symbols-outlined",
+            "iconName": "directions_car"
         },
         {
             "label": "Pagamentos e Pontos",
-            "id": "3"
+            "id": "3",
+            "icon": "material-symbols-outlined",
+            "iconName": "payment"
         },
         {
             "label": "Configurações",
-            "id": "4"
+            "id": "4",
+            "icon": "material-symbols-outlined",
+            "iconName": "settings"
         },
         {
             "label": "CheckIn/CheckOut",
-            "id": "5"
+            "id": "5",
+            "icon": "material-symbols-outlined",
+            "iconName": "check_circle"
         },
         {
             "label": "Cadastros",
-            "id": "6"
+            "id": "6",
+            "icon": "material-symbols-outlined",
+            "iconName": "person_add"
         },
         {
             "label": "log",
-            "id": "7"
+            "id": "7",
+            "icon": "material-symbols-outlined",
+            "iconName": "description"
         },
         {
             "label": "Relatórios",
-            "id": "8"
+            "id": "8",
+            "icon": "material-symbols-outlined",
+            "iconName": "bar_chart"
         }
     ],
     "linksCadastros": [

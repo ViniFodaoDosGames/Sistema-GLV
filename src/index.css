@@ -1,5 +1,8 @@
-body {
+*:require{
+  padding: 0;
   margin: 0;
+}
+body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -10,4 +13,46 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+:root {
+  --cor-background: #f2f2f2;
+  --cor-botao-hover: #DFDFDF;
+  --cor-side-bar: #A2A2A2;
+  --cor-letra: #3B3838;
+  --fonte-padrao: 'Arial', sans-serif;
+  --espacamento: 16px;
+}
+
+.app-layout {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: stretch;
+  flex-direction: row;
+  min-height: 100dvh;
+  background-color: var(--cor-principal);
+  transition: all 0.3s ease-in-out;
+}
+
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.app-content {
+  min-height: 100dvh;
+  min-width: 0;
+  padding: 1.5rem;
+}
+
+@media (max-width: 767.98px) {
+  .app-layout {
+    flex-direction: column;
+  }
 }

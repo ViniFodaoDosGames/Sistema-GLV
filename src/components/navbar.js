@@ -10,11 +10,8 @@ const linksCadastros = rotasMenu.linksCadastros;
 
 function Navbar(props) {
   return (
-    <div className='navbar navbar-expand-lg fixed-top navbar-dark bg-primary '>
+    <div className='navbar navbar-expand-lg navbar-dark bg-primary '>
       <div className='container-fluid'>
-        <a href='/' className='navbar-brand'>
-          Sistema GLV
-        </a>
         <button
           className='navbar-toggler'
           type='button'
@@ -33,15 +30,23 @@ function Navbar(props) {
                 (link) => link.idDropDown === titulo.id
               );
 
-              return links.length > 0 ? (
+              return links.length > 1 ? (
                 <DropDown
                   key={titulo.id}
                   id={titulo.id}
                   label={titulo.label}
                   links={links}
+                  setDropdownOpen={true}
                   render
                 />
-              ) : null;
+              ) : (<DropDown
+                  key={titulo.id}
+                  id={titulo.id}
+                  label={titulo.label}
+                  links={links}
+                  setDropdownOpen={false}
+                  render
+                />);
             })}
           </ul>
         </div>

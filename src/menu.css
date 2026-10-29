@@ -1,0 +1,71 @@
+
+.sidebar {
+  flex: 0 0 15dvw;
+  min-height: 100vh;
+  overflow-y: auto;
+  background-color: var(--cor-side-bar);
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar .sidebar-menu {
+  margin: 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar .sidebar-header {
+  padding: 2rem;
+}
+
+.sidebar-item {
+  margin: 0.5rem .5rem;
+  padding: 0.5rem .5rem;
+  text-align: left;
+
+}
+
+.sidebar  a{
+  color: var(--cor-letra);
+}
+
+.sidebar .sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: var(--cor-letra);
+  transition: all 300ms ease-in-out;
+}
+
+.sidebar .sidebar-item-header > .sidebar-link {
+  width: 100%;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar-dropdown-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 315ms ease, opacity 200ms ease;
+}
+
+.sidebar-dropdown-collapse.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.sidebar-dropdown-collapse > .sidebar-dropdown {
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+}
