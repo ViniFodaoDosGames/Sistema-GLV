@@ -1,16 +1,14 @@
-* {
-  color: var(--cor-letra);
-}
-
 .sidebar {
-  flex: 0.4;
-  min-height: 100vh;
+  flex: 0.3;
+  flex-wrap: nowrap;
+  min-height: 100dvh;
   background-color: var(--cor-side-bar);
   transition: all 0.3s ease-in-out;
   position: sticky;
   top: 0;
   align-self: start;
   overflow: hidden;
+  text-wrap: nowrap;
 }
 
 .sidebar>ul {
@@ -20,12 +18,24 @@
 }
 
 .sidebar .sidebar-header {
+  display: flex;
   text-align: center;
   padding: 2rem;
   font-size: 1.6rem;
 
   a {
+    flex: 1;
     text-decoration: none;
+    color: var(--cor-letra);
+  }
+
+  button {
+    span {
+      rotate: 180deg;
+    }
+
+    all: unset;
+    cursor: pointer;
   }
 
 }
@@ -57,10 +67,14 @@
   transition: font-size 10ms ease-in-out;
 }
 
-.sidebar-dropdown-collapse .sidebar-link:hover {
-  font-size: 1.2rem;
+
+.sidebar-dropdown-collapse .sidebar-link {
   margin: 0 .8rem;
-  transition: font-size 10ms ease-in-out;
+}
+
+.sidebar-dropdown-collapse .sidebar-link:hover {
+  margin: 0 1rem;
+  transition: margin 10ms ease-in-out;
 }
 
 
@@ -89,12 +103,12 @@
 }
 
 .arrow-icon {
-   transition: rotate 200ms ease-in-out;
+  transition: rotate 200ms ease-in-out;
 }
 
 .arrow-icon.is-open {
-   rotate: 180deg;
-   transition: rotate 300ms ease-in-out;
+  rotate: 180deg;
+  transition: rotate 300ms ease-in-out;
 }
 
 .sidebar-dropdown-collapse>.sidebar-dropdown {

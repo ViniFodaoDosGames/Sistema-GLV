@@ -14,8 +14,18 @@ function SideBaR() {
                 <a href='/' className='logo'>
                     <span className='navbar-brand-text'>Sistema GLV</span>
                 </a>
+                <button
+                        className='sidebar-link'
+                        type='button' //* define o tipo do botão
+                        id={`sideBar`} //* define o id do botão
+                        data-bs-toggle='collapse' //* define o comportamento do botão. Colapse que dizer que ele vai abrir e fechar alguem
+                        data-bs-target='#sideBar'
+                    >
+                <span class="material-symbols-outlined ">
+                    double_arrow
+                </span></button>
             </div>
-            <ul className='sidebar-nav'>
+            <ul className='sidebar-nav' id=''>
                 {dropDownTitulos.map((titulo) => {
                     const links = linksCadastros.filter(
                         (link) => link.idDropDown === titulo.id

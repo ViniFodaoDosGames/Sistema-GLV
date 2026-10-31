@@ -206,6 +206,24 @@ pre {
   margin-bottom: 2em;
 }
 
+
+.navbar {
+overflow: hidden;
+}
+
+.card{
+  overflow: scroll;
+  .card-header{
+    min-width: 100dvh;
+  }
+  .row{
+    min-width: 100dvh;
+    padding: 0;
+  }
+}
+
+
+
 @media (max-width: 767px) {
   .section-preview .image img {
     width: 100%;
