@@ -70,7 +70,7 @@ function ListagemModelo() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Novo modelo
+                Novo Modelo
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>

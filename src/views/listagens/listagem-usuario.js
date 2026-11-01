@@ -73,7 +73,7 @@ function ListagemUsuario() {
                 className='btn btn-warning'
                 onClick={() => cadastrar()}
               >
-                Nova Usuário
+                Novo Usuário
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
@@ -93,7 +93,7 @@ function ListagemUsuario() {
                       <td className='justify-content-center'>{dado.cpf}</td>
                       <td className='justify-content-center'>{dado.email}</td>
                       <td className='justify-content-center'>{dado.celular}</td>
-                      <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
+                      <td className='justify-content-center'>{dado.status ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

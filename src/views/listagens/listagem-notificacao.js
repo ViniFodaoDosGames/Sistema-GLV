@@ -63,7 +63,7 @@ function ListagemNotificacao() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Notificacaos'>
+      <Card title='Listagem de Notificações'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>

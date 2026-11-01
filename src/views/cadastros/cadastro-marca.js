@@ -71,18 +71,29 @@ function CadastroMarca() {
         }
     }
     async function buscar() {
-        await axios.get(`${baseURL}/${idParam}`).then((response) => {
-            setDados(response.data);
-        });
-        setId(dados.id);
-        setNome(dados.nome);
-        setAtivo(dados.ativo);
-    }
-    useEffect(() => {
-        buscar();
-    }, [id]);
+    if (idParam == null) return;
 
-    if (!dados) return null;
+    await axios
+        .get(`${baseURL}/${idParam}`)
+        .then((response) => {
+            setDados(response.data);
+            setId(response.data.id);
+            setNome(response.data.nome);
+            setAtivo(response.data.ativo);
+        })
+        .catch(function (error) {
+            mensagemErro('Marca não encontrada');
+        });
+}
+
+useEffect(() => {
+    buscar();
+}, [idParam]);
+
+useEffect(() => {
+    buscar();
+}, [idParam]);
+
 
     return (
         <div className='container'>

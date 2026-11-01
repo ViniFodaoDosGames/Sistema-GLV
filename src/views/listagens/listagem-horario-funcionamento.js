@@ -26,7 +26,7 @@ function ListagemHorarioFuncionamento() {
   };
 
   const editar = (id) => {
-    navigate(`/cadastro-intervalo-almoco/${id}`);
+    navigate(`/cadastro-horario-funcionamento/${id}`);
   };
 
   const [dados, setDados] = React.useState([]);

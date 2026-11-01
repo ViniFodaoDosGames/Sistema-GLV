@@ -88,7 +88,7 @@ function ListagemPagamento() {
                   {dados.map((dado) => (
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.forma}</td>
-                      <td className='justify-content-center'>{dado.stadus}</td>
+                      <td className='justify-content-center'>{dado.status ? 'Sim' : 'Não'}</td>
                       <td className='justify-content-center'>{dado.valor}</td>
                       <td className='justify-content-center'>{dado.dataHora}</td>
                       <td className='justify-content-center'>{dado.codigoGateway}</td>

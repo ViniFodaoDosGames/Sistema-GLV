@@ -63,7 +63,7 @@ function ListagemIntervaloAlmoco() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Intevalos de Almoço'>
+      <Card title='Listagem de Intervalos de Almoço'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>

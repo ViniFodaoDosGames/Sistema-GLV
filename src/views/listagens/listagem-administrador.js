@@ -61,7 +61,7 @@ function ListagemAdministrador() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Administradors'>
+      <Card title='Listagem de Administradores'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
