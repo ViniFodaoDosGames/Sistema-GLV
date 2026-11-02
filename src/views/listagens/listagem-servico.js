@@ -75,6 +75,7 @@ function ListagemServico() {
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
+                    <th scope='col'>Lava Jato</th>
                     <th scope='col'>Nome</th>
                     <th scope='col'>Preço</th>
                     <th scope='col'>Pontos Gerados</th>
@@ -88,6 +89,7 @@ function ListagemServico() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
+                      <td className='justify-content-center'>{dado.idLavaJato}</td>
                       <td className='justify-content-center'>{dado.nome}</td>
                       <td className='justify-content-center'>{dado.preco}</td>
                       <td className='justify-content-center'>{dado.pontosGerados}</td>

@@ -77,6 +77,7 @@ function ListagemHorarioFuncionamento() {
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
+                    <th scope='col'>Lava Jato</th>
                     <th scope='col'>Dia da Semana</th>
                     <th scope='col'>Horario de Abertura</th>
                     <th scope='col'>Horario de Fechamento</th>
@@ -87,9 +88,10 @@ function ListagemHorarioFuncionamento() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
+                      <td className='justify-content-center'>{dado.idLavaJato}</td>
                       <td className='justify-content-center'>{dado.diaSemana}</td>
-                      <td className='justify-content-center'>{dado.horaAbertura}</td>
-                      <td className='justify-content-center'>{dado.horaFechamento}</td>
+                      <td className='justify-content-center'>{dado.horaAbertura  ? dado.horaAbertura : 'Não Informado'}</td>
+                      <td className='justify-content-center'>{dado.horaFechamento  ? dado.horaFechamento : 'Não Informado'}</td>
                       <td className='justify-content-center'>{dado.aberto ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >

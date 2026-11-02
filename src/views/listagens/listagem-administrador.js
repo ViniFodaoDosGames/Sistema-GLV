@@ -75,6 +75,7 @@ function ListagemAdministrador() {
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
+                    <th scope='col'>Funcionario</th>
                     <th scope='col'>Matricula</th>
                     <th scope='col'>Ações</th>
                   </tr>
@@ -82,6 +83,7 @@ function ListagemAdministrador() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
+                      <td className='justify-content-center'>{dado.idFuncionario}</td>
                       <td className='justify-content-center'>{dado.id}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >

@@ -81,6 +81,10 @@
     {
       "id": "adm-2",
       "idFuncionario": "funcionario-04"
+    },
+    {
+      "id": "bNYIaLT4waQ",
+      "idFuncionario": "funcionario-01"
     }
   ],
   "Clientes": [
@@ -276,6 +280,12 @@
       "horaInicio": "12:00:00",
       "horaFim": "13:00:00",
       "aplicaFimDeSemana": false,
+      "idLavaJato": "lavajato-01"
+    },
+    {
+      "id": "intervalo-02",
+      "horaInicio": "",
+      "horaFim": "",
       "idLavaJato": "lavajato-01"
     }
   ],

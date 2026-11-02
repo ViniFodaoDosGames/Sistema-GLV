@@ -77,6 +77,9 @@ function ListagemVeiculo() {
                   <tr>
                     <th scope='col'>Placa</th>
                     <th scope='col'>Ano</th>
+                    <th scope='col'>Cor</th>
+                    <th scope='col'>Modelo</th>
+                    <th scope='col'>Categoria de Veiculo</th>
                     <th scope='col'>Ativo</th>
                     <th scope='col'>Ações</th>
                   </tr>
@@ -86,6 +89,9 @@ function ListagemVeiculo() {
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.placa}</td>
                       <td className='justify-content-center'>{dado.ano}</td>
+                      <td className='justify-content-center'>{dado.idCor}</td>
+                      <td className='justify-content-center'>{dado.idModelo}</td>
+                      <td className='justify-content-center'>{dado.idCategoriaVeiculo}</td>
                       <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >

@@ -75,6 +75,7 @@ function ListagemLotePontos() {
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
+                    <th scope='col'>Cliente</th>
                     <th scope='col'>Tipo</th>
                     <th scope='col'>Quantidade</th>
                     <th scope='col'>Saldo</th>
@@ -86,6 +87,7 @@ function ListagemLotePontos() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
+                      <td className='justify-content-center'>{dado.idCliente}</td>
                       <td className='justify-content-center'>{dado.tipo}</td>
                     <td className='justify-content-center'>{dado.quantidade}</td>
                       <td className='justify-content-center'>{dado.saldo}</td>

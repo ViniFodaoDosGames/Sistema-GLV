@@ -75,24 +75,28 @@ function ListagemPagamento() {
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
+                    <th scope='col'>Agendamento</th>
                     <th scope='col'>Forma</th>
                     <th scope='col'>Status</th>
                     <th scope='col'>Valor</th>
                     <th scope='col'>Data e Hora</th>
                     <th scope='col'>Código Gateway</th>
                     <th scope='col'>Justificativa do Estorno</th>
+                    <th scope='col'>Funcionário</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
+                      <td className='justify-content-center'>{dado.idAgendamento}</td>
                       <td className='justify-content-center'>{dado.forma}</td>
                       <td className='justify-content-center'>{dado.status ? 'Sim' : 'Não'}</td>
                       <td className='justify-content-center'>{dado.valor}</td>
                       <td className='justify-content-center'>{dado.dataHora}</td>
                       <td className='justify-content-center'>{dado.codigoGateway}</td>
                       <td className='justify-content-center'>{dado.justificativaEstorno}</td>
+                      <td className='justify-content-center'>{dado.idFuncionario}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

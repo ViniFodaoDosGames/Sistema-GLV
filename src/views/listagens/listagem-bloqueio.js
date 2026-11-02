@@ -75,6 +75,7 @@ function ListagemBloqueio() {
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
+                    <th scope='col'>Serviço</th>
                     <th scope='col'>Data</th>
                     <th scope='col'>Horário de Inicio</th>
                     <th scope='col'>Horário de Termino</th>
@@ -87,6 +88,7 @@ function ListagemBloqueio() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
+                      <td className='justify-content-center'>{dado.idServico}</td>
                       <td className='justify-content-center'>{dado.data}</td>
                       <td className='justify-content-center'>{dado.horaInicio}</td>
                       <td className='justify-content-center'>{dado.horaFim}</td>

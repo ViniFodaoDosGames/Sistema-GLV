@@ -77,6 +77,7 @@ function ListagemIntervaloAlmoco() {
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
+                    <th scope='col'>Lava Jato</th>
                     <th scope='col'>Horario de Inicio</th>
                     <th scope='col'>Horario de Termino</th>
                     <th scope='col'>Fim de Semana Aplicável</th>
@@ -86,8 +87,9 @@ function ListagemIntervaloAlmoco() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.horaInicio}</td>
-                      <td className='justify-content-center'>{dado.horaFim}</td>
+                      <td className='justify-content-center'>{dado.idLavaJato}</td>
+                      <td className='justify-content-center'>{dado.horaInicio ? dado.horaInicio : 'Não Informado'}</td>
+                      <td className='justify-content-center'>{dado.horaFim ? dado.horaFim : 'Não Informado'}</td>
                       <td className='justify-content-center'>{dado.aplicaFimDeSemana ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >

@@ -75,16 +75,18 @@ function ListagemCliente() {
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
+                    <th scope='col'>Código</th>
+                    <th scope='col'>Usuário</th>
                     <th scope='col'>Data de Aceitação dos Termos</th>
-                    <th scope='col'>Usuário vinculado</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.dataAceiteTermos}</td>
+                      <td className='justify-content-center'>{dado.id}</td>
                       <td className='justify-content-center'>{dado.idUsuario}</td>
+                      <td className='justify-content-center'>{dado.dataAceiteTermos}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

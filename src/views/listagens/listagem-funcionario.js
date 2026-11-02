@@ -76,6 +76,7 @@ function ListagemFuncionario() {
                 <thead>
                   <tr>
                     <th scope='col'>Matricula</th>
+                    <th scope='col'>Usuário</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
@@ -83,6 +84,7 @@ function ListagemFuncionario() {
                   {dados.map((dado) => (
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.id}</td>
+                      <td className='justify-content-center'>{dado.idUsuario}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
