@@ -79,7 +79,6 @@ function ListagemIntervaloAlmoco() {
                   <tr>
                     <th scope='col'>Horario de Inicio</th>
                     <th scope='col'>Horario de Termino</th>
-                    <th scope='col'>Fim de Semana Aplicável</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
@@ -88,7 +87,6 @@ function ListagemIntervaloAlmoco() {
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.horaInicio}</td>
                       <td className='justify-content-center'>{dado.horaFim}</td>
-                      <td className='justify-content-center'>{dado.aplicaFimDeSemana ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

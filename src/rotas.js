@@ -14,7 +14,6 @@ import ListagemTipoFeriado from "./views/listagens/listagem-tipo-feriado"
 import ListagemFeriado from "./views/listagens/listagem-feriado"
 import ListagemNotificacao from "./views/listagens/listagem-notificacao"
 import ListagemServico from "./views/listagens/listagem-servico"
-import ListagemTempo from "./views/listagens/listagem-tempo"
 import ListagemPagamento from "./views/listagens/listagem-pagamento"
 import ListagemLotePonto from "./views/listagens/listagem-lote-ponto"
 import ListagemBloqueio from "./views/listagens/listagem-bloqueio"
@@ -23,6 +22,25 @@ import ListagemFuncionario from "./views/listagens/listagem-funcionario"
 
 
 import CadastroMarca from './views/cadastros/cadastro-marca';
+import CadastroCor from './views/cadastros/cadastro-cor';
+import CadastroCategoriaVeiculo from './views/cadastros/cadastro-categoria-veiculo';
+import CadastroTipoFeriado from './views/cadastros/cadastro-tipo-feriado';
+import CadastroModelo from './views/cadastros/cadastro-modelo';
+import CadastroVeiculo from './views/cadastros/cadastro-veiculo';
+import CadastroFeriado from './views/cadastros/cadastro-feriado';
+import CadastroServico from './views/cadastros/cadastro-servico';
+import CadastroBloqueio from './views/cadastros/cadastro-bloqueio';
+import CadastroLavaJato from './views/cadastros/cadastro-lava-jato';
+import CadastroHorarioFuncionamento from './views/cadastros/cadastro-horario-funcionamento';
+import CadastroIntervaloAlmoco from './views/cadastros/cadastro-intervalo-almoco';
+import CadastroUsuario from './views/cadastros/cadastro-usuario';
+import CadastroCliente from './views/cadastros/cadastro-cliente';
+import CadastroFuncionario from './views/cadastros/cadastro-funcionario';
+import CadastroAdministrador from './views/cadastros/cadastro-administrador';
+import CadastroAgendamento from './views/cadastros/cadastro-agendamento';
+import CadastroPagamento from './views/cadastros/cadastro-pagamento';
+import CadastroLotePonto from './views/cadastros/cadastro-lote-ponto';
+import CadastroNotificacao from './views/cadastros/cadastro-notificacao';
 
 
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
@@ -91,10 +109,6 @@ function Rotas(props) {
           element={<ListagemNotificacao />}
         />
         <Route
-          path='/listagem-tempo/:idParam?'
-          element={<ListagemTempo />}
-        />
-        <Route
           path='/listagem-servico/:idParam?'
           element={<ListagemServico />}
         />
@@ -124,6 +138,82 @@ function Rotas(props) {
         <Route
           path='/cadastro-marca/:idParam?'
           element={<CadastroMarca />}
+        />
+        <Route
+          path='/cadastro-cor/:idParam?'
+          element={<CadastroCor />}
+        />
+        <Route
+          path='/cadastro-categoria-veiculo/:idParam?'
+          element={<CadastroCategoriaVeiculo />}
+        />
+        <Route
+          path='/cadastro-tipo-feriado/:idParam?'
+          element={<CadastroTipoFeriado />}
+        />
+        <Route
+          path='/cadastro-modelo/:idParam?'
+          element={<CadastroModelo />}
+        />
+        <Route
+          path='/cadastro-veiculo/:idParam?'
+          element={<CadastroVeiculo />}
+        />
+        <Route
+          path='/cadastro-feriado/:idParam?'
+          element={<CadastroFeriado />}
+        />
+        <Route
+          path='/cadastro-servico/:idParam?'
+          element={<CadastroServico />}
+        />
+        <Route
+          path='/cadastro-bloqueio/:idParam?'
+          element={<CadastroBloqueio />}
+        />
+        <Route
+          path='/cadastro-lava-jato/:idParam?'
+          element={<CadastroLavaJato />}
+        />
+        <Route
+          path='/cadastro-horario-funcionamento/:idParam?'
+          element={<CadastroHorarioFuncionamento />}
+        />
+        <Route
+          path='/cadastro-intervalo-almoco/:idParam?'
+          element={<CadastroIntervaloAlmoco />}
+        />
+        <Route
+          path='/cadastro-usuario/:idParam?'
+          element={<CadastroUsuario />}
+        />
+        <Route
+          path='/cadastro-cliente/:idParam?'
+          element={<CadastroCliente />}
+        />
+        <Route
+          path='/cadastro-funcionario/:idParam?'
+          element={<CadastroFuncionario />}
+        />
+        <Route
+          path='/cadastro-administrador/:idParam?'
+          element={<CadastroAdministrador />}
+        />
+        <Route
+          path='/cadastro-agendamento/:idParam?'
+          element={<CadastroAgendamento />}
+        />
+        <Route
+          path='/cadastro-pagamento/:idParam?'
+          element={<CadastroPagamento />}
+        />
+        <Route
+          path='/cadastro-lote-ponto/:idParam?'
+          element={<CadastroLotePonto />}
+        />
+        <Route
+          path='/cadastro-notificacao/:idParam?'
+          element={<CadastroNotificacao />}
         />
       </Routes>
     </BrowserRouter>
