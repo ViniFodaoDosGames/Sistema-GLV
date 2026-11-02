@@ -23,21 +23,12 @@ function CadastroMarca() {
     const [nome, setNome] = useState('');
     const [ativo, setAtivo] = useState(false);
 
-    const [dados, setDados] = React.useState([]);
-
-    function inicializar() {
-        if (idParam == null) {
-            setId('');
-            setNome('');
-            setAtivo(false);
-        } else {
-            setId(dados.id);
-            setNome(dados.nome);
-            setAtivo(dados.ativo);
-        }
-    }
-
     async function salvar() {
+        if (!nome.trim()) {
+            mensagemErro('Informe o nome');
+            return;
+        }
+
         let data = {
             id,
             nome,
@@ -50,11 +41,11 @@ function CadastroMarca() {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then(function (response) {
-                    mensagemSucesso(`Categoria ${nome} cadastrada com sucesso!`);
+                    mensagemSucesso(`Marca ${nome} cadastrada com sucesso!`);
                     navigate(`/listagem-marcas`);
                 })
                 .catch(function (error) {
-                    mensagemErro(error.response.data);
+                    mensagemErro('Erro ao cadastrar a marca');
                 });
         } else {
             await axios
@@ -62,38 +53,33 @@ function CadastroMarca() {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then(function (response) {
-                    mensagemSucesso(`Categoria ${nome} alterada com sucesso!`);
+                    mensagemSucesso(`Marca ${nome} alterada com sucesso!`);
                     navigate(`/listagem-marcas`);
                 })
                 .catch(function (error) {
-                    mensagemErro(error.response.data);
+                    mensagemErro('Erro ao alterar a marca');
                 });
         }
     }
+
     async function buscar() {
-    if (idParam == null) return;
+        if (idParam == null) return;
 
-    await axios
-        .get(`${baseURL}/${idParam}`)
-        .then((response) => {
-            setDados(response.data);
-            setId(response.data.id);
-            setNome(response.data.nome);
-            setAtivo(response.data.ativo);
-        })
-        .catch(function (error) {
-            mensagemErro('Marca não encontrada');
-        });
-}
+        await axios
+            .get(`${baseURL}/${idParam}`)
+            .then((response) => {
+                setId(response.data.id);
+                setNome(response.data.nome);
+                setAtivo(response.data.ativo);
+            })
+            .catch(function (error) {
+                mensagemErro('Marca não encontrada');
+            });
+    }
 
-useEffect(() => {
-    buscar();
-}, [idParam]);
-
-useEffect(() => {
-    buscar();
-}, [idParam]);
-
+    useEffect(() => {
+        buscar();
+    }, [idParam]);
 
     return (
         <div className='container'>
@@ -101,7 +87,7 @@ useEffect(() => {
                 <div className='row'>
                     <div className='col-lg-12'>
                         <div className='bs-component'>
-                            <FormGroup label='Descrição: *' htmlFor='inputNome'>
+                            <FormGroup label='Nome: *' htmlFor='inputNome'>
                                 <input
                                     type='text'
                                     id='inputNome'
@@ -111,14 +97,14 @@ useEffect(() => {
                                     onChange={(e) => setNome(e.target.value)}
                                 />
                             </FormGroup>
-                            <FormGroup label='Descrição: *' htmlFor='inputAtivo'>
+                            <FormGroup label='Ativo' htmlFor='inputAtivo'>
                                 <input
                                     type='checkbox'
                                     id='inputAtivo'
                                     checked={ativo}
                                     className='form-control form-check-input'
                                     name='ativo'
-                                    onChange={(e) => setAtivo(e.target.value)}
+                                    onChange={(e) => setAtivo(e.target.checked)}
                                 />
                             </FormGroup>
                             <Stack spacing={1} padding={1} direction='row'>
@@ -130,7 +116,7 @@ useEffect(() => {
                                     Salvar
                                 </button>
                                 <button
-                                    onClick={inicializar}
+                                    onClick={() => navigate(`/listagem-marcas`)}
                                     type='button'
                                     className='btn btn-danger'
                                 >

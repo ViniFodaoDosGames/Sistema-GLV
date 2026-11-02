@@ -131,11 +131,6 @@
             "idDropDown": "6"
         },
         {
-            "href": "/listagem-tempo",
-            "label": "Tempo de serviço",
-            "idDropDown": "6"
-        },
-        {
             "href": "/listagem-servico",
             "label": "Serviços",
             "idDropDown": "6"
