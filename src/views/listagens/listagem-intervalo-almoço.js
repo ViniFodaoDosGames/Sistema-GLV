@@ -80,7 +80,6 @@ function ListagemIntervaloAlmoco() {
                     <th scope='col'>Lava Jato</th>
                     <th scope='col'>Horario de Inicio</th>
                     <th scope='col'>Horario de Termino</th>
-                    <th scope='col'>Fim de Semana Aplicável</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>

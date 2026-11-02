@@ -86,7 +86,6 @@ function ListagemCliente() {
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.id}</td>
                       <td className='justify-content-center'>{dado.idUsuario}</td>
-                      <td className='justify-content-center'>{dado.dataAceiteTermos}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

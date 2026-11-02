@@ -90,12 +90,10 @@
   "Clientes": [
     {
       "id": "cliente-01",
-      "dataAceiteTermos": "2026-09-01 10:00:00",
       "idUsuario": "usuario-03"
     },
     {
       "id": "cliente-02",
-      "dataAceiteTermos": "2026-09-02 14:30:00",
       "idUsuario": "usuario-04"
     }
   ],
@@ -113,6 +111,11 @@
     {
       "id": "cor-03",
       "nome": "prata",
+      "ativo": true
+    },
+    {
+      "id": "l7KN3_E8AM8",
+      "nome": "Azul",
       "ativo": true
     }
   ],
@@ -279,7 +282,6 @@
       "id": "intervalo-01",
       "horaInicio": "12:00:00",
       "horaFim": "13:00:00",
-      "aplicaFimDeSemana": false,
       "idLavaJato": "lavajato-01"
     },
     {
@@ -319,23 +321,6 @@
       "idLavaJato": "lavajato-01"
     }
   ],
-  "Tempos": [
-    {
-      "id": "tempo-01",
-      "minutos": 15,
-      "ativo": true
-    },
-    {
-      "id": "tempo-02",
-      "minutos": 30,
-      "ativo": true
-    },
-    {
-      "id": "tempo-03",
-      "minutos": 60,
-      "ativo": true
-    }
-  ],
   "Servicos": [
     {
       "id": "servico-01",
@@ -344,10 +329,9 @@
       "pontosGerados": 40,
       "vagas": 2,
       "descricao": "Lavagem externa",
-      "notificaConclusao": true,
       "ativo": true,
-      "idTempoDuracao": "tempo-02",
-      "idTempoIntervalo": "tempo-01",
+      "tempoDuracao": 30,
+      "tempoIntervalo": 15,
       "idLavaJato": "lavajato-01"
     },
     {
@@ -357,10 +341,9 @@
       "pontosGerados": 80,
       "vagas": 1,
       "descricao": "Lavagem externa e interna",
-      "notificaConclusao": true,
       "ativo": true,
-      "idTempoDuracao": "tempo-03",
-      "idTempoIntervalo": "tempo-01",
+      "tempoDuracao": 60,
+      "tempoIntervalo": 15,
       "idLavaJato": "lavajato-01"
     }
   ],
@@ -517,7 +500,6 @@
       "canal": "WHATSAPP",
       "mensagem": "Seu veiculo esta pronto",
       "dataHora": "2026-10-01 09:35:00",
-      "statusEnvio": "ENVIADO",
       "idCliente": "cliente-01",
       "idAgendamento": "agendamento-01"
     },
@@ -526,7 +508,6 @@
       "canal": "EMAIL",
       "mensagem": "Voce recebeu pontos de compensacao",
       "dataHora": "2026-09-20 12:00:00",
-      "statusEnvio": "ENVIADO",
       "idCliente": "cliente-02",
       "idAgendamento": null
     }
