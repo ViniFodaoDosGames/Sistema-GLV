@@ -1,70 +1,34 @@
-# Getting Started with Create React App
+# Sistema GLV — Lava-jato
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicação React responsiva para demonstração dos fluxos do cliente, funcionário e administrador, baseada no documento de requisitos e nas telas de referência.
 
-## Available Scripts
+## Executar
 
-In the project directory, you can run:
+```bash
+npm install
+npm start
+```
 
-### `npm start`
+O front-end abre em `http://localhost:3000`. Os três perfis podem ser acessados pelos botões rápidos na tela de login.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Dados da demonstração
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- `src/db/db.json` é a fonte dos dados iniciais.
+- As alterações feitas pela interface são mantidas no `localStorage` do navegador.
+- Para restaurar os dados de exemplo, remova os dados locais do site ou limpe a chave `glv-mock-data`.
+- Agendamentos, pagamentos, notificações e recuperação de senha são simulações locais. Não há API, envio de e-mail/WhatsApp ou cobrança real.
+- Não use credenciais ou dados pessoais reais neste protótipo.
 
-### `npm test`
+## Validar
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm test -- --watchAll=false
+npm run build
+```
 
-### `npm run build`
+## Áreas implementadas
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Cliente:** agendamentos, seleção de horários, pagamento demonstrativo, veículos, pontos e configurações.
+- **Funcionário:** fila de atendimento, check-in, check-out, walk-in e atualização dos registros locais.
+- **Administrador:** cadastros, pagamentos e estornos demonstrativos, logs, notificações e relatórios.
+- Os grupos e links laterais por perfil são definidos em `src/config/rotasMenu.json`.

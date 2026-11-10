@@ -2,7 +2,7 @@
   "Usuarios": [
     {
       "id": "usuario-01",
-      "nome": "usuario-01",
+      "nome": "Pedro Almeida",
       "cpf": "11111111101",
       "email": "usuario01@email.com",
       "celular": "32999999901",
@@ -11,7 +11,7 @@
     },
     {
       "id": "usuario-02",
-      "nome": "usuario-02",
+      "nome": "Julia Santos",
       "cpf": "11111111102",
       "email": "usuario02@email.com",
       "celular": "32999999902",
@@ -20,7 +20,7 @@
     },
     {
       "id": "usuario-03",
-      "nome": "usuario-03",
+      "nome": "Ana Paula",
       "cpf": "11111111103",
       "email": "usuario03@email.com",
       "celular": "32999999903",
@@ -29,7 +29,7 @@
     },
     {
       "id": "usuario-04",
-      "nome": "usuario-04",
+      "nome": "Bruno Silva",
       "cpf": "11111111104",
       "email": "usuario04@email.com",
       "celular": "32999999904",
@@ -38,7 +38,7 @@
     },
     {
       "id": "usuario-05",
-      "nome": "usuario-05",
+      "nome": "Camila Rocha",
       "cpf": "11111111105",
       "email": "usuario05@email.com",
       "celular": "32999999905",
@@ -47,7 +47,7 @@
     },
     {
       "id": "usuario-06",
-      "nome": "usuario-06",
+      "nome": "Rafael Lima",
       "cpf": "11111111106",
       "email": "usuario06@email.com",
       "celular": "32999999906",
@@ -122,12 +122,12 @@
   "Marcas": [
     {
       "id": "marca-01",
-      "nome": "marca_1",
+      "nome": "Fiat",
       "ativo": true
     },
     {
       "id": "marca-02",
-      "nome": "marca_2",
+      "nome": "Volkswagen",
       "ativo": true
     }
   ],
@@ -154,12 +154,12 @@
   "CategoriasVeiculo": [
     {
       "id": "categoria-01",
-      "nome": "hatch",
+      "nome": "Hatch",
       "ativo": true
     },
     {
       "id": "categoria-02",
-      "nome": "caminhonete",
+      "nome": "Caminhonete",
       "ativo": true
     }
   ],
@@ -212,10 +212,10 @@
   "LavaJatos": [
     {
       "id": "lavajato-01",
-      "totalPosicoes": 3,
-      "fatorFidelidade": 10,
-      "validadePontosFidelidade": 180,
-      "validadePontosCompensacao": 90,
+      "totalPosicoes": 6,
+      "fatorFidelidade": 7,
+      "validadePontosFidelidade": 365,
+      "validadePontosCompensacao": 60,
       "ativo": true
     }
   ],
@@ -232,48 +232,48 @@
       "id": "horario-02",
       "diaSemana": "SEGUNDA",
       "aberto": true,
-      "horaAbertura": "08:00:00",
-      "horaFechamento": "18:00:00",
+      "horaAbertura": "09:00:00",
+      "horaFechamento": "19:00:00",
       "idLavaJato": "lavajato-01"
     },
     {
       "id": "horario-03",
       "diaSemana": "TERCA",
       "aberto": true,
-      "horaAbertura": "08:00:00",
-      "horaFechamento": "18:00:00",
+      "horaAbertura": "09:00:00",
+      "horaFechamento": "19:00:00",
       "idLavaJato": "lavajato-01"
     },
     {
       "id": "horario-04",
       "diaSemana": "QUARTA",
       "aberto": true,
-      "horaAbertura": "08:00:00",
-      "horaFechamento": "18:00:00",
+      "horaAbertura": "09:00:00",
+      "horaFechamento": "19:00:00",
       "idLavaJato": "lavajato-01"
     },
     {
       "id": "horario-05",
       "diaSemana": "QUINTA",
       "aberto": true,
-      "horaAbertura": "08:00:00",
-      "horaFechamento": "18:00:00",
+      "horaAbertura": "09:00:00",
+      "horaFechamento": "19:00:00",
       "idLavaJato": "lavajato-01"
     },
     {
       "id": "horario-06",
       "diaSemana": "SEXTA",
       "aberto": true,
-      "horaAbertura": "08:00:00",
-      "horaFechamento": "18:00:00",
+      "horaAbertura": "09:00:00",
+      "horaFechamento": "19:00:00",
       "idLavaJato": "lavajato-01"
     },
     {
       "id": "horario-07",
       "diaSemana": "SABADO",
       "aberto": true,
-      "horaAbertura": "08:00:00",
-      "horaFechamento": "12:00:00",
+      "horaAbertura": "09:00:00",
+      "horaFechamento": "19:00:00",
       "idLavaJato": "lavajato-01"
     }
   ],
@@ -286,20 +286,20 @@
     },
     {
       "id": "intervalo-02",
-      "horaInicio": "",
-      "horaFim": "",
+      "horaInicio": "12:00:00",
+      "horaFim": "13:00:00",
       "idLavaJato": "lavajato-01"
     }
   ],
   "TiposFeriado": [
     {
       "id": "tipo-01",
-      "nome": "nacional",
+      "nome": "Nacional",
       "ativo": true
     },
     {
       "id": "tipo-02",
-      "nome": "municipal",
+      "nome": "Municipal",
       "ativo": true
     }
   ],
@@ -324,33 +324,35 @@
   "Servicos": [
     {
       "id": "servico-01",
-      "nome": "Lavagem simples",
-      "preco": 40,
-      "pontosGerados": 40,
-      "vagas": 2,
-      "descricao": "Lavagem externa",
+      "nome": "Lavagem rápida",
+      "preco": 25,
+      "pontosGerados": 25,
+      "vagas": 3,
+      "descricao": "Totalmente automatizada, com aplicação de água e sabão pela máquina.",
       "ativo": true,
-      "tempoDuracao": 30,
+      "tempoDuracao": 15,
       "tempoIntervalo": 15,
+      "notificaConclusao": false,
       "idLavaJato": "lavajato-01"
     },
     {
       "id": "servico-02",
-      "nome": "Lavagem completa",
-      "preco": 80,
-      "pontosGerados": 80,
-      "vagas": 1,
-      "descricao": "Lavagem externa e interna",
+      "nome": "Lavagem detalhada",
+      "preco": 50,
+      "pontosGerados": 50,
+      "vagas": 3,
+      "descricao": "Lavagem externa e interna, enceramento, higienização e limpeza do motor.",
       "ativo": true,
-      "tempoDuracao": 60,
+      "tempoDuracao": 40,
       "tempoIntervalo": 15,
+      "notificaConclusao": true,
       "idLavaJato": "lavajato-01"
     }
   ],
   "Bloqueios": [
     {
       "id": "bloqueio-01",
-      "data": "2026-10-05",
+      "data": "2026-11-12",
       "diaInteiro": false,
       "horaInicio": "14:00:00",
       "horaFim": "16:00:00",
@@ -360,7 +362,7 @@
     },
     {
       "id": "bloqueio-02",
-      "data": "2026-10-12",
+      "data": "2026-11-15",
       "diaInteiro": true,
       "horaInicio": null,
       "horaFim": null,
@@ -372,9 +374,9 @@
   "Agendamentos": [
     {
       "id": "agendamento-01",
-      "dataHora": "2026-10-01 09:00:00",
+      "dataHora": "2026-11-08 09:00:00",
       "status": "CONCLUIDO",
-      "valor": 40,
+      "valor": 25,
       "walkIn": false,
       "posicaoFila": 1,
       "idCliente": "cliente-01",
@@ -383,9 +385,9 @@
     },
     {
       "id": "agendamento-02",
-      "dataHora": "2026-10-01 10:00:00",
+      "dataHora": "2026-11-10 10:00:00",
       "status": "CONFIRMADO",
-      "valor": 80,
+      "valor": 50,
       "walkIn": false,
       "posicaoFila": 2,
       "idCliente": "cliente-02",
@@ -394,10 +396,10 @@
     },
     {
       "id": "agendamento-03",
-      "dataHora": "2026-10-02 11:00:00",
+      "dataHora": "2026-11-10 14:00:00",
       "status": "AGUARDANDO_PAGAMENTO",
-      "valor": 40,
-      "walkIn": true,
+      "valor": 25,
+      "walkIn": false,
       "posicaoFila": 1,
       "idCliente": "cliente-01",
       "idVeiculo": "veiculo-02",
@@ -409,8 +411,8 @@
       "id": "pagamento-01",
       "forma": "PIX",
       "status": "APROVADO",
-      "valor": 40,
-      "dataHora": "2026-09-30 18:00:00",
+      "valor": 25,
+      "dataHora": "2026-11-08 10:00:00",
       "codigoGateway": "GW-0001",
       "justificativaEstorno": null,
       "idAgendamento": "agendamento-01",
@@ -420,8 +422,8 @@
       "id": "pagamento-02",
       "forma": "CARTAO",
       "status": "APROVADO",
-      "valor": 80,
-      "dataHora": "2026-09-30 19:00:00",
+      "valor": 50,
+      "dataHora": "2026-11-09 16:00:00",
       "codigoGateway": "GW-0002",
       "justificativaEstorno": null,
       "idAgendamento": "agendamento-02",
@@ -431,8 +433,8 @@
       "id": "pagamento-03",
       "forma": "PONTOS",
       "status": "PENDENTE",
-      "valor": 40,
-      "dataHora": "2026-10-02 11:00:00",
+      "valor": 25,
+      "dataHora": "2026-11-09 16:30:00",
       "codigoGateway": null,
       "justificativaEstorno": null,
       "idAgendamento": "agendamento-03",
@@ -443,21 +445,31 @@
     {
       "id": "lote-01",
       "tipo": "FIDELIDADE",
-      "quantidade": 40,
-      "saldo": 0,
-      "geradoEm": "2026-10-01",
-      "expiraEm": "2027-03-30",
+      "quantidade": 25,
+      "saldo": 25,
+      "geradoEm": "2026-11-08",
+      "expiraEm": "2027-11-08",
       "idCliente": "cliente-01",
       "idAgendamento": "agendamento-01"
     },
     {
       "id": "lote-02",
       "tipo": "COMPENSACAO",
-      "quantidade": 20,
-      "saldo": 20,
-      "geradoEm": "2026-09-20",
-      "expiraEm": "2026-12-19",
+      "quantidade": 175,
+      "saldo": 175,
+      "geradoEm": "2026-11-01",
+      "expiraEm": "2026-12-31",
       "idCliente": "cliente-02",
+      "idAgendamento": null
+    },
+    {
+      "id": "lote-03",
+      "tipo": "COMPENSACAO",
+      "quantidade": 175,
+      "saldo": 175,
+      "geradoEm": "2026-11-01",
+      "expiraEm": "2026-12-31",
+      "idCliente": "cliente-01",
       "idAgendamento": null
     }
   ],
@@ -472,7 +484,7 @@
     {
       "id": "logs-01",
       "tipo": "ENTRADA",
-      "dataHora": "2026-10-01 09:00:00",
+      "dataHora": "2026-11-08 09:00:00",
       "observacao": "Veiculo recebido",
       "idAgendamento": "agendamento-01",
       "idFuncionario": "funcionario-01"
@@ -480,7 +492,7 @@
     {
       "id": "logs-02",
       "tipo": "SAIDA",
-      "dataHora": "2026-10-01 09:35:00",
+      "dataHora": "2026-11-08 09:35:00",
       "observacao": "Veiculo entregue",
       "idAgendamento": "agendamento-01",
       "idFuncionario": "funcionario-01"
@@ -488,7 +500,7 @@
     {
       "id": "logs-03",
       "tipo": "AJUSTE",
-      "dataHora": "2026-10-01 10:05:00",
+      "dataHora": "2026-11-10 10:05:00",
       "observacao": "Ajuste de posicao na fila",
       "idAgendamento": "agendamento-02",
       "idFuncionario": "funcionario-02"
@@ -499,7 +511,7 @@
       "id": "notificacao-01",
       "canal": "WHATSAPP",
       "mensagem": "Seu veiculo esta pronto",
-      "dataHora": "2026-10-01 09:35:00",
+      "dataHora": "2026-11-08 09:35:00",
       "idCliente": "cliente-01",
       "idAgendamento": "agendamento-01"
     },
@@ -507,7 +519,7 @@
       "id": "notificacao-02",
       "canal": "EMAIL",
       "mensagem": "Voce recebeu pontos de compensacao",
-      "dataHora": "2026-09-20 12:00:00",
+      "dataHora": "2026-11-01 12:00:00",
       "idCliente": "cliente-02",
       "idAgendamento": null
     }

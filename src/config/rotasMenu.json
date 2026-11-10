@@ -1,154 +1,41 @@
 {
-    "dropDownTitulos": [
-        {
-            "label": "Agendamentos",
-            "id": "1",
-            "icon": "material-symbols-outlined",
-            "iconName": "calendar_month"
-        },
-        {
-            "label": "Veículos",
-            "id": "2",
-            "icon": "material-symbols-outlined",
-            "iconName": "directions_car"
-        },
-        {
-            "label": "Pagamentos e Pontos",
-            "id": "3",
-            "icon": "material-symbols-outlined",
-            "iconName": "payment"
-        },
-        {
-            "label": "Configurações",
-            "id": "4",
-            "icon": "material-symbols-outlined",
-            "iconName": "settings"
-        },
-        {
-            "label": "CheckIn/CheckOut",
-            "id": "5",
-            "icon": "material-symbols-outlined",
-            "iconName": "check_circle"
-        },
-        {
-            "label": "Cadastros",
-            "id": "6",
-            "icon": "material-symbols-outlined",
-            "iconName": "person_add"
-        },
-        {
-            "label": "log",
-            "id": "7",
-            "icon": "material-symbols-outlined",
-            "iconName": "description"
-        },
-        {
-            "label": "Relatórios",
-            "id": "8",
-            "icon": "material-symbols-outlined",
-            "iconName": "bar_chart"
-        }
-    ],
-    "linksCadastros": [
-        {
-            "href": "/listagem-agendamento",
-            "label": "Agendamentos",
-            "idDropDown": "1"
-        },
-        {
-            "href": "/listagem-veiculo",
-            "label": "Veículos",
-            "idDropDown": "2"
-        },
-        {
-            "href": "/listagem-pagamento",
-            "label": "Pagamentos e Pontos",
-            "idDropDown": "3"
-        },
-        {
-            "href": "/listagem-lavajato",
-            "label": "Lava-jatos",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-administrador",
-            "label": "Administradores",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-marcas",
-            "label": "Marcas",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-modelo",
-            "label": "Modelos",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-lote-ponto",
-            "label": "Lote de pontos",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-cor",
-            "label": "Cores",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-categoria-veiculo",
-            "label": "Categorias de veículos",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-usuario",
-            "label": "Usuários",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-cliente",
-            "label": "Clientes",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-intervalo-almoço",
-            "label": "Intervalo de almoço",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-horario-funcionamento",
-            "label": "Horário de funcionamento",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-tipo-feriado",
-            "label": "Tipos de feriado",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-feriado",
-            "label": "Feriados",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-servico",
-            "label": "Serviços",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-notificacao",
-            "label": "Notificações",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-funcionario",
-            "label": "Funcionários",
-            "idDropDown": "6"
-        },
-        {
-            "href": "/listagem-bloqueio",
-            "label": "Bloqueios",
-            "idDropDown": "6"
-        }
-    ]
+  "dropDownTitulos": [
+    { "label": "Agendamentos", "id": "1", "iconName": "calendar_month" },
+    { "label": "Veículos", "id": "2", "iconName": "directions_car" },
+    { "label": "Pagamentos e pontos", "id": "3", "iconName": "payments" },
+    { "label": "Configurações", "id": "4", "iconName": "settings" },
+    { "label": "Check-in e check-out", "id": "5", "iconName": "fact_check" },
+    { "label": "Cadastros", "id": "6", "iconName": "inventory_2" },
+    { "label": "Log", "id": "7", "iconName": "receipt_long" },
+    { "label": "Relatórios", "id": "8", "iconName": "bar_chart" }
+  ],
+  "linksCadastros": [
+    { "href": "/cliente/agendamentos", "label": "Meus agendamentos", "idDropdown": "1", "roles": ["cliente"] },
+    { "href": "/cliente/novo-agendamento", "label": "Novo agendamento", "idDropdown": "1", "roles": ["cliente"] },
+    { "href": "/operacao/agendamentos", "label": "Agendamentos", "idDropdown": "1", "roles": ["funcionario", "administrador"] },
+    { "href": "/cliente/veiculos", "label": "Meus veículos", "idDropdown": "2", "roles": ["cliente"] },
+    { "href": "/cliente/pontos", "label": "Meus pontos", "idDropdown": "3", "roles": ["cliente"] },
+    { "href": "/admin/pagamentos", "label": "Pagamentos", "idDropdown": "3", "roles": ["administrador"] },
+    { "href": "/admin/lotes-pontos", "label": "Lotes de pontos", "idDropdown": "3", "roles": ["administrador"] },
+    { "href": "/configuracoes", "label": "Dados da conta", "idDropdown": "4", "roles": ["cliente", "funcionario", "administrador"] },
+    { "href": "/operacao/atendimentos", "label": "Fila do dia", "idDropdown": "5", "roles": ["funcionario", "administrador"] },
+    { "href": "/admin/cadastros/Marcas", "label": "Marcas", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/Modelos", "label": "Modelos", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/Cores", "label": "Cores", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/CategoriasVeiculo", "label": "Categorias de veículos", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/Servicos", "label": "Serviços", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/Usuarios", "label": "Usuários", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/Clientes", "label": "Clientes", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/Funcionarios", "label": "Funcionários", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/Administradores", "label": "Administradores", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/LavaJatos", "label": "Lava-jato", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/HorariosFuncionamento", "label": "Horários de funcionamento", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/IntervalosAlmoco", "label": "Intervalo de almoço", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/TiposFeriado", "label": "Tipos de feriado", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/Feriados", "label": "Feriados", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/cadastros/Bloqueios", "label": "Bloqueios", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/notificacoes", "label": "Notificações", "idDropdown": "6", "roles": ["administrador"] },
+    { "href": "/admin/logs", "label": "Movimentações", "idDropdown": "7", "roles": ["administrador"] },
+    { "href": "/admin/relatorios", "label": "Visão geral", "idDropdown": "8", "roles": ["administrador"] }
+  ]
 }
