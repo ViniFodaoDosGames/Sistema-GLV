@@ -18,10 +18,12 @@ code {
 }
 
 :root {
-  --cor-background: #f2f2f2;
-  --cor-botao-hover: #DFDFDF;
-  --cor-side-bar: #A2A2A2;
+  --cor-background: #e4e4e4;
+  --cor-botao-hover: #e0e0e0;
+  --cor-side-bar: #f2f2f2;
   --cor-letra: #3B3838;
+  --cor-destaque: #2445ff;
+  --cor-secundaria: #696464;
   --fonte-padrao: 'Arial', sans-serif;
   --espacamento: 16px;
 }
@@ -32,7 +34,7 @@ code {
   display: flex;
   align-items: stretch;
   flex-direction: row;
-  background-color: var(--cor-principal);
+  background-color: var(--cor-background);
   transition: all 0.3s ease-in-out;
 }
 

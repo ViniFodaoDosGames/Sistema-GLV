@@ -14,7 +14,6 @@ class App extends React.Component {
       <div className='app-layout'>
         <SideBaR />
         <div className='app-main'>
-          <Navbar />
           <main className='app-content'>
             <Rotas />
           </main>
