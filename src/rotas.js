@@ -20,17 +20,65 @@ import ListagemLotePonto from "./views/listagens/listagem-lote-ponto"
 import ListagemBloqueio from "./views/listagens/listagem-bloqueio"
 import ListagemAgendamento from "./views/listagens/listagem-agendamento"
 import ListagemFuncionario from "./views/listagens/listagem-funcionario"
+import Login from './views/publico/login';
+import Configuracoes from './views/configuracoes';
+import Pagamento from './views/pagamento';
+import { getSession } from './auth';
+import rotasMenu from './config/rotasMenu.json';
 
 
 import CadastroMarca from './views/cadastros/cadastro-marca';
 
 
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes, BrowserRouter, useLocation } from 'react-router-dom';
+
+function ProtectedRoute({ children }) {
+  const session = getSession();
+  const location = useLocation();
+
+  if (!session) {
+    return <Navigate to='/login' replace />;
+  }
+
+  const link = rotasMenu.linksCadastros.find((item) =>
+    location.pathname === item.href ||
+    location.pathname.startsWith(`${item.href}/`)
+  );
+  let allowedRoles = link?.role;
+
+  if (!allowedRoles && location.pathname.startsWith('/cadastro-')) {
+    allowedRoles = ['ADMINISTRADOR'];
+  }
+
+  if (allowedRoles && !allowedRoles.includes(session.role)) {
+    return <Navigate to='/configuracoes' replace />;
+  }
+
+  return children || <Outlet />;
+}
 
 function Rotas(props) {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path='/login' element={<Login />} />
+        <Route
+          path='/configuracoes'
+          element={
+            <ProtectedRoute>
+              <Configuracoes />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/pagamento/:idAgendamento'
+          element={
+            <ProtectedRoute>
+              <Pagamento />
+            </ProtectedRoute>
+          }
+        />
+        <Route element={<ProtectedRoute />}>
         <Route
           path='/listagem-marcas/:idParam?'
           element={<ListagemMarcas />}
@@ -124,6 +172,15 @@ function Rotas(props) {
         <Route
           path='/cadastro-marca/:idParam?'
           element={<CadastroMarca />}
+        />
+        </Route>
+        <Route
+          path='*'
+          element={
+            getSession()
+              ? <Navigate to='/configuracoes' replace />
+              : <Navigate to='/login' replace />
+          }
         />
       </Routes>
     </BrowserRouter>

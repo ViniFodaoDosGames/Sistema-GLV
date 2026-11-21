@@ -67,7 +67,7 @@ function ListagemParametrosLavaJato() {
             <div className='bs-component'>
               <button
                 type='button'
-                className='btn btn-warning'
+                className='btn btn-info'
                 onClick={() => cadastrar()}
               >
                 Novo Parametro do LavaJato

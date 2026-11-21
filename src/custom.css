@@ -9,6 +9,22 @@ pre {
     box-shadow: none;
   }
 }
+.nav-item {
+  font-size: .875rem;
+  font-weight: 100;
+  margin: 0;
+  padding: 0;
+  > .nav-link {
+    transition: color 200ms ease-in-out;
+    &:hover {
+      color: var(--cor-destaque);
+    }
+  }
+}
+.nav-item :first-child {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
 #home,
 #help {
   font-size: 0.9rem;
@@ -209,6 +225,7 @@ pre {
 
 .navbar {
 overflow: hidden;
+background-color: var(--cor-side-bar);
 }
 
 .card{

@@ -6,7 +6,19 @@
 import React, { useState } from 'react';
 import NavbarItem from './navbarItem';
 
-function DropDown({ render, id, label, links, icon, iconName, setDropdownOpen, isSidebar }) {
+function DropDown({
+    render,
+    id,
+    label,
+    links,
+    icon,
+    iconName,
+    setDropdownOpen,
+    isSidebar,
+    isSidebarCollapsed,
+    setSidebarCollapsed,
+    onNavigate
+}) {
     const [isOpen, setIsOpen] = useState(false);
     const menuId = `navbar-dropdown-${id}`;
 
@@ -23,8 +35,19 @@ function DropDown({ render, id, label, links, icon, iconName, setDropdownOpen, i
                 href={link.href}
                 label={link.label}
                 onClick={() => setIsOpen(false)}
+                onNavigate={onNavigate}
             />
         )
+
+    const toggleSidebarDropdown = () => {
+        if (isSidebarCollapsed) {
+            setSidebarCollapsed(false);
+            setIsOpen(true);
+            return;
+        }
+
+        setIsOpen(!isOpen);
+    };
 
     return (
         <li className='sidebar-item'>{/* items que vai aparecer primeiro*/}
@@ -38,13 +61,13 @@ function DropDown({ render, id, label, links, icon, iconName, setDropdownOpen, i
                         data-bs-target={`#${menuId}`} //* define o alvo do botão (quem ele comanda) que é o menu dropdown que vai sofrer a ação de abrir e fechar
                         aria-expanded={isOpen} //* define se o menu dropdown está aberto ou fechado (leitor de tela)
                         aria-controls={menuId} //* define o id do menu dropdown que ele controla (leitor de tela)
-                        onClick={() => setIsOpen(!isOpen)} //* mudsa o estado do menu dropdown de aberto para fechado e vice-versa através do useState
+                        onClick={toggleSidebarDropdown} //* alterna o menu e o expande quando a sidebar está recolhida
                     >
                         <span className={icon || 'material-symbols-outlined'}>
                             {iconName}
                         </span>
                         <span>{label}</span>
-                        <span class={`material-symbols-outlined arrow-icon${isOpen ? ' is-open' : ''}`}>
+                        <span className={`material-symbols-outlined arrow-icon${isOpen ? ' is-open' : ''}`}>
                             stat_minus_1
                         </span>
                     </button> /*cria o botão do dropdown se for verdadeiro*/
@@ -52,11 +75,14 @@ function DropDown({ render, id, label, links, icon, iconName, setDropdownOpen, i
                     <a //! os comentarios anteriores são vailidos aqui também, mas esse é um link e não um botão
                         className='sidebar-link'
                         id={`${menuId}-toggle`}
+                        aria-label={label}
                         aria-expanded={isOpen}
                         aria-controls={menuId}
-                        data-bs-toggle='collapse'
-                        href={links[0]?.href}
-                        onClick={() => setIsOpen(!isOpen)}
+                        href={links[0]?.href || '/'}
+                        onClick={() => {
+                            setIsOpen(!isOpen);
+                            if (onNavigate) onNavigate();
+                        }}
                     >
                         <span className={icon || 'material-symbols-outlined'}>
                             {iconName}

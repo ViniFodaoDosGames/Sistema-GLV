@@ -67,7 +67,7 @@ function ListagemMarca() {
             <div className='bs-component'>
               <button
                 type='button'
-                className='btn btn-warning'
+                className='btn btn-info'
                 onClick={() => cadastrar()}
               >
                 Nova Marca
