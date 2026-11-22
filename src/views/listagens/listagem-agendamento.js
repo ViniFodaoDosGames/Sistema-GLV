@@ -37,6 +37,7 @@ function ListagemAgendamento() {
   const [busca, setBusca] = React.useState('');
   const [status, setStatus] = React.useState('');
   const [servico, setServico] = React.useState('');
+  const [pagamentos, setPagamentos] = React.useState([]);
 
   async function excluir(id) {
     let data = JSON.stringify({ id });
@@ -62,12 +63,13 @@ function ListagemAgendamento() {
  React.useEffect(() => {
    async function carregar() {
      try {
-       const [agendamentos, veiculosResponse, servicosResponse, clientesResponse] =
+       const [agendamentos, veiculosResponse, servicosResponse, clientesResponse, pagamentosResponse] =
          await Promise.all([
            axios.get(baseURL),
            axios.get(`${BASE_URL}/Veiculos`),
            axios.get(`${BASE_URL}/Servicos`),
            axios.get(`${BASE_URL}/Clientes`),
+           axios.get(`${BASE_URL}/Pagamentos`),
          ]);
 
        let filtrados = agendamentos.data;
@@ -94,6 +96,7 @@ function ListagemAgendamento() {
        setDados(filtrados);
        setVeiculos(veiculosResponse.data);
        setServicos(servicosResponse.data);
+       setPagamentos(pagamentosResponse.data);
      } catch (error) {
        mensagemErro('Erro ao carregar os agendamentos');
      }
@@ -176,11 +179,25 @@ function ListagemAgendamento() {
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           {session?.role === 'CLIENTE' &&
-                            dado.status === 'AGUARDANDO_PAGAMENTO' && (
+                            pagamentos.some(
+                              (pagamento) =>
+                                String(pagamento.idAgendamento) === String(dado.id) &&
+                                pagamento.status === 'PENDENTE'
+                            ) && (
                               <button
                                 type='button'
                                 className='btn btn-primary btn-sm'
-                                onClick={() => navigate(`/pagamento/${dado.id}`)}
+                                onClick={() =>
+                                  navigate(
+                                    `/pagamento/pagamento/${
+                                      pagamentos.find(
+                                        (pagamento) =>
+                                          String(pagamento.idAgendamento) ===
+                                          String(dado.id)
+                                      )?.id
+                                    }`
+                                  )
+                                }
                               >
                                 Pagar
                               </button>

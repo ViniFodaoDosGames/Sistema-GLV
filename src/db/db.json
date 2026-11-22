@@ -49,9 +49,9 @@
       "id": "usuario-06",
       "nome": "usuario-06",
       "cpf": "11111111106",
-      "email": "usuario06@email.com",
+      "email": "Email@gmail.com",
       "celular": "32999999906",
-      "senha": "hash_06",
+      "senha": "senha_6",
       "status": true
     }
   ],
@@ -417,7 +417,7 @@
     {
       "id": "agendamento-05",
       "dataHora": "2026-11-23 14:00:00",
-      "status": "AGUARDANDO_PAGAMENTO",
+      "status": "CONFIRMADO",
       "valor": 80,
       "walkIn": false,
       "posicaoFila": 2,
@@ -473,11 +473,11 @@
     },
     {
       "id": "pagamento-05",
-      "forma": "PIX",
-      "status": "PENDENTE",
+      "forma": "CARTAO",
+      "status": "APROVADO",
       "valor": 80,
-      "dataHora": null,
-      "codigoGateway": null,
+      "dataHora": "2026-11-21 00:03:51",
+      "codigoGateway": "GW-1795230231583",
       "justificativaEstorno": null,
       "idAgendamento": "agendamento-05",
       "idFuncionario": null

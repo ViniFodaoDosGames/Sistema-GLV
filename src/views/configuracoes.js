@@ -8,6 +8,7 @@ import { mensagemErro, mensagemSucesso } from '../components/toastr';
 import '../custom.css';
 
 function Configuracoes() {
+  const baseURL = `${BASE_URL}/Usuarios`;
   const session = getSession();
   const usuarioId = session?.usuario?.id;
   const [usuario, setUsuario] = useState(null);
@@ -17,60 +18,63 @@ function Configuracoes() {
   const [novaSenha, setNovaSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
 
+  function localStorageToUsuario() {
+    const storage =
+      localStorage.getItem('sistema-glv-session')
+        ? localStorage
+        : sessionStorage;
+    const salvo = storage.getItem('sistema-glv-session');
+    if (salvo) {
+      const atual = JSON.parse(salvo);
+      storage.setItem(
+        'sistema-glv-session',
+        JSON.stringify({
+          ...atual,
+          usuario: { ...atual.usuario, nome, email, senha: novaSenha || atual.usuario.senha },
+        })
+      );
+    }
+  }
   function cancelarDados() {
     setNome(usuario.nome);
     setEmail(usuario.email);
   }
 
-  useEffect(() => {
+  async function carregarUsuario() {
     if (!usuarioId) return;
-
-    axios
-      .get(`${BASE_URL}/Usuarios/${usuarioId}`)
+    await axios
+      .get(`${baseURL}/${usuarioId}`)
       .then((response) => {
         setUsuario(response.data);
         setNome(response.data.nome);
         setEmail(response.data.email);
       })
       .catch(() => mensagemErro('Não foi possível carregar seus dados.'));
+  }
+
+  useEffect(() => {
+    carregarUsuario();
   }, [usuarioId]);
 
-  async function salvarDados(event) {
-    event.preventDefault();
+  async function salvarDados() {
 
     try {
       const atualizado = { ...usuario, nome, email };
       await axios.put(
-        `${BASE_URL}/Usuarios/${usuario.id}`,
-        atualizado,
+        `${baseURL}/${usuario.id}`,
+        JSON.stringify(atualizado),
         { headers: { 'Content-Type': 'application/json' } }
       );
+
       setUsuario(atualizado);
-
-      const storage =
-        localStorage.getItem('sistema-glv-session')
-          ? localStorage
-          : sessionStorage;
-      const raw = storage.getItem('sistema-glv-session');
-      if (raw) {
-        const current = JSON.parse(raw);
-        storage.setItem(
-          'sistema-glv-session',
-          JSON.stringify({
-            ...current,
-            usuario: { ...current.usuario, nome, email },
-          })
-        );
-      }
-
+      localStorageToUsuario();
       mensagemSucesso('Dados cadastrais alterados com sucesso.');
     } catch (error) {
       mensagemErro('Não foi possível alterar os dados cadastrais.');
     }
   }
 
-  async function alterarSenha(event) {
-    event.preventDefault();
+  async function alterarSenha() {
 
     if (senhaAtual !== usuario.senha) {
       mensagemErro('A senha atual está incorreta.');
@@ -84,11 +88,12 @@ function Configuracoes() {
 
     try {
       await axios.put(
-        `${BASE_URL}/Usuarios/${usuario.id}`,
-        { ...usuario, senha: novaSenha },
+        `${baseURL}/${usuario.id}`,
+        JSON.stringify({ ...usuario, senha: novaSenha }),
         { headers: { 'Content-Type': 'application/json' } }
       );
       setUsuario({ ...usuario, senha: novaSenha });
+      localStorageToUsuario();
       setSenhaAtual('');
       setNovaSenha('');
       setConfirmarSenha('');
@@ -110,7 +115,7 @@ function Configuracoes() {
     if (!window.confirm('Deseja realmente excluir sua conta?')) return;
 
     try {
-      await axios.patch(`${BASE_URL}/Usuarios/${usuario.id}`, {
+      await axios.patch(`${baseURL}/${usuario.id}`, {
         status: false,
       });
       clearSession();
@@ -149,7 +154,7 @@ function Configuracoes() {
                 />
               </FormGroup>
               <div className='d-flex gap-2 mt-3'>
-                <button type='submit' className='btn btn-primary'>
+                <button type='submit' className='btn btn-primary' onClick={salvarDados}>
                   Salvar dados
                 </button>
                 <button

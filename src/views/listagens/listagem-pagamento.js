@@ -32,10 +32,6 @@ function ListagemPagamento() {
   };
 
   const [dados, setDados] = React.useState([]);
-  const [agendamentos, setAgendamentos] = React.useState([]);
-  const [pagamentoSelecionado, setPagamentoSelecionado] = React.useState(null);
-  const [formaPagamento, setFormaPagamento] = React.useState('PIX');
-  const [saldoPontos, setSaldoPontos] = React.useState(0);
 
   async function excluir(id) {
     let data = JSON.stringify({ id });
@@ -61,12 +57,11 @@ function ListagemPagamento() {
  React.useEffect(() => {
    async function carregar() {
      try {
-       const [pagamentos, agendamentosResponse, clientesResponse, lotesResponse] =
+       const [pagamentos, agendamentosResponse, clientesResponse] =
          await Promise.all([
            axios.get(baseURL),
            axios.get(`${BASE_URL}/Agendamentos`),
            axios.get(`${BASE_URL}/Clientes`),
-           axios.get(`${BASE_URL}/LotesPontos`),
          ]);
 
        let pagamentosFiltrados = pagamentos.data;
@@ -94,26 +89,10 @@ function ListagemPagamento() {
              ids.has(String(item.idAgendamento))
            );
 
-           setSaldoPontos(
-             lotesResponse.data
-               .filter((item) =>
-                 clienteIds.has(String(item.idCliente)) &&
-                 item.saldo > 0
-               )
-               .reduce((total, item) => total + Number(item.saldo), 0)
-           );
          }
-       } else {
-         setSaldoPontos(
-           lotesResponse.data.reduce(
-             (total, item) => total + Number(item.saldo || 0),
-             0
-           )
-         );
        }
 
        setDados(pagamentosFiltrados);
-       setAgendamentos(agendamentosFiltrados);
      } catch (error) {
        mensagemErro('Erro ao carregar os pagamentos');
      }
@@ -121,106 +100,6 @@ function ListagemPagamento() {
 
    carregar();
  }, [session?.role, session?.usuario?.id]);
-
-  async function pagar() {
-    if (!pagamentoSelecionado) return;
-
-    try {
-      const agendamento = agendamentos.find(
-        (item) => String(item.id) === String(pagamentoSelecionado.idAgendamento)
-      );
-
-      if (!agendamento) {
-        mensagemErro('Agendamento do pagamento não encontrado.');
-        return;
-      }
-
-      if (
-        formaPagamento === 'PONTOS' &&
-        (session?.role !== 'CLIENTE' ||
-          saldoPontos < Number(pagamentoSelecionado.valor))
-      ) {
-        if (session?.role !== 'CLIENTE') {
-          mensagemErro('Somente clientes podem pagar com pontos.');
-          return;
-        }
-        mensagemErro('Saldo insuficiente de pontos para este pagamento.');
-        return;
-      }
-
-      await axios.patch(`${baseURL}/${pagamentoSelecionado.id}`, {
-        forma: formaPagamento,
-        status: 'APROVADO',
-        dataHora: new Date().toLocaleString('sv-SE').replace('T', ' '),
-        codigoGateway: formaPagamento === 'PONTOS' ? null : `GW-${Date.now()}`,
-      });
-
-      await axios.patch(`${BASE_URL}/Agendamentos/${agendamento.id}`, {
-        status: 'CONFIRMADO',
-      });
-
-      if (formaPagamento === 'PONTOS') {
-        const clientesResponse = await axios.get(`${BASE_URL}/Clientes`);
-        const lotesResponse = await axios.get(`${BASE_URL}/LotesPontos`);
-        const cliente = clientesResponse.data.find(
-          (item) => String(item.idUsuario) === String(session.usuario.id)
-        );
-
-        if (!cliente) throw new Error('Cliente não encontrado.');
-
-        const clienteIds = new Set([
-          String(cliente.id),
-          String(cliente.id).replace('cliente-', ''),
-          String(cliente.id).replace(/^cliente-0*/, ''),
-        ]);
-        let restante = Number(pagamentoSelecionado.valor);
-        const lotes = lotesResponse.data
-          .filter((item) =>
-            clienteIds.has(String(item.idCliente)) &&
-            Number(item.saldo) > 0 &&
-            (!item.expiraEm || item.expiraEm >= new Date().toISOString().slice(0, 10))
-          )
-          .sort((a, b) => String(a.expiraEm).localeCompare(String(b.expiraEm)));
-
-        for (const lote of lotes) {
-          if (restante <= 0) break;
-          const utilizado = Math.min(restante, Number(lote.saldo));
-          await axios.patch(`${BASE_URL}/LotesPontos/${lote.id}`, {
-            saldo: Number(lote.saldo) - utilizado,
-          });
-          await axios.post(`${BASE_URL}/PagamentosLotesPontos`, {
-            idPagamento: pagamentoSelecionado.id,
-            idLotePontos: lote.id,
-            quantidadeUtilizada: utilizado,
-          });
-          restante -= utilizado;
-        }
-
-        if (restante > 0) {
-          throw new Error('Não foi possível consumir todos os pontos.');
-        }
-      }
-
-      setDados((atuais) =>
-        atuais.map((item) =>
-          String(item.id) === String(pagamentoSelecionado.id)
-            ? { ...item, forma: formaPagamento, status: 'APROVADO', codigoGateway: formaPagamento === 'PONTOS' ? null : `GW-${Date.now()}` }
-            : item
-        )
-      );
-      setAgendamentos((atuais) =>
-        atuais.map((item) =>
-          String(item.id) === String(agendamento.id)
-            ? { ...item, status: 'CONFIRMADO' }
-            : item
-        )
-      );
-      setPagamentoSelecionado(null);
-      mensagemSucesso('Pagamento realizado com sucesso.');
-    } catch (error) {
-      mensagemErro(error.message || 'Não foi possível realizar o pagamento.');
-    }
-  }
 
   if (!dados) return null;
   return (
@@ -263,10 +142,7 @@ function ListagemPagamento() {
                             <button
                               type='button'
                               className='btn btn-primary btn-sm'
-                              onClick={() => {
-                                setPagamentoSelecionado(dado);
-                                setFormaPagamento('PIX');
-                              }}
+                              onClick={() => navigate(`/pagamento/pagamento/${dado.id}`)}
                             >
                               Pagar
                             </button>
@@ -289,48 +165,6 @@ function ListagemPagamento() {
                   ))}
                 </tbody>
               </table>{' '}
-              {pagamentoSelecionado && (
-                <div className='card mt-3'>
-                  <div className='card-body'>
-                    <h5 className='card-title'>Realizar pagamento</h5>
-                    <p className='mb-2'>
-                      Valor: <strong>R$ {Number(pagamentoSelecionado.valor).toFixed(2)}</strong>
-                    </p>
-                    <p className='mb-3'>
-                      Saldo de pontos: <strong>{saldoPontos}</strong>
-                    </p>
-                    <div className='d-flex flex-wrap gap-2 mb-3'>
-                      {['PIX', 'CARTAO', 'PONTOS'].map((forma) => (
-                        <button
-                          key={forma}
-                          type='button'
-                          className={`btn ${formaPagamento === forma ? 'btn-primary' : 'btn-outline-primary'}`}
-                          disabled={
-                            forma === 'PONTOS' &&
-                            (session?.role !== 'CLIENTE' ||
-                              saldoPontos < Number(pagamentoSelecionado.valor))
-                          }
-                          onClick={() => setFormaPagamento(forma)}
-                        >
-                          {forma === 'CARTAO' ? 'Cartão' : forma}
-                        </button>
-                      ))}
-                    </div>
-                    <div className='d-flex gap-2'>
-                      <button type='button' className='btn btn-primary' onClick={pagar}>
-                        Confirmar pagamento
-                      </button>
-                      <button
-                        type='button'
-                        className='btn btn-secondary'
-                        onClick={() => setPagamentoSelecionado(null)}
-                      >
-                        Cancelar
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>

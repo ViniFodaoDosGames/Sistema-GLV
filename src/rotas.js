@@ -78,6 +78,14 @@ function Rotas(props) {
             </ProtectedRoute>
           }
         />
+        <Route
+          path='/pagamento/:tipo/:id'
+          element={
+            <ProtectedRoute>
+              <Pagamento />
+            </ProtectedRoute>
+          }
+        />
         <Route element={<ProtectedRoute />}>
         <Route
           path='/listagem-marcas/:idParam?'
