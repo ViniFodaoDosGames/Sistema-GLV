@@ -103,7 +103,7 @@ function CadastroVeiculo() {
             id,
             placa: normalizarPlaca(placa),
             ano: Number(ano),
-            ativo,
+            ativo: ehCliente && idParam == null ? true : ativo,
             idCor,
             idModelo,
             idCategoriaVeiculo: modeloEscolhido.idCategoriaVeiculo,
@@ -336,16 +336,18 @@ function CadastroVeiculo() {
                                     ))}
                                 </select>
                             </FormGroup>
-                            <FormGroup label='Ativo' htmlFor='inputAtivo'>
-                                <input
-                                    type='checkbox'
-                                    id='inputAtivo'
-                                    checked={ativo}
-                                    className='form-control form-check-input'
-                                    name='ativo'
-                                    onChange={(e) => setAtivo(e.target.checked)}
-                                />
-                            </FormGroup>
+                            {!ehCliente && (
+                                <FormGroup label='Ativo' htmlFor='inputAtivo'>
+                                    <input
+                                        type='checkbox'
+                                        id='inputAtivo'
+                                        checked={ativo}
+                                        className='form-control form-check-input'
+                                        name='ativo'
+                                        onChange={(e) => setAtivo(e.target.checked)}
+                                    />
+                                </FormGroup>
+                            )}
                             <Stack spacing={1} padding={1} direction='row'>
                                 <button
                                     onClick={salvar}

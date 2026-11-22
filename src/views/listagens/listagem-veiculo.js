@@ -33,7 +33,7 @@ function ListagemVeiculo() {
 
   const [dados, setDados] = React.useState([]);
   const [tabelas, setTabelas] = React.useState({
-    Cores: [], Modelos: [], Marcas: [], CategoriasVeiculo: [], Clientes: [], Usuarios: [], ClientesVeiculos: [],
+    Cores: [], Modelos: [], Marcas: [], CategoriasVeiculo: [], Clientes: [], Usuarios: [], ClientesVeiculos: [], Agendamentos: [],
   });
   const ehCliente = session?.role === 'CLIENTE';
 
@@ -51,6 +51,10 @@ function ListagemVeiculo() {
   }
 
   async function excluir(id) {
+    if (tabelas.Agendamentos.some((agendamento) => agendamento.idVeiculo === id)) {
+      mensagemErro('Este veículo tem agendamentos e não pode ser excluído');
+      return;
+    }
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);
@@ -58,7 +62,11 @@ function ListagemVeiculo() {
       .delete(url, data, {
         headers: { 'Content-Type': 'application/json' },
       })
-      .then(function (response) {
+      .then(async function (response) {
+        const ligacoes = tabelas.ClientesVeiculos.filter((ligacao) => ligacao.idVeiculo === id);
+        for (const ligacao of ligacoes) {
+          await axios.delete(`${BASE_URL}/ClientesVeiculos/${ligacao.id}`);
+        }
         mensagemSucesso(`Veículo excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
@@ -74,7 +82,7 @@ function ListagemVeiculo() {
  React.useEffect(() => {
    async function carregarVeiculos() {
      try {
-       const [veiculosResponse, clientesResponse, vinculosResponse, cores, modelos, marcas, categorias, usuarios] =
+       const [veiculosResponse, clientesResponse, vinculosResponse, cores, modelos, marcas, categorias, usuarios, agendamentos] =
          await Promise.all([
            axios.get(baseURL),
            axios.get(`${BASE_URL}/Clientes`),
@@ -84,6 +92,7 @@ function ListagemVeiculo() {
            axios.get(`${BASE_URL}/Marcas`),
            axios.get(`${BASE_URL}/CategoriasVeiculo`),
            axios.get(`${BASE_URL}/Usuarios`),
+           axios.get(`${BASE_URL}/Agendamentos`),
          ]);
 
        setTabelas({
@@ -94,6 +103,7 @@ function ListagemVeiculo() {
          Clientes: clientesResponse.data,
          Usuarios: usuarios.data,
          ClientesVeiculos: vinculosResponse.data,
+         Agendamentos: agendamentos.data,
        });
 
        let veiculos = veiculosResponse.data;
@@ -155,7 +165,7 @@ function ListagemVeiculo() {
                     <th scope='col'>Categoria</th>
                     <th scope='col'>Cor</th>
                     {!ehCliente && <th scope='col'>Dono</th>}
-                    <th scope='col'>Ativo</th>
+                    {!ehCliente && <th scope='col'>Ativo</th>}
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
@@ -169,7 +179,7 @@ function ListagemVeiculo() {
                       <td className='justify-content-center'>{nomeEm('CategoriasVeiculo', dado.idCategoriaVeiculo)}</td>
                       <td className='justify-content-center'>{nomeEm('Cores', dado.idCor)}</td>
                       {!ehCliente && <td className='justify-content-center'>{donoDoVeiculo(dado)}</td>}
-                      <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
+                      {!ehCliente && <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>}
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton
