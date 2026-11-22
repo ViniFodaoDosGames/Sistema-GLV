@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { formatarData } from '../../config/util';
 const baseURL = `${BASE_URL}/Feriados`;
 
 
@@ -85,7 +86,7 @@ function ListagemFeriado() {
                   {dados.map((dado) => (
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.nome}</td>
-                      <td className='justify-content-center'>{dado.data}</td>
+                      <td className='justify-content-center'>{formatarData(dado.data)}</td>
                       <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >

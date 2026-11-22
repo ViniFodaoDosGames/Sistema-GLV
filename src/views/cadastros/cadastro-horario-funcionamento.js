@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 
 import Stack from '@mui/material/Stack';
 
@@ -16,6 +16,7 @@ import { BASE_URL } from '../../config/axios';
 function CadastroHorarioFuncionamento() {
     const { idParam } = useParams();
     const navigate = useNavigate();
+    const { cancelar } = useOutletContext();
     const baseURL = `${BASE_URL}/HorariosFuncionamento`;
 
 
@@ -129,13 +130,13 @@ function CadastroHorarioFuncionamento() {
                                     onChange={(e) => setDiaSemana(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    <option value='DOMINGO'>DOMINGO</option>
-                                    <option value='SEGUNDA'>SEGUNDA</option>
-                                    <option value='TERCA'>TERCA</option>
-                                    <option value='QUARTA'>QUARTA</option>
-                                    <option value='QUINTA'>QUINTA</option>
-                                    <option value='SEXTA'>SEXTA</option>
-                                    <option value='SABADO'>SABADO</option>
+                                    <option value='DOMINGO'>Domingo</option>
+                                    <option value='SEGUNDA'>Segunda-feira</option>
+                                    <option value='TERCA'>Terça-feira</option>
+                                    <option value='QUARTA'>Quarta-feira</option>
+                                    <option value='QUINTA'>Quinta-feira</option>
+                                    <option value='SEXTA'>Sexta-feira</option>
+                                    <option value='SABADO'>Sábado</option>
                                 </select>
                             </FormGroup>
                             <FormGroup label='Aberto' htmlFor='inputAberto'>
@@ -197,7 +198,7 @@ function CadastroHorarioFuncionamento() {
                                     Salvar
                                 </button>
                                 <button
-                                    onClick={() => navigate(`/listagem-horario-funcionamento`)}
+                                    onClick={() => cancelar(`/listagem-horario-funcionamento`)}
                                     type='button'
                                     className='btn btn-danger'
                                 >

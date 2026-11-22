@@ -64,7 +64,7 @@ function ListagemUsuario() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Usuarios'>
+      <Card title='Listagem de Usuários'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>

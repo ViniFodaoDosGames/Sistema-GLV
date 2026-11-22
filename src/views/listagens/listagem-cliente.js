@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { formatarDataHora } from '../../config/util';
 const baseURL = `${BASE_URL}/Clientes`;
 
 
@@ -86,6 +87,7 @@ function ListagemCliente() {
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.id}</td>
                       <td className='justify-content-center'>{dado.idUsuario}</td>
+                      <td className='justify-content-center'>{formatarDataHora(dado.dataAceiteTermos)}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

@@ -93,3 +93,22 @@ code {
     flex-direction: column;
   }
 }
+
+.tela-login {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espacamento);
+  background-color: var(--cor-background);
+}
+
+.tela-login .card {
+  width: 100%;
+  max-width: 380px;
+  overflow: visible;
+}
+
+.tela-login .form-group {
+  margin-bottom: 1rem;
+}

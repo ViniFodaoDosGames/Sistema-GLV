@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 
 import Stack from '@mui/material/Stack';
 
@@ -16,6 +16,7 @@ import { BASE_URL } from '../../config/axios';
 function CadastroServico() {
     const { idParam } = useParams();
     const navigate = useNavigate();
+    const { cancelar } = useOutletContext();
     const baseURL = `${BASE_URL}/Servicos`;
 
 
@@ -257,7 +258,7 @@ function CadastroServico() {
                                     Salvar
                                 </button>
                                 <button
-                                    onClick={() => navigate(`/listagem-servico`)}
+                                    onClick={() => cancelar(`/listagem-servico`)}
                                     type='button'
                                     className='btn btn-danger'
                                 >

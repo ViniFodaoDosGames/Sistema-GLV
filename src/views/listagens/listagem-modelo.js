@@ -30,6 +30,14 @@ function ListagemModelo() {
   };
 
   const [dados, setDados] = React.useState([]);
+  const [marcas, setMarcas] = React.useState([]);
+  const [categorias, setCategorias] = React.useState([]);
+
+  const nomeDaMarca = (idMarca) => marcas.find((marca) => marca.id === idMarca)?.nome || idMarca;
+  const nomeDaCategoria = (idCategoria) =>
+    categorias.find((categoria) => categoria.id === idCategoria)?.nome || idCategoria;
+  const periodo = (modelo) =>
+    modelo.anoInicio ? `${modelo.anoInicio} a ${modelo.anoFim || 'hoje'}` : '';
 
   async function excluir(id) {
     let data = JSON.stringify({ id });
@@ -56,6 +64,12 @@ function ListagemModelo() {
    axios.get(baseURL).then((response) => {
      setDados(response.data);
    });
+   axios.get(`${BASE_URL}/Marcas`).then((response) => {
+     setMarcas(response.data);
+   });
+   axios.get(`${BASE_URL}/CategoriasVeiculo`).then((response) => {
+     setCategorias(response.data);
+   });
  }, []);
 
   if (!dados) return null;
@@ -77,7 +91,9 @@ function ListagemModelo() {
                   <tr>
                     <th scope='col'>Nome</th>
                     <th scope='col'>Ativo</th>
-                    <th scope='col'>Marcas</th>
+                    <th scope='col'>Marca</th>
+                    <th scope='col'>Categoria</th>
+                    <th scope='col'>Fabricado</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
@@ -86,7 +102,9 @@ function ListagemModelo() {
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.nome}</td>
                       <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
-                      <td className='justify-content-center'>{dado.idMarca}</td>
+                      <td className='justify-content-center'>{nomeDaMarca(dado.idMarca)}</td>
+                      <td className='justify-content-center'>{nomeDaCategoria(dado.idCategoriaVeiculo)}</td>
+                      <td className='justify-content-center'>{periodo(dado)}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

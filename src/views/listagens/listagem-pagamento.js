@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { STATUS_PAGAMENTO, FORMA_PAGAMENTO, formatarDataHora, formatarMoeda } from '../../config/util';
 import { getSession } from '../../auth';
 const baseURL = `${BASE_URL}/Pagamentos`;
 
@@ -22,6 +23,7 @@ const baseURL = `${BASE_URL}/Pagamentos`;
 function ListagemPagamento() {
   const navigate = useNavigate();
   const session = getSession();
+  const ehCliente = session?.role === 'CLIENTE';
 
   const cadastrar = () => {
     navigate(`/cadastro-pagamento`);
@@ -104,17 +106,19 @@ function ListagemPagamento() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Pagamentos'>
+      <Card title='Pagamentos e Pontos'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
-              <button
-                type='button'
-                className='btn btn-info'
-                onClick={() => cadastrar()}
-              >
-                Novo Pagamento
-              </button>
+              {!ehCliente && (
+                <button
+                  type='button'
+                  className='btn btn-info'
+                  onClick={() => cadastrar()}
+                >
+                  Novo Pagamento
+                </button>
+              )}
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
@@ -125,46 +129,48 @@ function ListagemPagamento() {
                     <th scope='col'>Data e Hora</th>
                     <th scope='col'>Código Gateway</th>
                     <th scope='col'>Justificativa do Estorno</th>
-                    <th scope='col'>Funcionário</th>
-                    <th scope='col'>Ações</th>
+                    {!ehCliente && <th scope='col'>Funcionário</th>}
+                    {!ehCliente && <th scope='col'>Ações</th>}
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.idAgendamento}</td>
-                      <td className='justify-content-center'>{dado.forma}</td>
-                      <td className='justify-content-center'>{dado.status ? 'Sim' : 'Não'}</td>
-                      <td className='justify-content-center'>{dado.valor}</td>
-                      <td className='justify-content-center'>{dado.dataHora}</td>
+                      <td className='justify-content-center'>{FORMA_PAGAMENTO[dado.forma] || dado.forma}</td>
+                      <td className='justify-content-center'>{STATUS_PAGAMENTO[dado.status] || dado.status}</td>
+                      <td className='justify-content-center'>{formatarMoeda(dado.valor)}</td>
+                      <td className='justify-content-center'>{formatarDataHora(dado.dataHora)}</td>
                       <td className='justify-content-center'>{dado.codigoGateway}</td>
                       <td className='justify-content-center'>{dado.justificativaEstorno}</td>
-                      <td className='justify-content-center'>{dado.idFuncionario}</td>
-                      <td>
-                        <Stack spacing={1} padding={0} direction='row' >
-                          {dado.status === 'PENDENTE' && (
-                            <button
-                              type='button'
-                              className='btn btn-primary btn-sm'
-                              onClick={() => navigate(`/pagamento/pagamento/${dado.id}`)}
+                      {!ehCliente && <td className='justify-content-center'>{dado.idFuncionario}</td>}
+                      {!ehCliente && (
+                        <td>
+                          <Stack spacing={1} padding={0} direction='row' >
+                            {dado.status === 'PENDENTE' && (
+                              <button
+                                type='button'
+                                className='btn btn-primary btn-sm'
+                                onClick={() => navigate(`/pagamento/pagamento/${dado.id}`)}
+                              >
+                                Pagar
+                              </button>
+                            )}
+                            <IconButton
+                              aria-label='edit'
+                              onClick={() => editar(dado.id)}
                             >
-                              Pagar
-                            </button>
-                          )}
-                          <IconButton
-                            aria-label='edit'
-                            onClick={() => editar(dado.id)}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                          <IconButton
-                            aria-label='delete'
-                            onClick={() => excluir(dado.id)}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </Stack>
-                      </td>
+                              <EditIcon />
+                            </IconButton>
+                            <IconButton
+                              aria-label='delete'
+                              onClick={() => excluir(dado.id)}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </Stack>
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>

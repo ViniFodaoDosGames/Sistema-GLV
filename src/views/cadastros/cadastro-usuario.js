@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 
 import Stack from '@mui/material/Stack';
 
@@ -16,6 +16,7 @@ import { BASE_URL } from '../../config/axios';
 function CadastroUsuario() {
     const { idParam } = useParams();
     const navigate = useNavigate();
+    const { cancelar } = useOutletContext();
     const baseURL = `${BASE_URL}/Usuarios`;
 
 
@@ -184,7 +185,7 @@ function CadastroUsuario() {
                                     Salvar
                                 </button>
                                 <button
-                                    onClick={() => navigate(`/listagem-usuario`)}
+                                    onClick={() => cancelar(`/listagem-usuario`)}
                                     type='button'
                                     className='btn btn-danger'
                                 >

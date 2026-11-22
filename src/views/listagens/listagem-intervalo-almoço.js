@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { formatarHora } from '../../config/util';
 const baseURL = `${BASE_URL}/IntervalosAlmoco`;
 
 
@@ -78,8 +79,9 @@ function ListagemIntervaloAlmoco() {
                 <thead>
                   <tr>
                     <th scope='col'>Lava Jato</th>
-                    <th scope='col'>Horario de Inicio</th>
-                    <th scope='col'>Horario de Termino</th>
+                    <th scope='col'>Horário de Início</th>
+                    <th scope='col'>Horário de Término</th>
+                    <th scope='col'>Aplica no Fim de Semana</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
@@ -87,8 +89,8 @@ function ListagemIntervaloAlmoco() {
                   {dados.map((dado) => (
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.idLavaJato}</td>
-                      <td className='justify-content-center'>{dado.horaInicio ? dado.horaInicio : 'Não Informado'}</td>
-                      <td className='justify-content-center'>{dado.horaFim ? dado.horaFim : 'Não Informado'}</td>
+                      <td className='justify-content-center'>{dado.horaInicio ? formatarHora(dado.horaInicio) : 'Não informado'}</td>
+                      <td className='justify-content-center'>{dado.horaFim ? formatarHora(dado.horaFim) : 'Não informado'}</td>
                       <td className='justify-content-center'>{dado.aplicaFimDeSemana ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >

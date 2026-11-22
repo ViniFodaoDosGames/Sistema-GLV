@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { formatarMoeda } from '../../config/util';
 const baseURL = `${BASE_URL}/Servicos`;
 
 
@@ -92,7 +93,7 @@ function ListagemServico() {
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.idLavaJato}</td>
                       <td className='justify-content-center'>{dado.nome}</td>
-                      <td className='justify-content-center'>{dado.preco}</td>
+                      <td className='justify-content-center'>{formatarMoeda(dado.preco)}</td>
                       <td className='justify-content-center'>{dado.pontosGerados}</td>
                       <td className='justify-content-center'>{dado.tempoDuracao}</td>
                       <td className='justify-content-center'>{dado.tempoIntervalo}</td>

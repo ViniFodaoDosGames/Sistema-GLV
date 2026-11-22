@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 
 import Stack from '@mui/material/Stack';
 
@@ -16,6 +16,7 @@ import { BASE_URL } from '../../config/axios';
 function CadastroModelo() {
     const { idParam } = useParams();
     const navigate = useNavigate();
+    const { cancelar } = useOutletContext();
     const baseURL = `${BASE_URL}/Modelos`;
 
 
@@ -23,7 +24,12 @@ function CadastroModelo() {
     const [nome, setNome] = useState('');
     const [ativo, setAtivo] = useState(false);
     const [idMarca, setIdMarca] = useState('');
+    const [idCategoriaVeiculo, setIdCategoriaVeiculo] = useState('');
+    const [anoInicio, setAnoInicio] = useState('');
+    const [anoFim, setAnoFim] = useState('');
     const [marcas, setMarcas] = useState([]);
+    const [categorias, setCategorias] = useState([]);
+    const anoAtual = new Date().getFullYear();
 
     async function salvar() {
         if (!nome.trim()) {
@@ -34,12 +40,27 @@ function CadastroModelo() {
             mensagemErro('Informe: Marca');
             return;
         }
+        if (idCategoriaVeiculo === '') {
+            mensagemErro('Informe: Categoria');
+            return;
+        }
+        if (anoInicio === '' || Number(anoInicio) < 1900 || Number(anoInicio) > anoAtual) {
+            mensagemErro(`Informe o ano em que o modelo começou a ser fabricado (entre 1900 e ${anoAtual})`);
+            return;
+        }
+        if (anoFim !== '' && (Number(anoFim) < Number(anoInicio) || Number(anoFim) > anoAtual)) {
+            mensagemErro(`O ano final deve ficar entre ${anoInicio} e ${anoAtual}, ou vazio se o modelo ainda é fabricado`);
+            return;
+        }
 
         let data = {
             id,
             nome,
             ativo,
             idMarca,
+            idCategoriaVeiculo,
+            anoInicio: Number(anoInicio),
+            anoFim: anoFim === '' ? null : Number(anoFim),
         };
         data = JSON.stringify(data);
         if (idParam == null) {
@@ -79,6 +100,9 @@ function CadastroModelo() {
                 setNome(response.data.nome ?? '');
                 setAtivo(response.data.ativo);
                 setIdMarca(response.data.idMarca ?? '');
+                setIdCategoriaVeiculo(response.data.idCategoriaVeiculo ?? '');
+                setAnoInicio(response.data.anoInicio ?? '');
+                setAnoFim(response.data.anoFim ?? '');
             })
             .catch(function (error) {
                 mensagemErro('Modelo não encontrado');
@@ -94,6 +118,14 @@ function CadastroModelo() {
             .get(`${BASE_URL}/Marcas`)
             .then((response) => {
                 setMarcas(response.data);
+            })
+            .catch(function (error) {
+                mensagemErro('Erro ao carregar os dados da tela');
+            });
+        axios
+            .get(`${BASE_URL}/CategoriasVeiculo`)
+            .then((response) => {
+                setCategorias(response.data);
             })
             .catch(function (error) {
                 mensagemErro('Erro ao carregar os dados da tela');
@@ -142,6 +174,46 @@ function CadastroModelo() {
                                     ))}
                                 </select>
                             </FormGroup>
+                            <FormGroup label='Categoria: *' htmlFor='inputIdCategoriaVeiculo'>
+                                <select
+                                    id='inputIdCategoriaVeiculo'
+                                    value={idCategoriaVeiculo}
+                                    className='form-select'
+                                    name='idCategoriaVeiculo'
+                                    onChange={(e) => setIdCategoriaVeiculo(e.target.value)}
+                                >
+                                    <option value=''>Selecione</option>
+                                    {categorias.map((dado) => (
+                                        <option key={dado.id} value={dado.id}>
+                                            {dado.nome}
+                                        </option>
+                                    ))}
+                                </select>
+                            </FormGroup>
+                            <FormGroup label='Fabricado desde (ano): *' htmlFor='inputAnoInicio'>
+                                <input
+                                    type='number'
+                                    id='inputAnoInicio'
+                                    value={anoInicio}
+                                    className='form-control'
+                                    name='anoInicio'
+                                    min='1900'
+                                    max={anoAtual}
+                                    onChange={(e) => setAnoInicio(e.target.value)}
+                                />
+                            </FormGroup>
+                            <FormGroup label='Fabricado até (ano, vazio se ainda é fabricado)' htmlFor='inputAnoFim'>
+                                <input
+                                    type='number'
+                                    id='inputAnoFim'
+                                    value={anoFim}
+                                    className='form-control'
+                                    name='anoFim'
+                                    min='1900'
+                                    max={anoAtual}
+                                    onChange={(e) => setAnoFim(e.target.value)}
+                                />
+                            </FormGroup>
                             <Stack spacing={1} padding={1} direction='row'>
                                 <button
                                     onClick={salvar}
@@ -151,7 +223,7 @@ function CadastroModelo() {
                                     Salvar
                                 </button>
                                 <button
-                                    onClick={() => navigate(`/listagem-modelo`)}
+                                    onClick={() => cancelar(`/listagem-modelo`)}
                                     type='button'
                                     className='btn btn-danger'
                                 >
