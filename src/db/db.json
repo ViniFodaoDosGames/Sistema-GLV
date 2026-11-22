@@ -2,9 +2,9 @@
   "Usuarios": [
     {
       "id": "usuario-01",
-      "nome": "usuario-01",
+      "nome": "Administrador",
       "cpf": "11111111101",
-      "email": "usuario01@email.com",
+      "email": "admin@email.com",
       "celular": "32999999901",
       "senha": "hash_01",
       "status": true
@@ -49,9 +49,9 @@
       "id": "usuario-06",
       "nome": "usuario-06",
       "cpf": "11111111106",
-      "email": "usuario06@email.com",
+      "email": "Email@gmail.com",
       "celular": "32999999906",
-      "senha": "hash_06",
+      "senha": "senha_6",
       "status": true
     }
   ],
@@ -395,6 +395,17 @@
     {
       "id": "agendamento-03",
       "dataHora": "2026-10-02 11:00:00",
+      "status": "CONFIRMADO",
+      "valor": 40,
+      "walkIn": true,
+      "posicaoFila": 1,
+      "idCliente": "cliente-01",
+      "idVeiculo": "veiculo-01",
+      "idServico": "servico-01"
+    },
+    {
+      "id": "agendamento-04",
+      "dataHora": "2026-10-02 11:00:00",
       "status": "AGUARDANDO_PAGAMENTO",
       "valor": 40,
       "walkIn": true,
@@ -402,6 +413,17 @@
       "idCliente": "cliente-01",
       "idVeiculo": "veiculo-02",
       "idServico": "servico-01"
+    },
+    {
+      "id": "agendamento-05",
+      "dataHora": "2026-11-23 14:00:00",
+      "status": "CONFIRMADO",
+      "valor": 80,
+      "walkIn": false,
+      "posicaoFila": 2,
+      "idCliente": "cliente-02",
+      "idVeiculo": "veiculo-02",
+      "idServico": "servico-02"
     }
   ],
   "Pagamentos": [
@@ -429,11 +451,11 @@
     },
     {
       "id": "pagamento-03",
-      "forma": "PONTOS",
-      "status": "PENDENTE",
+      "forma": "PIX",
+      "status": "APROVADO",
       "valor": 40,
-      "dataHora": "2026-10-02 11:00:00",
-      "codigoGateway": null,
+      "dataHora": "2026-11-20 23:42:48",
+      "codigoGateway": "GW-1795228968338",
       "justificativaEstorno": null,
       "idAgendamento": "agendamento-03",
       "idFuncionario": "funcionario-02"

@@ -4,151 +4,185 @@
             "label": "Agendamentos",
             "id": "1",
             "icon": "material-symbols-outlined",
-            "iconName": "calendar_month"
+            "iconName": "calendar_month",
+            "role": ["CLIENTE", "FUNCIONARIO", "ADMINISTRADOR"]
         },
         {
             "label": "Veículos",
             "id": "2",
             "icon": "material-symbols-outlined",
-            "iconName": "directions_car"
+            "iconName": "directions_car",
+            "role": ["CLIENTE"]
         },
         {
             "label": "Pagamentos e Pontos",
             "id": "3",
             "icon": "material-symbols-outlined",
-            "iconName": "payment"
+            "iconName": "payment",
+            "role": ["CLIENTE", "ADMINISTRADOR"]
         },
         {
             "label": "Configurações",
             "id": "4",
             "icon": "material-symbols-outlined",
-            "iconName": "settings"
+            "iconName": "settings",
+            "role": ["CLIENTE", "FUNCIONARIO", "ADMINISTRADOR"]
         },
         {
             "label": "CheckIn/CheckOut",
             "id": "5",
             "icon": "material-symbols-outlined",
-            "iconName": "check_circle"
+            "iconName": "check_circle",
+            "role": ["FUNCIONARIO", "ADMINISTRADOR"]
         },
         {
             "label": "Cadastros",
             "id": "6",
             "icon": "material-symbols-outlined",
-            "iconName": "person_add"
+            "iconName": "person_add",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "label": "log",
             "id": "7",
             "icon": "material-symbols-outlined",
-            "iconName": "description"
+            "iconName": "description",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "label": "Relatórios",
             "id": "8",
             "icon": "material-symbols-outlined",
-            "iconName": "bar_chart"
+            "iconName": "bar_chart",
+            "role": ["ADMINISTRADOR"]
         }
     ],
     "linksCadastros": [
         {
             "href": "/listagem-agendamento",
             "label": "Agendamentos",
-            "idDropDown": "1"
+            "idDropDown": "1",
+            "role": ["CLIENTE", "FUNCIONARIO", "ADMINISTRADOR"]
         },
         {
             "href": "/listagem-veiculo",
             "label": "Veículos",
-            "idDropDown": "2"
+            "idDropDown": "2",
+            "role": ["CLIENTE"]
         },
         {
             "href": "/listagem-pagamento",
             "label": "Pagamentos e Pontos",
-            "idDropDown": "3"
+            "idDropDown": "3",
+            "role": ["CLIENTE", "ADMINISTRADOR"]
+        },
+        {
+            "href": "/configuracoes",
+            "label": "Dados cadastrais",
+            "idDropDown": "4",
+            "role": ["CLIENTE", "FUNCIONARIO", "ADMINISTRADOR"]
         },
         {
             "href": "/listagem-lavajato",
             "label": "Lava-jatos",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-administrador",
             "label": "Administradores",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-marcas",
             "label": "Marcas",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-modelo",
             "label": "Modelos",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-lote-ponto",
             "label": "Lote de pontos",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-cor",
             "label": "Cores",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-categoria-veiculo",
             "label": "Categorias de veículos",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-usuario",
             "label": "Usuários",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-cliente",
             "label": "Clientes",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-intervalo-almoço",
             "label": "Intervalo de almoço",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-horario-funcionamento",
             "label": "Horário de funcionamento",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-tipo-feriado",
             "label": "Tipos de feriado",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-feriado",
             "label": "Feriados",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-servico",
             "label": "Serviços",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-notificacao",
             "label": "Notificações",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-funcionario",
             "label": "Funcionários",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-bloqueio",
             "label": "Bloqueios",
-            "idDropDown": "6"
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         }
     ]
 }

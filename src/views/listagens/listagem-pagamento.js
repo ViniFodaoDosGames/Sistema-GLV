@@ -15,11 +15,13 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { getSession } from '../../auth';
 const baseURL = `${BASE_URL}/Pagamentos`;
 
 
 function ListagemPagamento() {
   const navigate = useNavigate();
+  const session = getSession();
 
   const cadastrar = () => {
     navigate(`/cadastro-pagamento`);
@@ -53,10 +55,51 @@ function ListagemPagamento() {
   }
 
  React.useEffect(() => {
-   axios.get(baseURL).then((response) => {
-     setDados(response.data);
-   });
- }, []);
+   async function carregar() {
+     try {
+       const [pagamentos, agendamentosResponse, clientesResponse] =
+         await Promise.all([
+           axios.get(baseURL),
+           axios.get(`${BASE_URL}/Agendamentos`),
+           axios.get(`${BASE_URL}/Clientes`),
+         ]);
+
+       let pagamentosFiltrados = pagamentos.data;
+       let agendamentosFiltrados = agendamentosResponse.data;
+
+       if (session?.role === 'CLIENTE') {
+         const cliente = clientesResponse.data.find(
+           (item) => String(item.idUsuario) === String(session.usuario.id)
+         );
+
+         if (!cliente) {
+           pagamentosFiltrados = [];
+           agendamentosFiltrados = [];
+         } else {
+           const clienteIds = new Set([
+             String(cliente.id),
+             String(cliente.id).replace('cliente-', ''),
+             String(cliente.id).replace(/^cliente-0*/, ''),
+           ]);
+           agendamentosFiltrados = agendamentosFiltrados.filter((item) =>
+             clienteIds.has(String(item.idCliente))
+           );
+           const ids = new Set(agendamentosFiltrados.map((item) => String(item.id)));
+           pagamentosFiltrados = pagamentosFiltrados.filter((item) =>
+             ids.has(String(item.idAgendamento))
+           );
+
+         }
+       }
+
+       setDados(pagamentosFiltrados);
+     } catch (error) {
+       mensagemErro('Erro ao carregar os pagamentos');
+     }
+   }
+
+   carregar();
+ }, [session?.role, session?.usuario?.id]);
 
   if (!dados) return null;
   return (
@@ -67,7 +110,7 @@ function ListagemPagamento() {
             <div className='bs-component'>
               <button
                 type='button'
-                className='btn btn-warning'
+                className='btn btn-info'
                 onClick={() => cadastrar()}
               >
                 Novo Pagamento
@@ -99,6 +142,15 @@ function ListagemPagamento() {
                       <td className='justify-content-center'>{dado.idFuncionario}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
+                          {dado.status === 'PENDENTE' && (
+                            <button
+                              type='button'
+                              className='btn btn-primary btn-sm'
+                              onClick={() => navigate(`/pagamento/pagamento/${dado.id}`)}
+                            >
+                              Pagar
+                            </button>
+                          )}
                           <IconButton
                             aria-label='edit'
                             onClick={() => editar(dado.id)}

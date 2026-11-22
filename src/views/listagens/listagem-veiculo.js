@@ -15,11 +15,13 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { getSession } from '../../auth';
 const baseURL = `${BASE_URL}/Veiculos`;
 
 
 function ListagemVeiculo() {
   const navigate = useNavigate();
+  const session = getSession();
 
   const cadastrar = () => {
     navigate(`/cadastro-veiculo`);
@@ -53,10 +55,49 @@ function ListagemVeiculo() {
   }
 
  React.useEffect(() => {
-   axios.get(baseURL).then((response) => {
-     setDados(response.data);
-   });
- }, []);
+   async function carregarVeiculos() {
+     try {
+       const [veiculosResponse, clientesResponse, vinculosResponse] =
+         await Promise.all([
+           axios.get(baseURL),
+           axios.get(`${BASE_URL}/Clientes`),
+           axios.get(`${BASE_URL}/ClientesVeiculos`),
+         ]);
+
+       let veiculos = veiculosResponse.data;
+
+       if (session?.role === 'CLIENTE') {
+         const cliente = clientesResponse.data.find(
+           (item) =>
+             String(item.idUsuario) === String(session.usuario.id)
+         );
+
+         if (cliente) {
+           const clienteIds = new Set([
+             String(cliente.id),
+             String(cliente.id).replace('cliente-', ''),
+             String(cliente.id).replace(/^cliente-0*/, ''),
+           ]);
+           const ids = vinculosResponse.data
+             .filter((item) => clienteIds.has(String(item.idCliente)))
+             .map((item) => String(item.idVeiculo));
+
+           veiculos = veiculos.filter((veiculo) =>
+             ids.includes(String(veiculo.id))
+           );
+         } else {
+           veiculos = [];
+         }
+       }
+
+       setDados(veiculos);
+     } catch (error) {
+       mensagemErro('Erro ao carregar os veículos');
+     }
+   }
+
+   carregarVeiculos();
+ }, [session?.role, session?.usuario?.id]);
 
   if (!dados) return null;
   return (
@@ -67,7 +108,7 @@ function ListagemVeiculo() {
             <div className='bs-component'>
               <button
                 type='button'
-                className='btn btn-warning'
+                className='btn btn-info'
                 onClick={() => cadastrar()}
               >
                 Novo Veiculo
