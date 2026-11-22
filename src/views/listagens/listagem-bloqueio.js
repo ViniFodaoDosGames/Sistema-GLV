@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { formatarData, formatarHora } from '../../config/util';
 const baseURL = `${BASE_URL}/Bloqueios`;
 
 
@@ -77,8 +78,8 @@ function ListagemBloqueio() {
                   <tr>
                     <th scope='col'>Serviço</th>
                     <th scope='col'>Data</th>
-                    <th scope='col'>Horário de Inicio</th>
-                    <th scope='col'>Horário de Termino</th>
+                    <th scope='col'>Horário de Início</th>
+                    <th scope='col'>Horário de Término</th>
                     <th scope='col'>Motivo</th>
                     <th scope='col'>Dia Todo</th>
                     <th scope='col'>Ativo</th>
@@ -89,9 +90,9 @@ function ListagemBloqueio() {
                   {dados.map((dado) => (
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.idServico}</td>
-                      <td className='justify-content-center'>{dado.data}</td>
-                      <td className='justify-content-center'>{dado.horaInicio}</td>
-                      <td className='justify-content-center'>{dado.horaFim}</td>
+                      <td className='justify-content-center'>{formatarData(dado.data)}</td>
+                      <td className='justify-content-center'>{formatarHora(dado.horaInicio)}</td>
+                      <td className='justify-content-center'>{formatarHora(dado.horaFim)}</td>
                       <td className='justify-content-center'>{dado.motivo}</td>
                       <td className='justify-content-center'>{dado.diaInteiro ? 'Sim' : 'Não'}</td>
                       <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>

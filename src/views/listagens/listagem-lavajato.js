@@ -40,7 +40,7 @@ function ListagemParametrosLavaJato() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Parametro excluído com sucesso!`);
+        mensagemSucesso(`Parâmetro excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -61,7 +61,7 @@ function ListagemParametrosLavaJato() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Parametros do LavaJato'>
+      <Card title='Listagem de Parâmetros do LavaJato'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,7 +70,7 @@ function ListagemParametrosLavaJato() {
                 className='btn btn-info'
                 onClick={() => cadastrar()}
               >
-                Novo Parametro do LavaJato
+                Novo Parâmetro do LavaJato
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>

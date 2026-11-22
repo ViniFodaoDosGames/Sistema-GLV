@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { STATUS_AGENDAMENTO, formatarDataHora, formatarMoeda } from '../../config/util';
 import { getSession } from '../../auth';
 const baseURL = `${BASE_URL}/Agendamentos`;
 
@@ -108,7 +109,7 @@ function ListagemAgendamento() {
   const dadosFiltrados = dados.filter((dado) => {
     const veiculo = veiculos.find((item) => String(item.id) === String(dado.idVeiculo));
     const tipoServico = servicos.find((item) => String(item.id) === String(dado.idServico));
-    const texto = `${dado.dataHora} ${dado.status} ${veiculo?.placa || ''} ${tipoServico?.nome || ''}`.toLowerCase();
+    const texto = `${dado.dataHora} ${formatarDataHora(dado.dataHora)} ${dado.status} ${STATUS_AGENDAMENTO[dado.status] || ''} ${veiculo?.placa || ''} ${tipoServico?.nome || ''}`.toLowerCase();
 
     return (
       (!busca || texto.includes(busca.toLowerCase())) &&
@@ -120,7 +121,7 @@ function ListagemAgendamento() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Agendamento'>
+      <Card title={session?.role === 'CLIENTE' ? 'Agendamentos' : 'Listagem de Agendamento'}>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -137,7 +138,7 @@ function ListagemAgendamento() {
                   <select className='form-select' value={status} onChange={(event) => setStatus(event.target.value)}>
                     <option value=''>Todos os status</option>
                     {['AGUARDANDO_PAGAMENTO', 'CONFIRMADO', 'EM_ANDAMENTO', 'CONCLUIDO', 'NAO_COMPARECEU', 'CANCELADO'].map((item) => (
-                      <option key={item} value={item}>{item}</option>
+                      <option key={item} value={item}>{STATUS_AGENDAMENTO[item] || item}</option>
                     ))}
                   </select>
                 </div>
@@ -170,9 +171,9 @@ function ListagemAgendamento() {
                 <tbody>
                   {dadosFiltrados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.dataHora}</td>
-                      <td className='justify-content-center'>{dado.status}</td>
-                      <td className='justify-content-center'>{dado.valor}</td>
+                      <td className='justify-content-center'>{formatarDataHora(dado.dataHora)}</td>
+                      <td className='justify-content-center'>{STATUS_AGENDAMENTO[dado.status] || dado.status}</td>
+                      <td className='justify-content-center'>{formatarMoeda(dado.valor)}</td>
                       <td className='justify-content-center'>{dado.walkIn ? 'Sim' : 'Não'}</td>
                       <td className='justify-content-center'>{servicos.find((s) => s.id === dado.idServico)?.nome || 'Serviço não encontrado'}</td>
                       <td className='justify-content-center'>{dado.posicaoFila}</td>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 
 import Stack from '@mui/material/Stack';
 
@@ -12,10 +12,12 @@ import '../../custom.css';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios';
+import { formatarDataHora } from '../../config/util';
 
 function CadastroNotificacao() {
     const { idParam } = useParams();
     const navigate = useNavigate();
+    const { cancelar } = useOutletContext();
     const baseURL = `${BASE_URL}/Notificacoes`;
 
 
@@ -152,8 +154,8 @@ function CadastroNotificacao() {
                                     onChange={(e) => setCanal(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    <option value='WHATSAPP'>WHATSAPP</option>
-                                    <option value='EMAIL'>EMAIL</option>
+                                    <option value='WHATSAPP'>WhatsApp</option>
+                                    <option value='EMAIL'>E-mail</option>
                                 </select>
                             </FormGroup>
                             <FormGroup label='Mensagem: *' htmlFor='inputMensagem'>
@@ -203,7 +205,7 @@ function CadastroNotificacao() {
                                     <option value=''>Selecione</option>
                                     {agendamentos.map((dado) => (
                                         <option key={dado.id} value={dado.id}>
-                                            {dado.dataHora}
+                                            {formatarDataHora(dado.dataHora)}
                                         </option>
                                     ))}
                                 </select>
@@ -217,7 +219,7 @@ function CadastroNotificacao() {
                                     Salvar
                                 </button>
                                 <button
-                                    onClick={() => navigate(`/listagem-notificacao`)}
+                                    onClick={() => cancelar(`/listagem-notificacao`)}
                                     type='button'
                                     className='btn btn-danger'
                                 >

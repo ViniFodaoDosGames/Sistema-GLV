@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Card from '../components/card';
 import { mensagemErro, mensagemSucesso } from '../components/toastr';
 import { BASE_URL } from '../config/axios';
+import { STATUS_AGENDAMENTO, formatarData, formatarHora, formatarMoeda } from '../config/util';
 import { getSession } from '../auth';
 import '../custom.css';
 
@@ -121,7 +122,7 @@ function Pagamento() {
             null
         );
       } catch (error) {
-        mensagemErro('Nao foi possivel carregar os dados do pagamento.');
+        mensagemErro('Não foi possível carregar os dados do pagamento.');
       } finally {
         setCarregando(false);
       }
@@ -149,7 +150,7 @@ function Pagamento() {
     }
 
     window.alert(
-      'Ao confirmar, voce sera direcionado para um gateway externo para finalizar a compra.'
+      'Ao confirmar, você será direcionado para um gateway externo para finalizar a compra.'
     );
 
     try {
@@ -186,7 +187,7 @@ function Pagamento() {
         const cliente = clientesResponse.data.find(
           (item) => String(item.idUsuario) === String(session.usuario.id)
         );
-        if (!cliente) throw new Error('Cliente nao encontrado.');
+        if (!cliente) throw new Error('Cliente não encontrado.');
 
         const clienteIds = new Set([
           String(cliente.id),
@@ -219,16 +220,14 @@ function Pagamento() {
         }
 
         if (restante > 0) {
-          throw new Error('Nao foi possivel consumir todos os pontos.');
+          throw new Error('Não foi possível consumir todos os pontos.');
         }
       }
 
-      setPagamento(pagamentoAtual);
-      setAgendamento({ ...agendamento, status: 'CONFIRMADO' });
-      setSaldoPontos((saldo) => (forma === 'PONTOS' ? saldo - valor : saldo));
       mensagemSucesso('Pagamento realizado com sucesso.');
+      navigate('/listagem-agendamento');
     } catch (error) {
-      mensagemErro(error.message || 'Nao foi possivel realizar o pagamento.');
+      mensagemErro(error.message || 'Não foi possível realizar o pagamento.');
     }
   }
 
@@ -237,7 +236,7 @@ function Pagamento() {
     return (
       <div className='container'>
         <Card title='Pagamento'>
-          <p>Agendamento nao encontrado.</p>
+          <p>Agendamento não encontrado.</p>
         </Card>
       </div>
     );
@@ -252,16 +251,16 @@ function Pagamento() {
           <div className='col-lg-7'>
             <h5>Resumo do atendimento</h5>
             <dl className='row mb-0'>
-              <dt className='col-sm-4'>Veiculo</dt>
-              <dd className='col-sm-8'>{veiculo?.placa || 'Nao informado'}</dd>
-              <dt className='col-sm-4'>Servico</dt>
-              <dd className='col-sm-8'>{servico?.nome || 'Nao informado'}</dd>
+              <dt className='col-sm-4'>Veículo</dt>
+              <dd className='col-sm-8'>{veiculo?.placa || 'Não informado'}</dd>
+              <dt className='col-sm-4'>Serviço</dt>
+              <dd className='col-sm-8'>{servico?.nome || 'Não informado'}</dd>
               <dt className='col-sm-4'>Data e hora</dt>
-              <dd className='col-sm-8'>{agendamento.dataHora}</dd>
+              <dd className='col-sm-8'>{formatarData(agendamento.dataHora)} às {formatarHora(agendamento.dataHora)}</dd>
               <dt className='col-sm-4'>Status</dt>
-              <dd className='col-sm-8'>{agendamento.status}</dd>
+              <dd className='col-sm-8'>{STATUS_AGENDAMENTO[agendamento.status] || agendamento.status}</dd>
               <dt className='col-sm-4'>Valor</dt>
-              <dd className='col-sm-8'>R$ {valor.toFixed(2)}</dd>
+              <dd className='col-sm-8'>{formatarMoeda(valor)}</dd>
               <dt className='col-sm-4'>Saldo de pontos</dt>
               <dd className='col-sm-8'>{saldoPontos}</dd>
             </dl>
@@ -271,7 +270,7 @@ function Pagamento() {
             <div className='d-grid gap-2'>
               {[
                 { value: 'PIX', label: 'Pix' },
-                { value: 'CARTAO', label: 'Cartao de credito' },
+                { value: 'CARTAO', label: 'Cartão de crédito' },
                 { value: 'PONTOS', label: 'Pontos' },
               ].map((opcao) => (
                 <button
@@ -292,7 +291,7 @@ function Pagamento() {
             </div>
             {forma === 'PONTOS' && saldoPontos < valor && (
               <div className='alert alert-warning mt-3 mb-0'>
-                Seus pontos nao cobrem integralmente este servico.
+                Seus pontos não cobrem integralmente este serviço.
               </div>
             )}
             <div className='d-flex gap-2 mt-4'>

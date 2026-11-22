@@ -61,7 +61,7 @@ function ListagemCategoriaVeiculo() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Categoria de Veiculos'>
+      <Card title='Listagem de Categoria de Veículos'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,7 +70,7 @@ function ListagemCategoriaVeiculo() {
                 className='btn btn-info'
                 onClick={() => cadastrar()}
               >
-                Nova Categoria de Veiculo
+                Nova Categoria de Veículo
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>

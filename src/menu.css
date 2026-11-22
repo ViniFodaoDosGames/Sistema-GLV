@@ -221,3 +221,23 @@ button{
     display: none !important;
   }
 }
+
+.only-print {
+  display: none;
+}
+
+@media print {
+  .sidebar,
+  .navbar,
+  .no-print {
+    display: none !important;
+  }
+
+  .only-print {
+    display: revert !important;
+  }
+
+  .card {
+    overflow: visible;
+  }
+}

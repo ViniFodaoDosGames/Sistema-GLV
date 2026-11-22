@@ -90,11 +90,13 @@
   "Clientes": [
     {
       "id": "cliente-01",
-      "idUsuario": "usuario-03"
+      "idUsuario": "usuario-03",
+      "dataAceiteTermos": "2026-09-01 10:00:00"
     },
     {
       "id": "cliente-02",
-      "idUsuario": "usuario-04"
+      "idUsuario": "usuario-04",
+      "dataAceiteTermos": "2026-09-01 10:00:00"
     }
   ],
   "Cores": [
@@ -122,12 +124,57 @@
   "Marcas": [
     {
       "id": "marca-01",
-      "nome": "marca_1",
+      "nome": "Fiat",
       "ativo": true
     },
     {
       "id": "marca-02",
-      "nome": "marca_2",
+      "nome": "Volkswagen",
+      "ativo": true
+    },
+    {
+      "id": "marca-03",
+      "nome": "Chevrolet",
+      "ativo": true
+    },
+    {
+      "id": "marca-04",
+      "nome": "Hyundai",
+      "ativo": true
+    },
+    {
+      "id": "marca-05",
+      "nome": "Toyota",
+      "ativo": true
+    },
+    {
+      "id": "marca-06",
+      "nome": "Renault",
+      "ativo": true
+    },
+    {
+      "id": "marca-07",
+      "nome": "Jeep",
+      "ativo": true
+    },
+    {
+      "id": "marca-08",
+      "nome": "BYD",
+      "ativo": true
+    },
+    {
+      "id": "marca-09",
+      "nome": "Honda",
+      "ativo": true
+    },
+    {
+      "id": "marca-10",
+      "nome": "Nissan",
+      "ativo": true
+    },
+    {
+      "id": "marca-11",
+      "nome": "Ford",
       "ativo": true
     }
   ],
@@ -136,52 +183,544 @@
       "id": "modelo-01",
       "nome": "Uno",
       "ativo": true,
-      "idMarca": "marca-01"
+      "idMarca": "marca-01",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 1984,
+      "anoFim": 2021
+    },
+    {
+      "id": "modelo-04",
+      "nome": "Palio",
+      "ativo": true,
+      "idMarca": "marca-01",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 1996,
+      "anoFim": 2017
+    },
+    {
+      "id": "modelo-05",
+      "nome": "Mobi",
+      "ativo": true,
+      "idMarca": "marca-01",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2017,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-06",
+      "nome": "Argo",
+      "ativo": true,
+      "idMarca": "marca-01",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2018,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-07",
+      "nome": "Strada",
+      "ativo": true,
+      "idMarca": "marca-01",
+      "idCategoriaVeiculo": "categoria-02",
+      "anoInicio": 1999,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-08",
+      "nome": "Toro",
+      "ativo": true,
+      "idMarca": "marca-01",
+      "idCategoriaVeiculo": "categoria-02",
+      "anoInicio": 2016,
+      "anoFim": null
     },
     {
       "id": "modelo-02",
       "nome": "Gol",
       "ativo": true,
-      "idMarca": "marca-02"
+      "idMarca": "marca-02",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 1980,
+      "anoFim": 2023
+    },
+    {
+      "id": "modelo-09",
+      "nome": "Polo",
+      "ativo": true,
+      "idMarca": "marca-02",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2003,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-10",
+      "nome": "Virtus",
+      "ativo": true,
+      "idMarca": "marca-02",
+      "idCategoriaVeiculo": "I_T41bO5RgM",
+      "anoInicio": 2018,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-11",
+      "nome": "T-Cross",
+      "ativo": true,
+      "idMarca": "marca-02",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2020,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-12",
+      "nome": "Saveiro",
+      "ativo": true,
+      "idMarca": "marca-02",
+      "idCategoriaVeiculo": "categoria-02",
+      "anoInicio": 1983,
+      "anoFim": null
     },
     {
       "id": "modelo-03",
       "nome": "Amarok",
       "ativo": true,
-      "idMarca": "marca-02"
+      "idMarca": "marca-02",
+      "idCategoriaVeiculo": "categoria-02",
+      "anoInicio": 2011,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-13",
+      "nome": "Onix",
+      "ativo": true,
+      "idMarca": "marca-03",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2013,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-14",
+      "nome": "Onix Plus",
+      "ativo": true,
+      "idMarca": "marca-03",
+      "idCategoriaVeiculo": "I_T41bO5RgM",
+      "anoInicio": 2020,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-15",
+      "nome": "Celta",
+      "ativo": true,
+      "idMarca": "marca-03",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2001,
+      "anoFim": 2016
+    },
+    {
+      "id": "modelo-16",
+      "nome": "Tracker",
+      "ativo": true,
+      "idMarca": "marca-03",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 1999,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-17",
+      "nome": "S10",
+      "ativo": true,
+      "idMarca": "marca-03",
+      "idCategoriaVeiculo": "categoria-02",
+      "anoInicio": 1995,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-18",
+      "nome": "Spin",
+      "ativo": true,
+      "idMarca": "marca-03",
+      "idCategoriaVeiculo": "categoria-03",
+      "anoInicio": 2013,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-19",
+      "nome": "HB20",
+      "ativo": true,
+      "idMarca": "marca-04",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2013,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-20",
+      "nome": "HB20S",
+      "ativo": true,
+      "idMarca": "marca-04",
+      "idCategoriaVeiculo": "I_T41bO5RgM",
+      "anoInicio": 2014,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-21",
+      "nome": "Creta",
+      "ativo": true,
+      "idMarca": "marca-04",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2017,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-22",
+      "nome": "Tucson",
+      "ativo": true,
+      "idMarca": "marca-04",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2005,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-23",
+      "nome": "ix35",
+      "ativo": true,
+      "idMarca": "marca-04",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2010,
+      "anoFim": 2022
+    },
+    {
+      "id": "modelo-24",
+      "nome": "Corolla",
+      "ativo": true,
+      "idMarca": "marca-05",
+      "idCategoriaVeiculo": "I_T41bO5RgM",
+      "anoInicio": 1993,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-25",
+      "nome": "Corolla Cross",
+      "ativo": true,
+      "idMarca": "marca-05",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2022,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-26",
+      "nome": "Hilux",
+      "ativo": true,
+      "idMarca": "marca-05",
+      "idCategoriaVeiculo": "categoria-02",
+      "anoInicio": 1992,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-27",
+      "nome": "Hilux SW4",
+      "ativo": true,
+      "idMarca": "marca-05",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 1992,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-28",
+      "nome": "Etios",
+      "ativo": true,
+      "idMarca": "marca-05",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2013,
+      "anoFim": 2021
+    },
+    {
+      "id": "modelo-29",
+      "nome": "Kwid",
+      "ativo": true,
+      "idMarca": "marca-06",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2018,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-30",
+      "nome": "Sandero",
+      "ativo": true,
+      "idMarca": "marca-06",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2008,
+      "anoFim": 2023
+    },
+    {
+      "id": "modelo-31",
+      "nome": "Logan",
+      "ativo": true,
+      "idMarca": "marca-06",
+      "idCategoriaVeiculo": "I_T41bO5RgM",
+      "anoInicio": 2008,
+      "anoFim": 2023
+    },
+    {
+      "id": "modelo-32",
+      "nome": "Duster",
+      "ativo": true,
+      "idMarca": "marca-06",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2012,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-33",
+      "nome": "Oroch",
+      "ativo": true,
+      "idMarca": "marca-06",
+      "idCategoriaVeiculo": "categoria-02",
+      "anoInicio": 2016,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-34",
+      "nome": "Renegade",
+      "ativo": true,
+      "idMarca": "marca-07",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2015,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-35",
+      "nome": "Compass",
+      "ativo": true,
+      "idMarca": "marca-07",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2012,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-36",
+      "nome": "Commander",
+      "ativo": true,
+      "idMarca": "marca-07",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2006,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-37",
+      "nome": "Wrangler",
+      "ativo": true,
+      "idMarca": "marca-07",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 1992,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-38",
+      "nome": "Dolphin Mini",
+      "ativo": true,
+      "idMarca": "marca-08",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2024,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-39",
+      "nome": "Dolphin",
+      "ativo": true,
+      "idMarca": "marca-08",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2024,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-40",
+      "nome": "King",
+      "ativo": true,
+      "idMarca": "marca-08",
+      "idCategoriaVeiculo": "I_T41bO5RgM",
+      "anoInicio": 2025,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-41",
+      "nome": "Song Plus",
+      "ativo": true,
+      "idMarca": "marca-08",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2023,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-42",
+      "nome": "Song Pro",
+      "ativo": true,
+      "idMarca": "marca-08",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2025,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-43",
+      "nome": "Civic",
+      "ativo": true,
+      "idMarca": "marca-09",
+      "idCategoriaVeiculo": "I_T41bO5RgM",
+      "anoInicio": 1991,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-44",
+      "nome": "City",
+      "ativo": true,
+      "idMarca": "marca-09",
+      "idCategoriaVeiculo": "I_T41bO5RgM",
+      "anoInicio": 2010,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-45",
+      "nome": "Fit",
+      "ativo": true,
+      "idMarca": "marca-09",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2004,
+      "anoFim": 2021
+    },
+    {
+      "id": "modelo-46",
+      "nome": "HR-V",
+      "ativo": true,
+      "idMarca": "marca-09",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2016,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-47",
+      "nome": "WR-V",
+      "ativo": true,
+      "idMarca": "marca-09",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2018,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-48",
+      "nome": "Kicks",
+      "ativo": true,
+      "idMarca": "marca-10",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2017,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-49",
+      "nome": "Versa",
+      "ativo": true,
+      "idMarca": "marca-10",
+      "idCategoriaVeiculo": "I_T41bO5RgM",
+      "anoInicio": 2012,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-50",
+      "nome": "March",
+      "ativo": true,
+      "idMarca": "marca-10",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2012,
+      "anoFim": 2020
+    },
+    {
+      "id": "modelo-51",
+      "nome": "Frontier",
+      "ativo": true,
+      "idMarca": "marca-10",
+      "idCategoriaVeiculo": "categoria-02",
+      "anoInicio": 1998,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-52",
+      "nome": "Sentra",
+      "ativo": true,
+      "idMarca": "marca-10",
+      "idCategoriaVeiculo": "I_T41bO5RgM",
+      "anoInicio": 1991,
+      "anoFim": 2026
+    },
+    {
+      "id": "modelo-53",
+      "nome": "Ka",
+      "ativo": true,
+      "idMarca": "marca-11",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 1997,
+      "anoFim": 2021
+    },
+    {
+      "id": "modelo-54",
+      "nome": "Fiesta",
+      "ativo": true,
+      "idMarca": "marca-11",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 1995,
+      "anoFim": 2019
+    },
+    {
+      "id": "modelo-55",
+      "nome": "EcoSport",
+      "ativo": true,
+      "idMarca": "marca-11",
+      "idCategoriaVeiculo": "s5pbu2UabK4",
+      "anoInicio": 2003,
+      "anoFim": 2021
+    },
+    {
+      "id": "modelo-56",
+      "nome": "Ranger",
+      "ativo": true,
+      "idMarca": "marca-11",
+      "idCategoriaVeiculo": "categoria-02",
+      "anoInicio": 1993,
+      "anoFim": null
+    },
+    {
+      "id": "modelo-57",
+      "nome": "Focus",
+      "ativo": true,
+      "idMarca": "marca-11",
+      "idCategoriaVeiculo": "categoria-01",
+      "anoInicio": 2001,
+      "anoFim": 2019
     }
   ],
   "CategoriasVeiculo": [
     {
       "id": "categoria-01",
-      "nome": "hatch",
+      "nome": "Hatch",
       "ativo": true
     },
     {
       "id": "categoria-02",
-      "nome": "caminhonete",
+      "nome": "Picape",
+      "ativo": true
+    },
+    {
+      "id": "s5pbu2UabK4",
+      "nome": "SUV",
+      "ativo": true
+    },
+    {
+      "id": "I_T41bO5RgM",
+      "nome": "Sedan",
+      "ativo": true
+    },
+    {
+      "id": "categoria-03",
+      "nome": "Minivan",
       "ativo": true
     }
   ],
   "Veiculos": [
-    {
-      "id": "veiculo-01",
-      "placa": "ABC1D23",
-      "ano": 2018,
-      "ativo": true,
-      "idCor": "cor-01",
-      "idModelo": "modelo-01",
-      "idCategoriaVeiculo": "categoria-01"
-    },
-    {
-      "id": "veiculo-02",
-      "placa": "DEF4G56",
-      "ano": 2021,
-      "ativo": true,
-      "idCor": "cor-02",
-      "idModelo": "modelo-02",
-      "idCategoriaVeiculo": "categoria-01"
-    },
     {
       "id": "veiculo-03",
       "placa": "HIJ7K89",
@@ -190,6 +729,15 @@
       "idCor": "cor-03",
       "idModelo": "modelo-03",
       "idCategoriaVeiculo": "categoria-02"
+    },
+    {
+      "id": "SnIT7MGY01M",
+      "placa": "ABC1234",
+      "ano": 2004,
+      "ativo": false,
+      "idCor": "cor-01",
+      "idModelo": "modelo-04",
+      "idCategoriaVeiculo": "categoria-01"
     }
   ],
   "ClientesVeiculos": [
@@ -207,6 +755,16 @@
       "id": "3",
       "idCliente": "cliente-02",
       "idVeiculo": "veiculo-03"
+    },
+    {
+      "idCliente": "cliente-01",
+      "idVeiculo": "4KCr8SQv2yE",
+      "id": "m9B64lASOQc"
+    },
+    {
+      "idCliente": "cliente-01",
+      "idVeiculo": "SnIT7MGY01M",
+      "id": "WyzzMGMWNLw"
     }
   ],
   "LavaJatos": [
@@ -282,7 +840,8 @@
       "id": "intervalo-01",
       "horaInicio": "12:00:00",
       "horaFim": "13:00:00",
-      "idLavaJato": "lavajato-01"
+      "idLavaJato": "lavajato-01",
+      "aplicaFimDeSemana": true
     },
     {
       "id": "intervalo-02",
@@ -306,7 +865,7 @@
   "Feriados": [
     {
       "id": "feriado-01",
-      "nome": "Proclamacao da Republica",
+      "nome": "Proclamação da República",
       "data": "2026-11-15",
       "ativo": true,
       "idTipoFeriado": "tipo-01",
@@ -314,7 +873,7 @@
     },
     {
       "id": "feriado-02",
-      "nome": "Aniversario da cidade",
+      "nome": "Aniversário da cidade",
       "data": "2026-06-10",
       "ativo": true,
       "idTipoFeriado": "tipo-02",
@@ -332,7 +891,8 @@
       "ativo": true,
       "tempoDuracao": 30,
       "tempoIntervalo": 15,
-      "idLavaJato": "lavajato-01"
+      "idLavaJato": "lavajato-01",
+      "notificaConclusao": false
     },
     {
       "id": "servico-02",
@@ -344,7 +904,8 @@
       "ativo": true,
       "tempoDuracao": 60,
       "tempoIntervalo": 15,
-      "idLavaJato": "lavajato-01"
+      "idLavaJato": "lavajato-01",
+      "notificaConclusao": true
     }
   ],
   "Bloqueios": [
@@ -354,7 +915,7 @@
       "diaInteiro": false,
       "horaInicio": "14:00:00",
       "horaFim": "16:00:00",
-      "motivo": "Manutencao",
+      "motivo": "Manutenção",
       "ativo": true,
       "idServico": "servico-01"
     },
@@ -384,7 +945,7 @@
     {
       "id": "agendamento-02",
       "dataHora": "2026-10-01 10:00:00",
-      "status": "CONFIRMADO",
+      "status": "CONCLUIDO",
       "valor": 80,
       "walkIn": false,
       "posicaoFila": 2,
@@ -404,40 +965,95 @@
       "idServico": "servico-01"
     },
     {
-      "id": "agendamento-04",
-      "dataHora": "2026-10-02 11:00:00",
-      "status": "AGUARDANDO_PAGAMENTO",
-      "valor": 40,
-      "walkIn": true,
-      "posicaoFila": 1,
-      "idCliente": "cliente-01",
-      "idVeiculo": "veiculo-02",
-      "idServico": "servico-01"
-    },
-    {
       "id": "agendamento-05",
       "dataHora": "2026-11-23 14:00:00",
-      "status": "CONFIRMADO",
+      "status": "EM_ANDAMENTO",
       "valor": 80,
       "walkIn": false,
       "posicaoFila": 2,
       "idCliente": "cliente-02",
       "idVeiculo": "veiculo-02",
       "idServico": "servico-02"
+    },
+    {
+      "dataHora": "2026-11-23 09:00:00",
+      "status": "CONCLUIDO",
+      "valor": 80,
+      "walkIn": true,
+      "posicaoFila": 1,
+      "idCliente": "cliente-02",
+      "idVeiculo": "veiculo-03",
+      "idServico": "servico-02",
+      "id": "wxu0Gt5aIrM"
+    },
+    {
+      "dataHora": "2026-11-28 10:15:00",
+      "status": "CONFIRMADO",
+      "valor": 40,
+      "walkIn": false,
+      "posicaoFila": 1,
+      "idCliente": "cliente-01",
+      "idVeiculo": "veiculo-01",
+      "idServico": "servico-01",
+      "id": "lkL2tZAOwCE"
+    },
+    {
+      "dataHora": "2026-12-10 13:15:00",
+      "status": "CONFIRMADO",
+      "valor": 80,
+      "walkIn": false,
+      "posicaoFila": 1,
+      "idCliente": "cliente-01",
+      "idVeiculo": "veiculo-02",
+      "idServico": "servico-02",
+      "id": "69H7R7-pvxk"
+    },
+    {
+      "dataHora": "2026-12-08 17:00:00",
+      "status": "CONFIRMADO",
+      "valor": 40,
+      "walkIn": false,
+      "posicaoFila": 1,
+      "idCliente": "cliente-01",
+      "idVeiculo": "veiculo-02",
+      "idServico": "servico-01",
+      "id": "QXwae-iLHXU"
+    },
+    {
+      "dataHora": "2026-11-28 10:45:00",
+      "status": "CONFIRMADO",
+      "valor": 80,
+      "walkIn": false,
+      "posicaoFila": 1,
+      "idCliente": "cliente-01",
+      "idVeiculo": "veiculo-02",
+      "idServico": "servico-02",
+      "id": "Q3DFiKk4pb0"
+    },
+    {
+      "dataHora": "2026-11-25 13:15:00",
+      "status": "AGUARDANDO_PAGAMENTO",
+      "valor": 40,
+      "walkIn": false,
+      "posicaoFila": 1,
+      "idCliente": "cliente-02",
+      "idVeiculo": "veiculo-03",
+      "idServico": "servico-01",
+      "id": "g2NXRw7DvhQ"
+    },
+    {
+      "dataHora": "2026-12-05 11:15:00",
+      "status": "CONFIRMADO",
+      "valor": 40,
+      "walkIn": false,
+      "posicaoFila": 1,
+      "idCliente": "cliente-01",
+      "idVeiculo": "SnIT7MGY01M",
+      "idServico": "servico-01",
+      "id": "bQHyVs2gIl8"
     }
   ],
   "Pagamentos": [
-    {
-      "id": "pagamento-01",
-      "forma": "PIX",
-      "status": "APROVADO",
-      "valor": 40,
-      "dataHora": "2026-09-30 18:00:00",
-      "codigoGateway": "GW-0001",
-      "justificativaEstorno": null,
-      "idAgendamento": "agendamento-01",
-      "idFuncionario": null
-    },
     {
       "id": "pagamento-02",
       "forma": "CARTAO",
@@ -459,6 +1075,83 @@
       "justificativaEstorno": null,
       "idAgendamento": "agendamento-03",
       "idFuncionario": "funcionario-02"
+    },
+    {
+      "forma": "PIX",
+      "status": "APROVADO",
+      "valor": 80,
+      "dataHora": "2026-11-22 13:41:55",
+      "codigoGateway": "GW-1795365715444",
+      "justificativaEstorno": null,
+      "idAgendamento": "wxu0Gt5aIrM",
+      "idFuncionario": "funcionario-03",
+      "id": "UNFxH_AnMGM"
+    },
+    {
+      "forma": "PIX",
+      "status": "APROVADO",
+      "valor": 40,
+      "dataHora": "2026-11-22 16:48:20",
+      "codigoGateway": "GW-1795376900752",
+      "justificativaEstorno": null,
+      "idAgendamento": "lkL2tZAOwCE",
+      "idFuncionario": null,
+      "id": "zNve_pqy7K0"
+    },
+    {
+      "forma": "CARTAO",
+      "status": "APROVADO",
+      "valor": 80,
+      "dataHora": "2026-11-22 16:48:58",
+      "codigoGateway": "GW-1795376938162",
+      "justificativaEstorno": null,
+      "idAgendamento": "69H7R7-pvxk",
+      "idFuncionario": null,
+      "id": "_JRrvrE0ZSM"
+    },
+    {
+      "forma": "PIX",
+      "status": "APROVADO",
+      "valor": 40,
+      "dataHora": "2026-11-22 16:51:17",
+      "codigoGateway": "GW-1795377077027",
+      "justificativaEstorno": null,
+      "idAgendamento": "QXwae-iLHXU",
+      "idFuncionario": null,
+      "id": "Tl2T1xkWL_U"
+    },
+    {
+      "forma": "CARTAO",
+      "status": "APROVADO",
+      "valor": 80,
+      "dataHora": "2026-11-22 16:52:07",
+      "codigoGateway": "GW-1795377127108",
+      "justificativaEstorno": null,
+      "idAgendamento": "Q3DFiKk4pb0",
+      "idFuncionario": null,
+      "id": "sHnU7SVuzpw"
+    },
+    {
+      "forma": "PIX",
+      "status": "PENDENTE",
+      "valor": 40,
+      "dataHora": null,
+      "codigoGateway": null,
+      "justificativaEstorno": null,
+      "idFuncionario": null,
+      "idAgendamento": "g2NXRw7DvhQ",
+      "id": "32_02z6_mZc"
+    },
+    {
+      "forma": "PIX",
+      "status": "APROVADO",
+      "valor": 40,
+      "dataHora": "2026-11-22 17:43:12",
+      "codigoGateway": "GW-1795380192308",
+      "justificativaEstorno": null,
+      "idFuncionario": null,
+      "idAgendamento": "bQHyVs2gIl8",
+      "id": "XZid_Z9JEjA"
     }
   ],
   "LotesPontos": [
@@ -481,6 +1174,26 @@
       "expiraEm": "2026-12-19",
       "idCliente": "cliente-02",
       "idAgendamento": null
+    },
+    {
+      "tipo": "FIDELIDADE",
+      "quantidade": 80,
+      "saldo": 80,
+      "geradoEm": "2026-11-22",
+      "expiraEm": "2027-05-21",
+      "idCliente": "cliente-02",
+      "idAgendamento": "agendamento-02",
+      "id": "A4kZjYWaxG0"
+    },
+    {
+      "tipo": "FIDELIDADE",
+      "quantidade": 80,
+      "saldo": 80,
+      "geradoEm": "2026-11-22",
+      "expiraEm": "2027-05-21",
+      "idCliente": "cliente-02",
+      "idAgendamento": "wxu0Gt5aIrM",
+      "id": "4OH01x9f8bA"
     }
   ],
   "PagamentosLotesPontos": [
@@ -495,7 +1208,7 @@
       "id": "logs-01",
       "tipo": "ENTRADA",
       "dataHora": "2026-10-01 09:00:00",
-      "observacao": "Veiculo recebido",
+      "observacao": "Veículo recebido",
       "idAgendamento": "agendamento-01",
       "idFuncionario": "funcionario-01"
     },
@@ -503,7 +1216,7 @@
       "id": "logs-02",
       "tipo": "SAIDA",
       "dataHora": "2026-10-01 09:35:00",
-      "observacao": "Veiculo entregue",
+      "observacao": "Veículo entregue",
       "idAgendamento": "agendamento-01",
       "idFuncionario": "funcionario-01"
     },
@@ -511,27 +1224,88 @@
       "id": "logs-03",
       "tipo": "AJUSTE",
       "dataHora": "2026-10-01 10:05:00",
-      "observacao": "Ajuste de posicao na fila",
+      "observacao": "Ajuste de posição na fila",
       "idAgendamento": "agendamento-02",
       "idFuncionario": "funcionario-02"
+    },
+    {
+      "tipo": "ENTRADA",
+      "dataHora": "2026-11-22 16:13:47",
+      "observacao": "Check-in realizado",
+      "idAgendamento": "agendamento-02",
+      "idFuncionario": "funcionario-02",
+      "id": "WFcKMAUOJuI"
+    },
+    {
+      "tipo": "ENTRADA",
+      "dataHora": "2026-11-22 16:13:57",
+      "observacao": "Check-in realizado",
+      "idAgendamento": "wxu0Gt5aIrM",
+      "idFuncionario": "funcionario-02",
+      "id": "3vJGzfASuTk"
+    },
+    {
+      "tipo": "SAIDA",
+      "dataHora": "2026-11-22 17:07:33",
+      "observacao": "Check-out realizado",
+      "idAgendamento": "wxu0Gt5aIrM",
+      "idFuncionario": "funcionario-02",
+      "id": "w7yDmKnkSE0"
+    },
+    {
+      "tipo": "ENTRADA",
+      "dataHora": "2026-11-22 17:07:39",
+      "observacao": "Check-in realizado",
+      "idAgendamento": "agendamento-05",
+      "idFuncionario": "funcionario-02",
+      "id": "1ESWpDYQo4s"
     }
   ],
   "Notificacoes": [
     {
       "id": "notificacao-01",
       "canal": "WHATSAPP",
-      "mensagem": "Seu veiculo esta pronto",
+      "mensagem": "Seu veículo está pronto",
       "dataHora": "2026-10-01 09:35:00",
       "idCliente": "cliente-01",
-      "idAgendamento": "agendamento-01"
+      "idAgendamento": "agendamento-01",
+      "statusEnvio": "ENVIADO"
     },
     {
       "id": "notificacao-02",
       "canal": "EMAIL",
-      "mensagem": "Voce recebeu pontos de compensacao",
+      "mensagem": "Você recebeu pontos de compensação",
       "dataHora": "2026-09-20 12:00:00",
       "idCliente": "cliente-02",
-      "idAgendamento": null
+      "idAgendamento": null,
+      "statusEnvio": "ENVIADO"
+    },
+    {
+      "canal": "WHATSAPP",
+      "mensagem": "Pagamento aprovado. Lavagem completa confirmado para 23/11/2026 às 09:00.",
+      "dataHora": "2026-11-22 13:41:55",
+      "idCliente": "cliente-02",
+      "idAgendamento": "wxu0Gt5aIrM",
+      "statusEnvio": "PENDENTE",
+      "id": "xiwt3eIrbAw"
+    },
+    {
+      "canal": "WHATSAPP",
+      "mensagem": "Seu veículo está pronto! Você ganhou 80 pontos.",
+      "dataHora": "2026-11-22 16:14:01",
+      "idCliente": "cliente-02",
+      "idAgendamento": "agendamento-02",
+      "statusEnvio": "PENDENTE",
+      "id": "GogHXIxXa1o"
+    },
+    {
+      "canal": "WHATSAPP",
+      "mensagem": "Seu veículo está pronto! Você ganhou 80 pontos.",
+      "dataHora": "2026-11-22 16:14:02",
+      "idCliente": "cliente-02",
+      "idAgendamento": "wxu0Gt5aIrM",
+      "statusEnvio": "PENDENTE",
+      "id": "cW2szdWLZhA"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

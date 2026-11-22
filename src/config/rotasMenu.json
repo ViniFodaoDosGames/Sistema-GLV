@@ -29,7 +29,7 @@
             "role": ["CLIENTE", "FUNCIONARIO", "ADMINISTRADOR"]
         },
         {
-            "label": "CheckIn/CheckOut",
+            "label": "Check-in e Check-out",
             "id": "5",
             "icon": "material-symbols-outlined",
             "iconName": "check_circle",
@@ -43,7 +43,7 @@
             "role": ["ADMINISTRADOR"]
         },
         {
-            "label": "log",
+            "label": "Log",
             "id": "7",
             "icon": "material-symbols-outlined",
             "iconName": "description",
@@ -62,13 +62,19 @@
             "href": "/listagem-agendamento",
             "label": "Agendamentos",
             "idDropDown": "1",
-            "role": ["CLIENTE", "FUNCIONARIO", "ADMINISTRADOR"]
+            "role": ["CLIENTE", "ADMINISTRADOR"]
+        },
+        {
+            "href": "/agendamentos",
+            "label": "Todos os agendamentos",
+            "idDropDown": "1",
+            "role": ["FUNCIONARIO", "ADMINISTRADOR"]
         },
         {
             "href": "/listagem-veiculo",
             "label": "Veículos",
             "idDropDown": "2",
-            "role": ["CLIENTE"]
+            "role": ["CLIENTE", "ADMINISTRADOR"]
         },
         {
             "href": "/listagem-pagamento",
@@ -81,6 +87,30 @@
             "label": "Dados cadastrais",
             "idDropDown": "4",
             "role": ["CLIENTE", "FUNCIONARIO", "ADMINISTRADOR"]
+        },
+        {
+            "href": "/checkin",
+            "label": "Check-in e Check-out",
+            "idDropDown": "5",
+            "role": ["FUNCIONARIO", "ADMINISTRADOR"]
+        },
+        {
+            "href": "/log",
+            "label": "Log",
+            "idDropDown": "7",
+            "role": ["ADMINISTRADOR"]
+        },
+        {
+            "href": "/relatorios",
+            "label": "Relatórios",
+            "idDropDown": "8",
+            "role": ["ADMINISTRADOR"]
+        },
+        {
+            "href": "/listagem-veiculo",
+            "label": "Veículos",
+            "idDropDown": "6",
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/listagem-lavajato",

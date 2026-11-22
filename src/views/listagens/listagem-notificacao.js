@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { CANAL_NOTIFICACAO, formatarDataHora } from '../../config/util';
 const baseURL = `${BASE_URL}/Notificacoes`;
 
 
@@ -40,7 +41,7 @@ function ListagemNotificacao() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Notificacao excluída com sucesso!`);
+        mensagemSucesso(`Notificação excluída com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +49,7 @@ function ListagemNotificacao() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir a notificacao`);
+        mensagemErro(`Erro ao excluir a notificação`);
       });
   }
 
@@ -72,7 +73,7 @@ function ListagemNotificacao() {
                 className='btn btn-info'
                 onClick={() => cadastrar()}
               >
-                Nova Notificacao
+                Nova Notificação
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
@@ -86,9 +87,9 @@ function ListagemNotificacao() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.canal}</td>
+                      <td className='justify-content-center'>{CANAL_NOTIFICACAO[dado.canal] || dado.canal}</td>
                       <td className='justify-content-center'>{dado.mensagem}</td>
-                      <td className='justify-content-center'>{dado.dataHora}</td>
+                      <td className='justify-content-center'>{formatarDataHora(dado.dataHora)}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

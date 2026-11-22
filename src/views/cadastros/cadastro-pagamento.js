@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 
 import Stack from '@mui/material/Stack';
 
@@ -12,10 +12,12 @@ import '../../custom.css';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios';
+import { formatarDataHora } from '../../config/util';
 
 function CadastroPagamento() {
     const { idParam } = useParams();
     const navigate = useNavigate();
+    const { cancelar } = useOutletContext();
     const baseURL = `${BASE_URL}/Pagamentos`;
 
 
@@ -165,9 +167,10 @@ function CadastroPagamento() {
                                     onChange={(e) => setForma(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    <option value='PIX'>PIX</option>
-                                    <option value='CARTAO'>CARTAO</option>
-                                    <option value='PONTOS'>PONTOS</option>
+                                    <option value='PIX'>Pix</option>
+                                    <option value='CARTAO'>Cartão</option>
+                                    <option value='PONTOS'>Pontos</option>
+                                    <option value='DINHEIRO'>Dinheiro</option>
                                 </select>
                             </FormGroup>
                             <FormGroup label='Status: *' htmlFor='inputStatus'>
@@ -179,9 +182,9 @@ function CadastroPagamento() {
                                     onChange={(e) => setStatus(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    <option value='PENDENTE'>PENDENTE</option>
-                                    <option value='APROVADO'>APROVADO</option>
-                                    <option value='ESTORNADO'>ESTORNADO</option>
+                                    <option value='PENDENTE'>Pendente</option>
+                                    <option value='APROVADO'>Aprovado</option>
+                                    <option value='ESTORNADO'>Estornado</option>
                                 </select>
                             </FormGroup>
                             <FormGroup label='Valor: *' htmlFor='inputValor'>
@@ -237,7 +240,7 @@ function CadastroPagamento() {
                                     <option value=''>Selecione</option>
                                     {agendamentos.map((dado) => (
                                         <option key={dado.id} value={dado.id}>
-                                            {dado.dataHora}
+                                            {formatarDataHora(dado.dataHora)}
                                         </option>
                                     ))}
                                 </select>
@@ -267,7 +270,7 @@ function CadastroPagamento() {
                                     Salvar
                                 </button>
                                 <button
-                                    onClick={() => navigate(`/listagem-pagamento`)}
+                                    onClick={() => cancelar(`/listagem-pagamento`)}
                                     type='button'
                                     className='btn btn-danger'
                                 >

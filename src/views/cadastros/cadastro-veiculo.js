@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 
 import Stack from '@mui/material/Stack';
 
@@ -12,11 +12,15 @@ import '../../custom.css';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios';
+import { getSession } from '../../auth';
+import { mascaraPlaca, normalizarPlaca, placaValida } from '../../config/util';
 
 function CadastroVeiculo() {
     const { idParam } = useParams();
     const navigate = useNavigate();
+    const { cancelar } = useOutletContext();
     const baseURL = `${BASE_URL}/Veiculos`;
+    const sessao = getSession();
 
 
     const [id, setId] = useState('');
@@ -25,41 +29,84 @@ function CadastroVeiculo() {
     const [ativo, setAtivo] = useState(false);
     const [idCor, setIdCor] = useState('');
     const [idModelo, setIdModelo] = useState('');
-    const [idCategoriaVeiculo, setIdCategoriaVeiculo] = useState('');
+    const [idMarca, setIdMarca] = useState('');
     const [cores, setCores] = useState([]);
     const [modelos, setModelos] = useState([]);
+    const [marcas, setMarcas] = useState([]);
     const [categorias, setCategorias] = useState([]);
+    const [clientes, setClientes] = useState([]);
+    const [usuarios, setUsuarios] = useState([]);
+    const [clientesVeiculos, setClientesVeiculos] = useState([]);
+    const [donoEscolhido, setDonoEscolhido] = useState(null);
+
+    const ehCliente = sessao?.role === 'CLIENTE';
+    const ligacaoAtual = clientesVeiculos.find((dado) => dado.idVeiculo === idParam);
+    const dono = donoEscolhido !== null ? donoEscolhido : ligacaoAtual?.idCliente || '';
+
+    function nomeDoCliente(cliente) {
+        const usuario = usuarios.find((dado) => dado.id === cliente.idUsuario);
+        return usuario ? usuario.nome : cliente.id;
+    }
+
+    async function ligarAoDono(idVeiculo) {
+        if (ehCliente) {
+            if (idParam == null) {
+                await axios.post(`${BASE_URL}/ClientesVeiculos`, { idCliente: sessao.idCliente, idVeiculo });
+            }
+            return;
+        }
+        if (ligacaoAtual && dono === '') {
+            await axios.delete(`${BASE_URL}/ClientesVeiculos/${ligacaoAtual.id}`);
+        } else if (ligacaoAtual && dono !== ligacaoAtual.idCliente) {
+            await axios.patch(`${BASE_URL}/ClientesVeiculos/${ligacaoAtual.id}`, { idCliente: dono });
+        } else if (!ligacaoAtual && dono !== '') {
+            await axios.post(`${BASE_URL}/ClientesVeiculos`, { idCliente: dono, idVeiculo });
+        }
+    }
+
+    const anoAtual = new Date().getFullYear();
+    const modeloEscolhido = modelos.find((dado) => dado.id === idModelo);
+    const marcaEscolhida = idMarca !== '' ? idMarca : modeloEscolhido?.idMarca || '';
+    const modelosDaMarca = modelos.filter((dado) => dado.idMarca === marcaEscolhida);
+    const categoriaDoModelo = categorias.find((dado) => dado.id === modeloEscolhido?.idCategoriaVeiculo);
+    const anosDoModelo = [];
+    if (modeloEscolhido) {
+        const ultimoAno = Math.min(modeloEscolhido.anoFim || anoAtual, anoAtual);
+        for (let anoDaLista = ultimoAno; anoDaLista >= modeloEscolhido.anoInicio; anoDaLista--) {
+            anosDoModelo.push(anoDaLista);
+        }
+    }
 
     async function salvar() {
-        if (!placa.trim()) {
-            mensagemErro('Informe: Placa');
+        if (!placaValida(placa)) {
+            mensagemErro('Placa inválida. Use o formato ABC1234 ou ABC1D23');
             return;
         }
-        if (ano === '') {
-            mensagemErro('Informe: Ano');
-            return;
-        }
-        if (idCor === '') {
-            mensagemErro('Informe: Cor');
+        if (marcaEscolhida === '') {
+            mensagemErro('Informe: Marca');
             return;
         }
         if (idModelo === '') {
             mensagemErro('Informe: Modelo');
             return;
         }
-        if (idCategoriaVeiculo === '') {
-            mensagemErro('Informe: Categoria');
+        if (!anosDoModelo.includes(Number(ano))) {
+            mensagemErro(`Escolha um ano entre ${anosDoModelo[anosDoModelo.length - 1]} e ${anosDoModelo[0]}`);
+            return;
+        }
+        if (idCor === '') {
+            mensagemErro('Informe: Cor');
             return;
         }
 
         let data = {
             id,
-            placa,
+            placa: normalizarPlaca(placa),
             ano: Number(ano),
             ativo,
             idCor,
             idModelo,
-            idCategoriaVeiculo,
+            idCategoriaVeiculo: modeloEscolhido.idCategoriaVeiculo,
         };
         data = JSON.stringify(data);
         if (idParam == null) {
@@ -67,7 +114,8 @@ function CadastroVeiculo() {
                 .post(baseURL, data, {
                     headers: { 'Content-Type': 'application/json' },
                 })
-                .then(function (response) {
+                .then(async function (response) {
+                    await ligarAoDono(response.data.id);
                     mensagemSucesso(`Veículo cadastrado com sucesso!`);
                     navigate(`/listagem-veiculo`);
                 })
@@ -79,7 +127,8 @@ function CadastroVeiculo() {
                 .put(`${baseURL}/${idParam}`, data, {
                     headers: { 'Content-Type': 'application/json' },
                 })
-                .then(function (response) {
+                .then(async function (response) {
+                    await ligarAoDono(idParam);
                     mensagemSucesso(`Veículo alterado com sucesso!`);
                     navigate(`/listagem-veiculo`);
                 })
@@ -101,7 +150,6 @@ function CadastroVeiculo() {
                 setAtivo(response.data.ativo);
                 setIdCor(response.data.idCor ?? '');
                 setIdModelo(response.data.idModelo ?? '');
-                setIdCategoriaVeiculo(response.data.idCategoriaVeiculo ?? '');
             })
             .catch(function (error) {
                 mensagemErro('Veículo não encontrado');
@@ -137,6 +185,38 @@ function CadastroVeiculo() {
             .catch(function (error) {
                 mensagemErro('Erro ao carregar os dados da tela');
             });
+        axios
+            .get(`${BASE_URL}/Marcas`)
+            .then((response) => {
+                setMarcas(response.data);
+            })
+            .catch(function (error) {
+                mensagemErro('Erro ao carregar os dados da tela');
+            });
+        axios
+            .get(`${BASE_URL}/Clientes`)
+            .then((response) => {
+                setClientes(response.data);
+            })
+            .catch(function (error) {
+                mensagemErro('Erro ao carregar os dados da tela');
+            });
+        axios
+            .get(`${BASE_URL}/Usuarios`)
+            .then((response) => {
+                setUsuarios(response.data);
+            })
+            .catch(function (error) {
+                mensagemErro('Erro ao carregar os dados da tela');
+            });
+        axios
+            .get(`${BASE_URL}/ClientesVeiculos`)
+            .then((response) => {
+                setClientesVeiculos(response.data);
+            })
+            .catch(function (error) {
+                mensagemErro('Erro ao carregar os dados da tela');
+            });
     }, []);
 
     return (
@@ -152,29 +232,93 @@ function CadastroVeiculo() {
                                     value={placa}
                                     className='form-control'
                                     name='placa'
-                                    onChange={(e) => setPlaca(e.target.value)}
+                                    placeholder='ABC1D23'
+                                    onChange={(e) => setPlaca(mascaraPlaca(e.target.value))}
+                                />
+                            </FormGroup>
+                            {!ehCliente && (
+                                <FormGroup label='Cliente (dono)' htmlFor='inputDono'>
+                                    <select
+                                        id='inputDono'
+                                        value={dono}
+                                        className='form-select'
+                                        onChange={(e) => setDonoEscolhido(e.target.value)}
+                                    >
+                                        <option value=''>Sem dono</option>
+                                        {clientes.map((dado) => (
+                                            <option key={dado.id} value={dado.id}>
+                                                {nomeDoCliente(dado)}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </FormGroup>
+                            )}
+                            <FormGroup label='Marca: *' htmlFor='inputIdMarca'>
+                                <select
+                                    id='inputIdMarca'
+                                    value={marcaEscolhida}
+                                    className='form-select'
+                                    name='idMarca'
+                                    onChange={(e) => {
+                                        setIdMarca(e.target.value);
+                                        setIdModelo('');
+                                        setAno('');
+                                    }}
+                                >
+                                    <option value=''>Selecione</option>
+                                    {marcas.map((dado) => (
+                                        <option key={dado.id} value={dado.id}>
+                                            {dado.nome}
+                                        </option>
+                                    ))}
+                                </select>
+                            </FormGroup>
+                            <FormGroup label='Modelo: *' htmlFor='inputIdModelo'>
+                                <select
+                                    id='inputIdModelo'
+                                    value={idModelo}
+                                    className='form-select'
+                                    name='idModelo'
+                                    disabled={marcaEscolhida === ''}
+                                    onChange={(e) => {
+                                        setIdModelo(e.target.value);
+                                        setAno('');
+                                    }}
+                                >
+                                    <option value=''>{marcaEscolhida === '' ? 'Escolha a marca primeiro' : 'Selecione'}</option>
+                                    {modelosDaMarca.map((dado) => (
+                                        <option key={dado.id} value={dado.id}>
+                                            {dado.nome}
+                                        </option>
+                                    ))}
+                                </select>
+                            </FormGroup>
+                            <FormGroup label='Categoria' htmlFor='inputCategoria'>
+                                <input
+                                    type='text'
+                                    id='inputCategoria'
+                                    value={categoriaDoModelo ? categoriaDoModelo.nome : ''}
+                                    className='form-control'
+                                    placeholder='Preenchida pelo modelo'
+                                    disabled
                                 />
                             </FormGroup>
                             <FormGroup label='Ano: *' htmlFor='inputAno'>
-                                <input
-                                    type='number'
+                                <select
                                     id='inputAno'
                                     value={ano}
-                                    className='form-control'
+                                    className='form-select'
                                     name='ano'
-                                    min='0'
+                                    disabled={!modeloEscolhido}
                                     onChange={(e) => setAno(e.target.value)}
-                                />
-                            </FormGroup>
-                            <FormGroup label='Ativo' htmlFor='inputAtivo'>
-                                <input
-                                    type='checkbox'
-                                    id='inputAtivo'
-                                    checked={ativo}
-                                    className='form-control form-check-input'
-                                    name='ativo'
-                                    onChange={(e) => setAtivo(e.target.checked)}
-                                />
+                                >
+                                    <option value=''>{modeloEscolhido ? 'Selecione' : 'Escolha o modelo primeiro'}</option>
+                                    {anosDoModelo.map((anoDaLista) => (
+                                        <option key={anoDaLista} value={anoDaLista}>
+                                            {anoDaLista}
+                                        </option>
+                                    ))}
+                                </select>
                             </FormGroup>
                             <FormGroup label='Cor: *' htmlFor='inputIdCor'>
                                 <select
@@ -192,37 +336,15 @@ function CadastroVeiculo() {
                                     ))}
                                 </select>
                             </FormGroup>
-                            <FormGroup label='Modelo: *' htmlFor='inputIdModelo'>
-                                <select
-                                    id='inputIdModelo'
-                                    value={idModelo}
-                                    className='form-select'
-                                    name='idModelo'
-                                    onChange={(e) => setIdModelo(e.target.value)}
-                                >
-                                    <option value=''>Selecione</option>
-                                    {modelos.map((dado) => (
-                                        <option key={dado.id} value={dado.id}>
-                                            {dado.nome}
-                                        </option>
-                                    ))}
-                                </select>
-                            </FormGroup>
-                            <FormGroup label='Categoria: *' htmlFor='inputIdCategoriaVeiculo'>
-                                <select
-                                    id='inputIdCategoriaVeiculo'
-                                    value={idCategoriaVeiculo}
-                                    className='form-select'
-                                    name='idCategoriaVeiculo'
-                                    onChange={(e) => setIdCategoriaVeiculo(e.target.value)}
-                                >
-                                    <option value=''>Selecione</option>
-                                    {categorias.map((dado) => (
-                                        <option key={dado.id} value={dado.id}>
-                                            {dado.nome}
-                                        </option>
-                                    ))}
-                                </select>
+                            <FormGroup label='Ativo' htmlFor='inputAtivo'>
+                                <input
+                                    type='checkbox'
+                                    id='inputAtivo'
+                                    checked={ativo}
+                                    className='form-control form-check-input'
+                                    name='ativo'
+                                    onChange={(e) => setAtivo(e.target.checked)}
+                                />
                             </FormGroup>
                             <Stack spacing={1} padding={1} direction='row'>
                                 <button
@@ -233,7 +355,7 @@ function CadastroVeiculo() {
                                     Salvar
                                 </button>
                                 <button
-                                    onClick={() => navigate(`/listagem-veiculo`)}
+                                    onClick={() => cancelar(`/listagem-veiculo`)}
                                     type='button'
                                     className='btn btn-danger'
                                 >

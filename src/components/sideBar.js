@@ -8,6 +8,7 @@ function SideBaR({ isOpen, onNavigate, role }) {
 
     const dropDownTitulos = rotasMenu.dropDownTitulos;
     const linksCadastros = rotasMenu.linksCadastros;
+    const configuracoes = dropDownTitulos.find((titulo) => titulo.label === 'Configurações');
 
     function sair() {
         clearSession();
@@ -27,7 +28,7 @@ function SideBaR({ isOpen, onNavigate, role }) {
             </div>
             <ul className='sidebar-nav' id=''>
                 {dropDownTitulos
-                    .filter((titulo) => titulo.role?.includes(role))
+                    .filter((titulo) => titulo.role?.includes(role) && titulo !== configuracoes)
                     .map((titulo) => {
                     const links = linksCadastros.filter(
                         (link) =>
@@ -64,6 +65,10 @@ function SideBaR({ isOpen, onNavigate, role }) {
             </ul>
             {role && (
                 <div className='sidebar-footer'>
+                    <a className='sidebar-link' href='/configuracoes' onClick={onNavigate}>
+                        <span className='material-symbols-outlined'>{configuracoes.iconName}</span>
+                        <span>{configuracoes.label}</span>
+                    </a>
                     <button
                         type='button'
                         className='sidebar-link'

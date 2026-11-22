@@ -75,8 +75,8 @@ function ListagemAdministrador() {
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Funcionario</th>
-                    <th scope='col'>Matricula</th>
+                    <th scope='col'>Funcionário</th>
+                    <th scope='col'>Matrícula</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>

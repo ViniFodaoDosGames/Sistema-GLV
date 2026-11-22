@@ -20,8 +20,15 @@ import ListagemBloqueio from "./views/listagens/listagem-bloqueio"
 import ListagemAgendamento from "./views/listagens/listagem-agendamento"
 import ListagemFuncionario from "./views/listagens/listagem-funcionario"
 import Login from './views/publico/login';
+import RecuperarSenha from './views/publico/recuperar-senha';
 import Configuracoes from './views/configuracoes';
 import Pagamento from './views/pagamento';
+import Inicio from './views/inicio';
+import Agendamentos from './views/cliente/agendamentos';
+import CheckIn from './views/operacao/checkin';
+import Log from './views/admin/log';
+import Relatorios from './views/admin/relatorios';
+import CancelarCadastro from './components/cancelar-cadastro';
 import { getSession } from './auth';
 import rotasMenu from './config/rotasMenu.json';
 
@@ -50,6 +57,11 @@ import CadastroNotificacao from './views/cadastros/cadastro-notificacao';
 
 import { Navigate, Outlet, Route, Routes, BrowserRouter, useLocation } from 'react-router-dom';
 
+const PERFIS_POR_CADASTRO = {
+  '/cadastro-agendamento': ['CLIENTE', 'FUNCIONARIO', 'ADMINISTRADOR'],
+  '/cadastro-veiculo': ['CLIENTE', 'ADMINISTRADOR'],
+};
+
 function ProtectedRoute({ children }) {
   const session = getSession();
   const location = useLocation();
@@ -65,7 +77,8 @@ function ProtectedRoute({ children }) {
   let allowedRoles = link?.role;
 
   if (!allowedRoles && location.pathname.startsWith('/cadastro-')) {
-    allowedRoles = ['ADMINISTRADOR'];
+    const cadastro = '/' + location.pathname.split('/')[1];
+    allowedRoles = PERFIS_POR_CADASTRO[cadastro] || ['ADMINISTRADOR'];
   }
 
   if (allowedRoles && !allowedRoles.includes(session.role)) {
@@ -80,6 +93,7 @@ function Rotas(props) {
     <BrowserRouter>
       <Routes>
         <Route path='/login' element={<Login />} />
+        <Route path='/recuperar-senha' element={<RecuperarSenha />} />
         <Route
           path='/configuracoes'
           element={
@@ -105,6 +119,11 @@ function Rotas(props) {
           }
         />
         <Route element={<ProtectedRoute />}>
+        <Route path='/' element={<Inicio />} />
+        <Route path='/agendamentos' element={<Agendamentos />} />
+        <Route path='/checkin' element={<CheckIn />} />
+        <Route path='/log' element={<Log />} />
+        <Route path='/relatorios' element={<Relatorios />} />
         <Route
           path='/listagem-marcas/:idParam?'
           element={<ListagemMarcas />}
@@ -191,10 +210,88 @@ function Rotas(props) {
 
 
         {/**Rotas de Cadastro**/}
+        <Route element={<CancelarCadastro />}>
         <Route
           path='/cadastro-marca/:idParam?'
           element={<CadastroMarca />}
         />
+        <Route
+          path='/cadastro-cor/:idParam?'
+          element={<CadastroCor />}
+        />
+        <Route
+          path='/cadastro-categoria-veiculo/:idParam?'
+          element={<CadastroCategoriaVeiculo />}
+        />
+        <Route
+          path='/cadastro-tipo-feriado/:idParam?'
+          element={<CadastroTipoFeriado />}
+        />
+        <Route
+          path='/cadastro-modelo/:idParam?'
+          element={<CadastroModelo />}
+        />
+        <Route
+          path='/cadastro-veiculo/:idParam?'
+          element={<CadastroVeiculo />}
+        />
+        <Route
+          path='/cadastro-feriado/:idParam?'
+          element={<CadastroFeriado />}
+        />
+        <Route
+          path='/cadastro-servico/:idParam?'
+          element={<CadastroServico />}
+        />
+        <Route
+          path='/cadastro-bloqueio/:idParam?'
+          element={<CadastroBloqueio />}
+        />
+        <Route
+          path='/cadastro-lava-jato/:idParam?'
+          element={<CadastroLavaJato />}
+        />
+        <Route
+          path='/cadastro-horario-funcionamento/:idParam?'
+          element={<CadastroHorarioFuncionamento />}
+        />
+        <Route
+          path='/cadastro-intervalo-almoco/:idParam?'
+          element={<CadastroIntervaloAlmoco />}
+        />
+        <Route
+          path='/cadastro-usuario/:idParam?'
+          element={<CadastroUsuario />}
+        />
+        <Route
+          path='/cadastro-cliente/:idParam?'
+          element={<CadastroCliente />}
+        />
+        <Route
+          path='/cadastro-funcionario/:idParam?'
+          element={<CadastroFuncionario />}
+        />
+        <Route
+          path='/cadastro-administrador/:idParam?'
+          element={<CadastroAdministrador />}
+        />
+        <Route
+          path='/cadastro-agendamento/:idParam?'
+          element={<CadastroAgendamento />}
+        />
+        <Route
+          path='/cadastro-pagamento/:idParam?'
+          element={<CadastroPagamento />}
+        />
+        <Route
+          path='/cadastro-lote-ponto/:idParam?'
+          element={<CadastroLotePonto />}
+        />
+        <Route
+          path='/cadastro-notificacao/:idParam?'
+          element={<CadastroNotificacao />}
+        />
+        </Route>
         </Route>
         <Route
           path='*'

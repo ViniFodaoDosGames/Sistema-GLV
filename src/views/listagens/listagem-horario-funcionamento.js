@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { NOME_DIA_SEMANA, formatarHora } from '../../config/util';
 const baseURL = `${BASE_URL}/HorariosFuncionamento`;
 
 
@@ -63,7 +64,7 @@ function ListagemHorarioFuncionamento() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Horario de Funcionamento'>
+      <Card title='Listagem de Horário de Funcionamento'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -72,16 +73,16 @@ function ListagemHorarioFuncionamento() {
                 className='btn btn-info'
                 onClick={() => cadastrar()}
               >
-                Novo Horario de Funcionamento
+                Novo Horário de Funcionamento
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
                     <th scope='col'>Lava Jato</th>
                     <th scope='col'>Dia da Semana</th>
-                    <th scope='col'>Horario de Abertura</th>
-                    <th scope='col'>Horario de Fechamento</th>
-                    <th scope='col'>Disponivel</th>
+                    <th scope='col'>Horário de Abertura</th>
+                    <th scope='col'>Horário de Fechamento</th>
+                    <th scope='col'>Disponível</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
@@ -89,9 +90,9 @@ function ListagemHorarioFuncionamento() {
                   {dados.map((dado) => (
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.idLavaJato}</td>
-                      <td className='justify-content-center'>{dado.diaSemana}</td>
-                      <td className='justify-content-center'>{dado.horaAbertura  ? dado.horaAbertura : 'Não Informado'}</td>
-                      <td className='justify-content-center'>{dado.horaFechamento  ? dado.horaFechamento : 'Não Informado'}</td>
+                      <td className='justify-content-center'>{NOME_DIA_SEMANA[dado.diaSemana] || dado.diaSemana}</td>
+                      <td className='justify-content-center'>{dado.horaAbertura ? formatarHora(dado.horaAbertura) : 'Não informado'}</td>
+                      <td className='justify-content-center'>{dado.horaFechamento ? formatarHora(dado.horaFechamento) : 'Não informado'}</td>
                       <td className='justify-content-center'>{dado.aberto ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >

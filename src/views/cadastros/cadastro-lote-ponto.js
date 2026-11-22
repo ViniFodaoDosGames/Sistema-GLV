@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 
 import Stack from '@mui/material/Stack';
 
@@ -12,10 +12,12 @@ import '../../custom.css';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios';
+import { formatarDataHora } from '../../config/util';
 
 function CadastroLotePonto() {
     const { idParam } = useParams();
     const navigate = useNavigate();
+    const { cancelar } = useOutletContext();
     const baseURL = `${BASE_URL}/LotesPontos`;
 
 
@@ -166,8 +168,8 @@ function CadastroLotePonto() {
                                     onChange={(e) => setTipo(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    <option value='FIDELIDADE'>FIDELIDADE</option>
-                                    <option value='COMPENSACAO'>COMPENSACAO</option>
+                                    <option value='FIDELIDADE'>Fidelidade</option>
+                                    <option value='COMPENSACAO'>Compensação</option>
                                 </select>
                             </FormGroup>
                             <FormGroup label='Quantidade: *' htmlFor='inputQuantidade'>
@@ -239,7 +241,7 @@ function CadastroLotePonto() {
                                     <option value=''>Selecione</option>
                                     {agendamentos.map((dado) => (
                                         <option key={dado.id} value={dado.id}>
-                                            {dado.dataHora}
+                                            {formatarDataHora(dado.dataHora)}
                                         </option>
                                     ))}
                                 </select>
@@ -253,7 +255,7 @@ function CadastroLotePonto() {
                                     Salvar
                                 </button>
                                 <button
-                                    onClick={() => navigate(`/listagem-lote-ponto`)}
+                                    onClick={() => cancelar(`/listagem-lote-ponto`)}
                                     type='button'
                                     className='btn btn-danger'
                                 >

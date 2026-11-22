@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { TIPO_LOTE_PONTOS, formatarData } from '../../config/util';
 const baseURL = `${BASE_URL}/LotesPontos`;
 
 
@@ -88,11 +89,11 @@ function ListagemLotePontos() {
                   {dados.map((dado) => (
                     <tr key={dado.id}>
                       <td className='justify-content-center'>{dado.idCliente}</td>
-                      <td className='justify-content-center'>{dado.tipo}</td>
+                      <td className='justify-content-center'>{TIPO_LOTE_PONTOS[dado.tipo] || dado.tipo}</td>
                     <td className='justify-content-center'>{dado.quantidade}</td>
                       <td className='justify-content-center'>{dado.saldo}</td>
-                      <td className='justify-content-center'>{dado.geradoEm}</td>
-                      <td className='justify-content-center'>{dado.expiraEm}</td>
+                      <td className='justify-content-center'>{formatarData(dado.geradoEm)}</td>
+                      <td className='justify-content-center'>{formatarData(dado.expiraEm)}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

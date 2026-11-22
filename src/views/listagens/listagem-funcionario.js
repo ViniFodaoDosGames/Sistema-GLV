@@ -40,7 +40,7 @@ function ListagemFuncionario() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(function (response) {
-        mensagemSucesso(`Funcionario excluído com sucesso!`);
+        mensagemSucesso(`Funcionário excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
             return dado.id !== id;
@@ -48,7 +48,7 @@ function ListagemFuncionario() {
         );
       })
       .catch(function (error) {
-        mensagemErro(`Erro ao excluir o funcionario`);
+        mensagemErro(`Erro ao excluir o funcionário`);
       });
   }
 
@@ -61,7 +61,7 @@ function ListagemFuncionario() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Funcionarios'>
+      <Card title='Listagem de Funcionários'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -70,12 +70,12 @@ function ListagemFuncionario() {
                 className='btn btn-info'
                 onClick={() => cadastrar()}
               >
-                Novo Funcionario
+                Novo Funcionário
               </button>
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Matricula</th>
+                    <th scope='col'>Matrícula</th>
                     <th scope='col'>Usuário</th>
                     <th scope='col'>Ações</th>
                   </tr>
