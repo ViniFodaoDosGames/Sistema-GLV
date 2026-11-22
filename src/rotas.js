@@ -14,7 +14,6 @@ import ListagemTipoFeriado from "./views/listagens/listagem-tipo-feriado"
 import ListagemFeriado from "./views/listagens/listagem-feriado"
 import ListagemNotificacao from "./views/listagens/listagem-notificacao"
 import ListagemServico from "./views/listagens/listagem-servico"
-import ListagemTempo from "./views/listagens/listagem-tempo"
 import ListagemPagamento from "./views/listagens/listagem-pagamento"
 import ListagemLotePonto from "./views/listagens/listagem-lote-ponto"
 import ListagemBloqueio from "./views/listagens/listagem-bloqueio"
@@ -28,6 +27,25 @@ import rotasMenu from './config/rotasMenu.json';
 
 
 import CadastroMarca from './views/cadastros/cadastro-marca';
+import CadastroCor from './views/cadastros/cadastro-cor';
+import CadastroCategoriaVeiculo from './views/cadastros/cadastro-categoria-veiculo';
+import CadastroTipoFeriado from './views/cadastros/cadastro-tipo-feriado';
+import CadastroModelo from './views/cadastros/cadastro-modelo';
+import CadastroVeiculo from './views/cadastros/cadastro-veiculo';
+import CadastroFeriado from './views/cadastros/cadastro-feriado';
+import CadastroServico from './views/cadastros/cadastro-servico';
+import CadastroBloqueio from './views/cadastros/cadastro-bloqueio';
+import CadastroLavaJato from './views/cadastros/cadastro-lava-jato';
+import CadastroHorarioFuncionamento from './views/cadastros/cadastro-horario-funcionamento';
+import CadastroIntervaloAlmoco from './views/cadastros/cadastro-intervalo-almoco';
+import CadastroUsuario from './views/cadastros/cadastro-usuario';
+import CadastroCliente from './views/cadastros/cadastro-cliente';
+import CadastroFuncionario from './views/cadastros/cadastro-funcionario';
+import CadastroAdministrador from './views/cadastros/cadastro-administrador';
+import CadastroAgendamento from './views/cadastros/cadastro-agendamento';
+import CadastroPagamento from './views/cadastros/cadastro-pagamento';
+import CadastroLotePonto from './views/cadastros/cadastro-lote-ponto';
+import CadastroNotificacao from './views/cadastros/cadastro-notificacao';
 
 
 import { Navigate, Outlet, Route, Routes, BrowserRouter, useLocation } from 'react-router-dom';
@@ -145,10 +163,6 @@ function Rotas(props) {
         <Route
           path='/listagem-notificacao/:idParam?'
           element={<ListagemNotificacao />}
-        />
-        <Route
-          path='/listagem-tempo/:idParam?'
-          element={<ListagemTempo />}
         />
         <Route
           path='/listagem-servico/:idParam?'

@@ -23,21 +23,12 @@ function CadastroMarca() {
     const [nome, setNome] = useState('');
     const [ativo, setAtivo] = useState(false);
 
-    const [dados, setDados] = React.useState([]);
-
-    function inicializar() {
-        if (idParam == null) {
-            setId('');
-            setNome('');
-            setAtivo(false);
-        } else {
-            setId(dados.id);
-            setNome(dados.nome);
-            setAtivo(dados.ativo);
-        }
-    }
-
     async function salvar() {
+        if (!nome.trim()) {
+            mensagemErro('Informe o nome');
+            return;
+        }
+
         let data = {
             id,
             nome,
@@ -50,11 +41,11 @@ function CadastroMarca() {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then(function (response) {
-                    mensagemSucesso(`Categoria ${nome} cadastrada com sucesso!`);
+                    mensagemSucesso(`Marca ${nome} cadastrada com sucesso!`);
                     navigate(`/listagem-marcas`);
                 })
                 .catch(function (error) {
-                    mensagemErro(error.response.data);
+                    mensagemErro('Erro ao cadastrar a marca');
                 });
         } else {
             await axios
@@ -62,27 +53,33 @@ function CadastroMarca() {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then(function (response) {
-                    mensagemSucesso(`Categoria ${nome} alterada com sucesso!`);
+                    mensagemSucesso(`Marca ${nome} alterada com sucesso!`);
                     navigate(`/listagem-marcas`);
                 })
                 .catch(function (error) {
-                    mensagemErro(error.response.data);
+                    mensagemErro('Erro ao alterar a marca');
                 });
         }
     }
+
     async function buscar() {
-        await axios.get(`${baseURL}/${idParam}`).then((response) => {
-            setDados(response.data);
-        });
-        setId(dados.id);
-        setNome(dados.nome);
-        setAtivo(dados.ativo);
+        if (idParam == null) return;
+
+        await axios
+            .get(`${baseURL}/${idParam}`)
+            .then((response) => {
+                setId(response.data.id);
+                setNome(response.data.nome);
+                setAtivo(response.data.ativo);
+            })
+            .catch(function (error) {
+                mensagemErro('Marca não encontrada');
+            });
     }
+
     useEffect(() => {
         buscar();
-    }, [id]);
-
-    if (!dados) return null;
+    }, [idParam]);
 
     return (
         <div className='container'>
@@ -90,7 +87,7 @@ function CadastroMarca() {
                 <div className='row'>
                     <div className='col-lg-12'>
                         <div className='bs-component'>
-                            <FormGroup label='Descrição: *' htmlFor='inputNome'>
+                            <FormGroup label='Nome: *' htmlFor='inputNome'>
                                 <input
                                     type='text'
                                     id='inputNome'
@@ -100,14 +97,14 @@ function CadastroMarca() {
                                     onChange={(e) => setNome(e.target.value)}
                                 />
                             </FormGroup>
-                            <FormGroup label='Descrição: *' htmlFor='inputAtivo'>
+                            <FormGroup label='Ativo' htmlFor='inputAtivo'>
                                 <input
                                     type='checkbox'
                                     id='inputAtivo'
                                     checked={ativo}
                                     className='form-control form-check-input'
                                     name='ativo'
-                                    onChange={(e) => setAtivo(e.target.value)}
+                                    onChange={(e) => setAtivo(e.target.checked)}
                                 />
                             </FormGroup>
                             <Stack spacing={1} padding={1} direction='row'>
@@ -119,7 +116,7 @@ function CadastroMarca() {
                                     Salvar
                                 </button>
                                 <button
-                                    onClick={inicializar}
+                                    onClick={() => navigate(`/listagem-marcas`)}
                                     type='button'
                                     className='btn btn-danger'
                                 >

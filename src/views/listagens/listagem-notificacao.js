@@ -63,7 +63,7 @@ function ListagemNotificacao() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title='Listagem de Notificacaos'>
+      <Card title='Listagem de Notificações'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -80,7 +80,6 @@ function ListagemNotificacao() {
                     <th scope='col'>Canal</th>
                     <th scope='col'>Mensagem</th>
                     <th scope='col'>Data e Hora</th>
-                    <th scope='col'>Status do Envio</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
@@ -90,7 +89,6 @@ function ListagemNotificacao() {
                       <td className='justify-content-center'>{dado.canal}</td>
                       <td className='justify-content-center'>{dado.mensagem}</td>
                       <td className='justify-content-center'>{dado.dataHora}</td>
-                      <td className='justify-content-center'>{dado.statusEnvio}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

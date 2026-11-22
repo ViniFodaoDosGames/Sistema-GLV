@@ -66,33 +66,35 @@
     },
     {
       "id": "funcionario-03",
-      "idUsuario": "usuario-03"
+      "idUsuario": "usuario-05"
     },
     {
       "id": "funcionario-04",
-      "idUsuario": "usuario-04"
+      "idUsuario": "usuario-06"
     }
   ],
   "Administradores": [
     {
       "id": "adm-1",
-      "idFuncionario": "funcionario-01"
+      "idFuncionario": "funcionario-03"
     },
     {
       "id": "adm-2",
-      "idFuncionario": "funcionario-02"
+      "idFuncionario": "funcionario-04"
+    },
+    {
+      "id": "bNYIaLT4waQ",
+      "idFuncionario": "funcionario-01"
     }
   ],
   "Clientes": [
     {
       "id": "cliente-01",
-      "dataAceiteTermos": "2026-09-01 10:00:00",
-      "idUsuario": "usuario-05"
+      "idUsuario": "usuario-03"
     },
     {
       "id": "cliente-02",
-      "dataAceiteTermos": "2026-09-02 14:30:00",
-      "idUsuario": "usuario-06"
+      "idUsuario": "usuario-04"
     }
   ],
   "Cores": [
@@ -110,6 +112,11 @@
       "id": "cor-03",
       "nome": "prata",
       "ativo": true
+    },
+    {
+      "id": "l7KN3_E8AM8",
+      "nome": "Azul",
+      "ativo": true
     }
   ],
   "Marcas": [
@@ -119,19 +126,9 @@
       "ativo": true
     },
     {
-      "id": "marca-2",
+      "id": "marca-02",
       "nome": "marca_2",
       "ativo": true
-    },
-    {
-      "id": "YXi_IAmx30Q",
-      "nome": "teste2",
-      "ativo": "on"
-    },
-    {
-      "id": "Ujbkd3uSAnw",
-      "nome": "teste",
-      "ativo": "on"
     }
   ],
   "Modelos": [
@@ -203,12 +200,12 @@
     },
     {
       "id": "2",
-      "idCliente": "cliente-02",
+      "idCliente": "cliente-01",
       "idVeiculo": "veiculo-02"
     },
     {
       "id": "3",
-      "idCliente": "cliente-03",
+      "idCliente": "cliente-02",
       "idVeiculo": "veiculo-03"
     }
   ],
@@ -285,7 +282,12 @@
       "id": "intervalo-01",
       "horaInicio": "12:00:00",
       "horaFim": "13:00:00",
-      "aplicaFimDeSemana": false,
+      "idLavaJato": "lavajato-01"
+    },
+    {
+      "id": "intervalo-02",
+      "horaInicio": "",
+      "horaFim": "",
       "idLavaJato": "lavajato-01"
     }
   ],
@@ -327,10 +329,9 @@
       "pontosGerados": 40,
       "vagas": 2,
       "descricao": "Lavagem externa",
-      "notificaConclusao": true,
       "ativo": true,
-      "TempoDuracao": 2,
-      "TempoIntervalo": 1,
+      "tempoDuracao": 30,
+      "tempoIntervalo": 15,
       "idLavaJato": "lavajato-01"
     },
     {
@@ -340,10 +341,9 @@
       "pontosGerados": 80,
       "vagas": 1,
       "descricao": "Lavagem externa e interna",
-      "notificaConclusao": true,
       "ativo": true,
-      "TempoDuracao": 3,
-      "TempoIntervalo": 1,
+      "tempoDuracao": 60,
+      "tempoIntervalo": 15,
       "idLavaJato": "lavajato-01"
     }
   ],
@@ -389,7 +389,7 @@
       "walkIn": false,
       "posicaoFila": 2,
       "idCliente": "cliente-02",
-      "idVeiculo": "veiculo-02",
+      "idVeiculo": "veiculo-03",
       "idServico": "servico-02"
     },
     {
@@ -411,7 +411,7 @@
       "walkIn": true,
       "posicaoFila": 1,
       "idCliente": "cliente-01",
-      "idVeiculo": "veiculo-01",
+      "idVeiculo": "veiculo-02",
       "idServico": "servico-01"
     },
     {
@@ -447,7 +447,7 @@
       "codigoGateway": "GW-0002",
       "justificativaEstorno": null,
       "idAgendamento": "agendamento-02",
-      "idFuncionario": 1
+      "idFuncionario": "funcionario-01"
     },
     {
       "id": "pagamento-03",
@@ -458,29 +458,7 @@
       "codigoGateway": "GW-1795228968338",
       "justificativaEstorno": null,
       "idAgendamento": "agendamento-03",
-      "idFuncionario": 2
-    },
-    {
-      "id": "pagamento-04",
-      "forma": "PIX",
-      "status": "PENDENTE",
-      "valor": 40,
-      "dataHora": null,
-      "codigoGateway": null,
-      "justificativaEstorno": null,
-      "idAgendamento": "agendamento-04",
-      "idFuncionario": null
-    },
-    {
-      "id": "pagamento-05",
-      "forma": "CARTAO",
-      "status": "APROVADO",
-      "valor": 80,
-      "dataHora": "2026-11-21 00:03:51",
-      "codigoGateway": "GW-1795230231583",
-      "justificativaEstorno": null,
-      "idAgendamento": "agendamento-05",
-      "idFuncionario": null
+      "idFuncionario": "funcionario-02"
     }
   ],
   "LotesPontos": [
@@ -491,7 +469,7 @@
       "saldo": 0,
       "geradoEm": "2026-10-01",
       "expiraEm": "2027-03-30",
-      "idCliente": 1,
+      "idCliente": "cliente-01",
       "idAgendamento": "agendamento-01"
     },
     {
@@ -501,7 +479,7 @@
       "saldo": 20,
       "geradoEm": "2026-09-20",
       "expiraEm": "2026-12-19",
-      "idCliente": 2,
+      "idCliente": "cliente-02",
       "idAgendamento": null
     }
   ],
@@ -526,16 +504,16 @@
       "tipo": "SAIDA",
       "dataHora": "2026-10-01 09:35:00",
       "observacao": "Veiculo entregue",
-      "idAgendamento": 1,
-      "idFuncionario": 1
+      "idAgendamento": "agendamento-01",
+      "idFuncionario": "funcionario-01"
     },
     {
       "id": "logs-03",
       "tipo": "AJUSTE",
       "dataHora": "2026-10-01 10:05:00",
       "observacao": "Ajuste de posicao na fila",
-      "idAgendamento": 2,
-      "idFuncionario": 2
+      "idAgendamento": "agendamento-02",
+      "idFuncionario": "funcionario-02"
     }
   ],
   "Notificacoes": [
@@ -544,17 +522,15 @@
       "canal": "WHATSAPP",
       "mensagem": "Seu veiculo esta pronto",
       "dataHora": "2026-10-01 09:35:00",
-      "statusEnvio": "ENVIADO",
-      "idCliente": 1,
-      "idAgendamento": 1
+      "idCliente": "cliente-01",
+      "idAgendamento": "agendamento-01"
     },
     {
       "id": "notificacao-02",
       "canal": "EMAIL",
       "mensagem": "Voce recebeu pontos de compensacao",
       "dataHora": "2026-09-20 12:00:00",
-      "statusEnvio": "ENVIADO",
-      "idCliente": 2,
+      "idCliente": "cliente-02",
       "idAgendamento": null
     }
   ],

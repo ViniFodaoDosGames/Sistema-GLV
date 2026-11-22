@@ -75,12 +75,14 @@ function ListagemServico() {
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
+                    <th scope='col'>Lava Jato</th>
                     <th scope='col'>Nome</th>
-                    <th scope='col'>Perço</th>
+                    <th scope='col'>Preço</th>
                     <th scope='col'>Pontos Gerados</th>
+                    <th scope='col'>Duração (min)</th>
+                    <th scope='col'>Intervalo (min)</th>
                     <th scope='col'>Vagas</th>
                     <th scope='col'>Descrição</th>
-                    <th scope='col'>Notificação Pós Conclusão</th>
                     <th scope='col'>Ativo</th>
                     <th scope='col'>Ações</th>
                   </tr>
@@ -88,12 +90,14 @@ function ListagemServico() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
+                      <td className='justify-content-center'>{dado.idLavaJato}</td>
                       <td className='justify-content-center'>{dado.nome}</td>
                       <td className='justify-content-center'>{dado.preco}</td>
                       <td className='justify-content-center'>{dado.pontosGerados}</td>
+                      <td className='justify-content-center'>{dado.tempoDuracao}</td>
+                      <td className='justify-content-center'>{dado.tempoIntervalo}</td>
                       <td className='justify-content-center'>{dado.vagas}</td>
                       <td className='justify-content-center'>{dado.descricao}</td>
-                      <td className='justify-content-center'>{dado.notificaConclusao ? 'Sim' : 'Não'}</td>
                       <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >

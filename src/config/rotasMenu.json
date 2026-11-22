@@ -161,12 +161,6 @@
             "role": ["ADMINISTRADOR"]
         },
         {
-            "href": "/listagem-tempo",
-            "label": "Tempo de serviço",
-            "idDropDown": "6",
-            "role": ["ADMINISTRADOR"]
-        },
-        {
             "href": "/listagem-servico",
             "label": "Serviços",
             "idDropDown": "6",
