@@ -8,7 +8,7 @@ import '../../custom.css';
 
 import { carregar } from '../../config/api';
 import { obterSessao, PERFIS } from '../../config/sessao';
-import { hoje, normalizarPlaca, mascaraPlaca, STATUS_AGENDAMENTO } from '../../config/util';
+import { hoje, formatarData, normalizarPlaca, mascaraPlaca, STATUS_AGENDAMENTO } from '../../config/util';
 import { detalharAgendamento, posicaoNaFila } from '../../config/agenda';
 import { fazerCheckin, concluirAtendimento, fazerCheckout, jaSaiu } from '../../config/operacao';
 
@@ -44,9 +44,10 @@ function CheckIn() {
   if (!db) return null;
 
   const placaBuscada = normalizarPlaca(placa);
+  const todosOsDias = ehAdmin && (mostrarTudo || placaBuscada !== '');
 
   const doDia = db.Agendamentos
-    .filter((a) => mostrarTudo || placaBuscada || a.dataHora.substring(0, 10) === data)
+    .filter((a) => todosOsDias || a.dataHora.substring(0, 10) === data)
     .map((a) => ({ ...a, info: detalharAgendamento(a, db), fila: posicaoNaFila(a, db.Agendamentos) }))
     .filter((a) => !placaBuscada || normalizarPlaca(a.info.placa).includes(placaBuscada));
 
@@ -59,6 +60,15 @@ function CheckIn() {
     .sort((a, b) => a.dataHora.localeCompare(b.dataHora));
 
   const itensDaPagina = itens.slice((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA);
+
+  let complemento = ' neste dia.';
+  if (!ehAdmin) {
+    complemento = placaBuscada ? ' com essa placa hoje.' : ' hoje.';
+  } else if (placaBuscada) {
+    complemento = ' com essa placa.';
+  } else if (mostrarTudo) {
+    complemento = '.';
+  }
 
   async function executar(acao, agendamento) {
     setOcupado(true);
@@ -117,17 +127,21 @@ function CheckIn() {
               setPagina(1);
             }}
           />
-          <input
-            type='date'
-            className='form-control w-auto'
-            value={data}
-            aria-label='Dia dos atendimentos'
-            disabled={mostrarTudo || placaBuscada !== ''}
-            onChange={(e) => {
-              setData(e.target.value);
-              setPagina(1);
-            }}
-          />
+          {ehAdmin ? (
+            <input
+              type='date'
+              className='form-control w-auto'
+              value={data}
+              aria-label='Dia dos atendimentos'
+              disabled={todosOsDias}
+              onChange={(e) => {
+                setData(e.target.value);
+                setPagina(1);
+              }}
+            />
+          ) : (
+            <span>Atendimentos de hoje, {formatarData(data)}</span>
+          )}
           {ehAdmin && (
             <div className='form-check'>
               <input
@@ -150,7 +164,7 @@ function CheckIn() {
         {itens.length === 0 && (
           <p>
             Nenhum atendimento {aba === 'checkin' ? 'para check-in' : 'para check-out'}
-            {placaBuscada ? ' com essa placa.' : mostrarTudo ? '.' : ' neste dia.'}
+            {complemento}
           </p>
         )}
 
@@ -159,7 +173,7 @@ function CheckIn() {
             <thead>
               <tr>
                 <th scope='col'>Fila</th>
-                <th scope='col'>Data</th>
+                {ehAdmin && <th scope='col'>Data</th>}
                 <th scope='col'>Horário</th>
                 <th scope='col'>Cliente</th>
                 <th scope='col'>Serviço</th>
@@ -174,7 +188,7 @@ function CheckIn() {
               {itensDaPagina.map((a) => (
                 <tr key={a.id}>
                   <td>{a.fila || '—'}</td>
-                  <td>{a.info.data}</td>
+                  {ehAdmin && <td>{a.info.data}</td>}
                   <td>{a.info.hora}</td>
                   <td>{a.info.nomeCliente}</td>
                   <td>{a.info.servico.nome}</td>
