@@ -11,7 +11,7 @@
     },
     {
       "id": "usuario-02",
-      "nome": "Fernando",
+      "nome": "Funcionário ",
       "cpf": "11111111102",
       "email": "usuario02@email.com",
       "celular": "32999999902",
@@ -20,7 +20,7 @@
     },
     {
       "id": "usuario-03",
-      "nome": "usuario-03",
+      "nome": "Cliente",
       "cpf": "11111111103",
       "email": "usuario03@email.com",
       "celular": "32999999903",
@@ -1164,7 +1164,7 @@
     },
     {
       "dataHora": "2026-11-23 15:30:00",
-      "status": "CONFIRMADO",
+      "status": "CONCLUIDO",
       "valor": 40,
       "walkIn": false,
       "posicaoFila": 1,
@@ -1186,7 +1186,7 @@
     },
     {
       "dataHora": "2026-11-23 16:00:00",
-      "status": "CONFIRMADO",
+      "status": "CANCELADO",
       "valor": 40,
       "walkIn": false,
       "idCliente": "cliente-01",
@@ -1206,7 +1206,7 @@
     },
     {
       "dataHora": "2026-11-23 17:15:00",
-      "status": "AGUARDANDO_PAGAMENTO",
+      "status": "CANCELADO",
       "valor": 40,
       "walkIn": false,
       "idCliente": "8WPlT0GddtA",
@@ -1360,11 +1360,11 @@
     },
     {
       "forma": "PIX",
-      "status": "APROVADO",
+      "status": "ESTORNADO",
       "valor": 40,
       "dataHora": "2026-11-23 15:49:26",
       "codigoGateway": null,
-      "justificativaEstorno": null,
+      "justificativaEstorno": "Não compareceu",
       "idFuncionario": "funcionario-02",
       "idAgendamento": "KMTvJp_a3AI",
       "id": "DX8TaK3ulJ4"
@@ -1379,17 +1379,6 @@
       "idFuncionario": null,
       "idAgendamento": "R325lbO3iUo",
       "id": "EYC_m1DD_LM"
-    },
-    {
-      "forma": "PIX",
-      "status": "PENDENTE",
-      "valor": 40,
-      "dataHora": null,
-      "codigoGateway": null,
-      "justificativaEstorno": null,
-      "idFuncionario": null,
-      "idAgendamento": "SoqCjjIx-jw",
-      "id": "E3cTwN3FsLQ"
     },
     {
       "forma": "PIX",
@@ -1473,6 +1462,16 @@
       "idCliente": "cliente-01",
       "idAgendamento": "V8gnw6XMWVM",
       "id": "5ZBjZhKKU_4"
+    },
+    {
+      "tipo": "FIDELIDADE",
+      "quantidade": 40,
+      "saldo": 40,
+      "geradoEm": "2026-11-23",
+      "expiraEm": "2027-05-22",
+      "idCliente": "cliente-01",
+      "idAgendamento": "h52J7O_5fUQ",
+      "id": "0ckMVdYrj_E"
     }
   ],
   "PagamentosLotesPontos": [
@@ -1580,6 +1579,14 @@
       "idAgendamento": "V8gnw6XMWVM",
       "idFuncionario": "funcionario-03",
       "id": "c1YUxts3c74"
+    },
+    {
+      "tipo": "ENTRADA",
+      "dataHora": "2026-11-23 17:22:35",
+      "observacao": "Check-in realizado",
+      "idAgendamento": "h52J7O_5fUQ",
+      "idFuncionario": "funcionario-01",
+      "id": "EKCftUznLyA"
     }
   ],
   "Notificacoes": [
