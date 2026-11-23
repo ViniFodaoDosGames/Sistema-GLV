@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { emUso } from '../../config/api';
 import { TIPO_LOTE_PONTOS, formatarData } from '../../config/util';
 const baseURL = `${BASE_URL}/LotesPontos`;
 
@@ -33,6 +34,10 @@ function ListagemLotePontos() {
   const [dados, setDados] = React.useState([]);
 
   async function excluir(id) {
+    if (await emUso([['PagamentosLotesPontos', 'idLotePontos']], id)) {
+      mensagemErro('Estes pontos já foram usados em um pagamento e não podem ser excluídos');
+      return;
+    }
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);

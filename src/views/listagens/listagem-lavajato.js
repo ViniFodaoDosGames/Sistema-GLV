@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { emUso } from '../../config/api';
 const baseURL = `${BASE_URL}/LavaJatos`;
 
 
@@ -32,6 +33,10 @@ function ListagemParametrosLavaJato() {
   const [dados, setDados] = React.useState([]);
 
   async function excluir(id) {
+    if (await emUso([['Servicos', 'idLavaJato'], ['HorariosFuncionamento', 'idLavaJato'], ['IntervalosAlmoco', 'idLavaJato'], ['Feriados', 'idLavaJato']], id)) {
+      mensagemErro('Este lava-jato tem serviços, horários ou feriados e não pode ser excluído');
+      return;
+    }
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);

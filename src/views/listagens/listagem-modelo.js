@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { emUso } from '../../config/api';
 const baseURL = `${BASE_URL}/Modelos`;
 
 
@@ -40,6 +41,10 @@ function ListagemModelo() {
     modelo.anoInicio ? `${modelo.anoInicio} a ${modelo.anoFim || 'hoje'}` : '';
 
   async function excluir(id) {
+    if (await emUso([['Veiculos', 'idModelo']], id)) {
+      mensagemErro('Este modelo é usado em veículos e não pode ser excluído');
+      return;
+    }
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);

@@ -738,6 +738,33 @@
       "idCor": "cor-01",
       "idModelo": "modelo-04",
       "idCategoriaVeiculo": "categoria-01"
+    },
+    {
+      "id": "c-hjXhxI_7w",
+      "placa": "ABC1236",
+      "ano": 2024,
+      "ativo": true,
+      "idCor": "l7KN3_E8AM8",
+      "idModelo": "modelo-10",
+      "idCategoriaVeiculo": "I_T41bO5RgM"
+    },
+    {
+      "id": "veiculo-01",
+      "placa": "ABC1D23",
+      "ano": 2018,
+      "ativo": true,
+      "idCor": "cor-01",
+      "idModelo": "modelo-01",
+      "idCategoriaVeiculo": "categoria-01"
+    },
+    {
+      "id": "veiculo-02",
+      "placa": "DEF4G56",
+      "ano": 2021,
+      "ativo": true,
+      "idCor": "cor-02",
+      "idModelo": "modelo-02",
+      "idCategoriaVeiculo": "categoria-01"
     }
   ],
   "ClientesVeiculos": [
@@ -758,13 +785,13 @@
     },
     {
       "idCliente": "cliente-01",
-      "idVeiculo": "4KCr8SQv2yE",
-      "id": "m9B64lASOQc"
-    },
-    {
-      "idCliente": "cliente-01",
       "idVeiculo": "SnIT7MGY01M",
       "id": "WyzzMGMWNLw"
+    },
+    {
+      "idCliente": "cliente-02",
+      "idVeiculo": "c-hjXhxI_7w",
+      "id": "2u2BpZoGzi8"
     }
   ],
   "LavaJatos": [

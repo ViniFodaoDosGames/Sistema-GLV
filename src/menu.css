@@ -237,7 +237,32 @@ button{
     display: revert !important;
   }
 
+  body,
+  .app-layout {
+    background: white !important;
+  }
+
+  .app-content,
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
   .card {
-    overflow: visible;
+    overflow: visible !important;
+    border: none !important;
+  }
+
+  .card .card-header,
+  .card .row {
+    min-width: 0 !important;
+  }
+
+  .table {
+    font-size: 0.8rem;
+  }
+
+  .table tr {
+    break-inside: avoid;
   }
 }

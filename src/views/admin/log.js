@@ -65,11 +65,11 @@ function Log() {
   function linha(l) {
     return (
       <tr key={l.id}>
-        <td>{formatarData(l.dataHora)}</td>
-        <td>{formatarHora(l.dataHora)}</td>
+        <td className='text-nowrap'>{formatarData(l.dataHora)}</td>
+        <td className='text-nowrap'>{formatarHora(l.dataHora)}</td>
         <td>{l.info ? `${l.info.placa} — ${l.info.servico.nome} (${l.info.data} ${l.info.hora})` : l.idAgendamento}</td>
-        <td>{l.info ? l.info.nomeCliente : ''}</td>
-        <td>{nomeFuncionario(l.idFuncionario, db)}</td>
+        <td className='text-nowrap'>{l.info ? l.info.nomeCliente : ''}</td>
+        <td className='text-nowrap'>{nomeFuncionario(l.idFuncionario, db)}</td>
         <td>{l.observacao}</td>
       </tr>
     );

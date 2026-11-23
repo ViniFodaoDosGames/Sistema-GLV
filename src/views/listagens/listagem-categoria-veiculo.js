@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { emUso } from '../../config/api';
 const baseURL = `${BASE_URL}/CategoriasVeiculo`;
 
 
@@ -32,6 +33,10 @@ function ListagemCategoriaVeiculo() {
   const [dados, setDados] = React.useState([]);
 
   async function excluir(id) {
+    if (await emUso([['Modelos', 'idCategoriaVeiculo'], ['Veiculos', 'idCategoriaVeiculo']], id)) {
+      mensagemErro('Esta categoria é usada em modelos ou veículos e não pode ser excluída');
+      return;
+    }
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);

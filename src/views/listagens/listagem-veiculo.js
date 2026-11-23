@@ -16,6 +16,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
 import { getSession } from '../../auth';
+import { emUso, removerLigacoes } from '../../config/api';
 const baseURL = `${BASE_URL}/Veiculos`;
 
 
@@ -51,6 +52,10 @@ function ListagemVeiculo() {
   }
 
   async function excluir(id) {
+    if (await emUso([['Agendamentos', 'idVeiculo']], id)) {
+      mensagemErro('Este veículo tem agendamentos e não pode ser excluído');
+      return;
+    }
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);
@@ -58,7 +63,8 @@ function ListagemVeiculo() {
       .delete(url, data, {
         headers: { 'Content-Type': 'application/json' },
       })
-      .then(function (response) {
+      .then(async function (response) {
+        await removerLigacoes('ClientesVeiculos', 'idVeiculo', id);
         mensagemSucesso(`Veículo excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
@@ -155,7 +161,7 @@ function ListagemVeiculo() {
                     <th scope='col'>Categoria</th>
                     <th scope='col'>Cor</th>
                     {!ehCliente && <th scope='col'>Dono</th>}
-                    <th scope='col'>Ativo</th>
+                    {!ehCliente && <th scope='col'>Ativo</th>}
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
@@ -169,7 +175,7 @@ function ListagemVeiculo() {
                       <td className='justify-content-center'>{nomeEm('CategoriasVeiculo', dado.idCategoriaVeiculo)}</td>
                       <td className='justify-content-center'>{nomeEm('Cores', dado.idCor)}</td>
                       {!ehCliente && <td className='justify-content-center'>{donoDoVeiculo(dado)}</td>}
-                      <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>
+                      {!ehCliente && <td className='justify-content-center'>{dado.ativo ? 'Sim' : 'Não'}</td>}
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

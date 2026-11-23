@@ -32,3 +32,22 @@ export async function alterar(colecao, id, campos) {
 export async function remover(colecao, id) {
   await axios.delete(`${BASE_URL}/${colecao}/${id}`);
 }
+
+export async function emUso(ligacoes, id) {
+  for (const [colecao, campo] of ligacoes) {
+    const resposta = await axios.get(`${BASE_URL}/${colecao}`);
+    if (resposta.data.some((item) => item[campo] === id)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export async function removerLigacoes(colecao, campo, id) {
+  const resposta = await axios.get(`${BASE_URL}/${colecao}`);
+  for (const item of resposta.data) {
+    if (item[campo] === id) {
+      await remover(colecao, item.id);
+    }
+  }
+}

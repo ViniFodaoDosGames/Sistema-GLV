@@ -17,6 +17,7 @@ import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
 import { STATUS_AGENDAMENTO, formatarDataHora, formatarMoeda } from '../../config/util';
 import { getSession } from '../../auth';
+import { emUso, removerLigacoes } from '../../config/api';
 const baseURL = `${BASE_URL}/Agendamentos`;
 
 
@@ -41,6 +42,11 @@ function ListagemAgendamento() {
   const [pagamentos, setPagamentos] = React.useState([]);
 
   async function excluir(id) {
+    const pago = pagamentos.some((pagamento) => pagamento.idAgendamento === id && pagamento.status !== 'PENDENTE');
+    if (pago || (await emUso([['LotesPontos', 'idAgendamento'], ['LogsMovimentacao', 'idAgendamento']], id))) {
+      mensagemErro('Este agendamento já foi pago ou atendido e não pode ser excluído');
+      return;
+    }
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);
@@ -48,7 +54,9 @@ function ListagemAgendamento() {
       .delete(url, data, {
         headers: { 'Content-Type': 'application/json' },
       })
-      .then(function (response) {
+      .then(async function (response) {
+        await removerLigacoes('Pagamentos', 'idAgendamento', id);
+        await removerLigacoes('Notificacoes', 'idAgendamento', id);
         mensagemSucesso(`Agendamento excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {

@@ -9,6 +9,14 @@ import '../../custom.css';
 import { carregar } from '../../config/api';
 import { hoje, formatarData, formatarMoeda, FORMA_PAGAMENTO } from '../../config/util';
 
+function ultimoDiaDoMes() {
+  const agora = new Date();
+  const ultimo = new Date(agora.getFullYear(), agora.getMonth() + 1, 0);
+  const mes = String(ultimo.getMonth() + 1).padStart(2, '0');
+  const dia = String(ultimo.getDate()).padStart(2, '0');
+  return `${ultimo.getFullYear()}-${mes}-${dia}`;
+}
+
 function Indicador({ titulo, valor }) {
   return (
     <div className='border rounded p-3' style={{ minWidth: '12rem' }}>
@@ -21,7 +29,7 @@ function Indicador({ titulo, valor }) {
 function Relatorios() {
   const [db, setDb] = useState(null);
   const [dataInicial, setDataInicial] = useState(`${hoje().substring(0, 8)}01`);
-  const [dataFinal, setDataFinal] = useState(hoje());
+  const [dataFinal, setDataFinal] = useState(ultimoDiaDoMes());
 
   useEffect(() => {
     carregar(['Agendamentos', 'Servicos', 'Pagamentos', 'LotesPontos'])

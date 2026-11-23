@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { emUso } from '../../config/api';
 import { STATUS_PAGAMENTO, FORMA_PAGAMENTO, formatarDataHora, formatarMoeda } from '../../config/util';
 import { getSession } from '../../auth';
 const baseURL = `${BASE_URL}/Pagamentos`;
@@ -36,6 +37,10 @@ function ListagemPagamento() {
   const [dados, setDados] = React.useState([]);
 
   async function excluir(id) {
+    if (await emUso([['PagamentosLotesPontos', 'idPagamento']], id)) {
+      mensagemErro('Este pagamento usou pontos e não pode ser excluído');
+      return;
+    }
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);
