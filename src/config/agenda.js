@@ -1,4 +1,4 @@
-import { carregar, inserir, alterar } from './api';
+import { carregar, inserir, alterar, remover } from './api';
 import {
   agora,
   hoje,
@@ -18,6 +18,8 @@ export const STATUS_OCUPAM_VAGA = ['AGUARDANDO_PAGAMENTO', 'CONFIRMADO', 'EM_AND
 export const PRAZO_CANCELAMENTO_MIN = 15;
 
 export const TOLERANCIA_MIN = 10;
+
+export const PRAZO_PAGAMENTO_MIN = 15;
 
 function sobrepoe(inicioA, fimA, inicioB, fimB) {
   return inicioA < fimB && inicioB < fimA;
@@ -155,6 +157,22 @@ export function podeAlterarAgendamento(agendamento) {
     ['AGUARDANDO_PAGAMENTO', 'CONFIRMADO'].includes(agendamento.status) &&
     minutosAteHorario(agendamento) >= PRAZO_CANCELAMENTO_MIN
   );
+}
+
+export function pagamentoExpirado(agendamento) {
+  return agendamento.status === 'AGUARDANDO_PAGAMENTO' && minutosAteHorario(agendamento) < -PRAZO_PAGAMENTO_MIN;
+}
+
+export async function cancelarExpirados(agendamentos, pagamentos) {
+  const expirados = agendamentos.filter(pagamentoExpirado);
+  for (const agendamento of expirados) {
+    await alterar('Agendamentos', agendamento.id, { status: 'CANCELADO' });
+    const pendentes = pagamentos.filter((p) => p.idAgendamento === agendamento.id && p.status === 'PENDENTE');
+    for (const pagamento of pendentes) {
+      await remover('Pagamentos', pagamento.id).catch(() => {});
+    }
+  }
+  return expirados.length > 0;
 }
 
 export function posicaoNaFila(agendamento, agendamentos) {

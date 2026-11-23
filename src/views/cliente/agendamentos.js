@@ -18,6 +18,7 @@ import {
   creditarCompensacao,
   custoResgate,
   registrarNotificacao,
+  cancelarExpirados,
   PRAZO_CANCELAMENTO_MIN,
 } from '../../config/agenda';
 
@@ -40,10 +41,14 @@ function Agendamentos() {
 
   async function buscar() {
     try {
-      const dados = await carregar([
+      const colecoes = [
         'Agendamentos', 'Servicos', 'Veiculos', 'Modelos', 'Marcas', 'Cores',
         'Clientes', 'Usuarios', 'Pagamentos', 'LavaJatos',
-      ]);
+      ];
+      let dados = await carregar(colecoes);
+      if (await cancelarExpirados(dados.Agendamentos, dados.Pagamentos)) {
+        dados = await carregar(colecoes);
+      }
       setDb(dados);
     } catch (erro) {
       mensagemErro('Erro ao carregar os agendamentos');

@@ -28,20 +28,20 @@ function CadastroLavaJato() {
     const [ativo, setAtivo] = useState(false);
 
     async function salvar() {
-        if (totalPosicoes === '') {
-            mensagemErro('Informe: Total de posições');
+        if (!(Number(totalPosicoes) >= 1)) {
+            mensagemErro('Informe pelo menos 1 posição');
             return;
         }
-        if (fatorFidelidade === '') {
-            mensagemErro('Informe: Fator de fidelidade');
+        if (!(Number(fatorFidelidade) >= 1)) {
+            mensagemErro('O fator de fidelidade deve ser pelo menos 1');
             return;
         }
-        if (validadePontosFidelidade === '') {
-            mensagemErro('Informe: Validade dos pontos de fidelidade (dias)');
+        if (!(Number(validadePontosFidelidade) >= 1)) {
+            mensagemErro('A validade dos pontos de fidelidade deve ser de pelo menos 1 dia');
             return;
         }
-        if (validadePontosCompensacao === '') {
-            mensagemErro('Informe: Validade dos pontos de compensação (dias)');
+        if (!(Number(validadePontosCompensacao) >= 1)) {
+            mensagemErro('A validade dos pontos de compensação deve ser de pelo menos 1 dia');
             return;
         }
         if (idParam == null) {

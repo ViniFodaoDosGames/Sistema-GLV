@@ -5,6 +5,7 @@ import FormGroup from '../components/form-group';
 import { clearSession, getSession } from '../auth';
 import { BASE_URL } from '../config/axios';
 import { mensagemErro, mensagemSucesso } from '../components/toastr';
+import { emailValido } from '../config/util';
 import '../custom.css';
 
 function Configuracoes() {
@@ -59,6 +60,14 @@ function Configuracoes() {
 
   async function salvarDados(e) {
     e.preventDefault();
+    if (!nome.trim()) {
+      mensagemErro('Informe o nome.');
+      return;
+    }
+    if (!emailValido(email)) {
+      mensagemErro('Informe um e-mail válido.');
+      return;
+    }
     try {
       const atualizado = { ...usuario, nome, email };
       await axios.put(
@@ -82,7 +91,12 @@ function Configuracoes() {
       return;
     }
 
-    if (!novaSenha || novaSenha !== confirmarSenha) {
+    if (novaSenha.length < 6) {
+      mensagemErro('A nova senha deve ter pelo menos 6 caracteres.');
+      return;
+    }
+
+    if (novaSenha !== confirmarSenha) {
       mensagemErro('A nova senha e a confirmação devem ser iguais.');
       return;
     }

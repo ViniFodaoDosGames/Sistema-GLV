@@ -5,7 +5,7 @@ import Card from '../components/card';
 import { mensagemErro, mensagemSucesso } from '../components/toastr';
 import { BASE_URL } from '../config/axios';
 import { STATUS_AGENDAMENTO, formatarData, formatarHora, formatarMoeda } from '../config/util';
-import { custoResgate } from '../config/agenda';
+import { custoResgate, pagamentoExpirado } from '../config/agenda';
 import { getSession } from '../auth';
 import '../custom.css';
 
@@ -303,6 +303,11 @@ function Pagamento() {
                 Faltam {custoPontos - saldoPontos} pontos para pagar com pontos.
               </div>
             )}
+            {pagamentoExpirado(agendamento) && (
+              <div className='alert alert-danger mt-3 mb-0'>
+                O prazo para pagar este agendamento acabou.
+              </div>
+            )}
             <div className='d-flex gap-2 mt-4'>
               <button
                 type='button'
@@ -310,7 +315,8 @@ function Pagamento() {
                 onClick={confirmarPagamento}
                 disabled={
                   agendamento.status !== 'AGUARDANDO_PAGAMENTO' ||
-                  pagamento?.status === 'APROVADO'
+                  pagamento?.status === 'APROVADO' ||
+                  pagamentoExpirado(agendamento)
                 }
               >
                 Confirmar pagamento
