@@ -33,6 +33,7 @@ function Configuracoes() {
           usuario: { ...atual.usuario, nome, email, senha: novaSenha || atual.usuario.senha },
         })
       );
+      window.dispatchEvent(new Event('auth-change'));
     }
   }
   function cancelarDados() {
@@ -56,8 +57,8 @@ function Configuracoes() {
     carregarUsuario();
   }, [usuarioId]);
 
-  async function salvarDados() {
-
+  async function salvarDados(e) {
+    e.preventDefault();
     try {
       const atualizado = { ...usuario, nome, email };
       await axios.put(
@@ -74,8 +75,8 @@ function Configuracoes() {
     }
   }
 
-  async function alterarSenha() {
-
+  async function alterarSenha(e) {
+    e.preventDefault();
     if (senhaAtual !== usuario.senha) {
       mensagemErro('A senha atual está incorreta.');
       return;
@@ -154,7 +155,7 @@ function Configuracoes() {
                 />
               </FormGroup>
               <div className='d-flex gap-2 mt-3'>
-                <button type='submit' className='btn btn-primary' onClick={salvarDados}>
+                <button type='submit' className='btn btn-primary'>
                   Salvar dados
                 </button>
                 <button

@@ -167,7 +167,7 @@ function CadastroModelo() {
                                     onChange={(e) => setIdMarca(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    {marcas.map((dado) => (
+                                    {marcas.filter((dado) => dado.ativo || dado.id === idMarca).map((dado) => (
                                         <option key={dado.id} value={dado.id}>
                                             {dado.nome}
                                         </option>
@@ -183,7 +183,7 @@ function CadastroModelo() {
                                     onChange={(e) => setIdCategoriaVeiculo(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    {categorias.map((dado) => (
+                                    {categorias.filter((dado) => dado.ativo || dado.id === idCategoriaVeiculo).map((dado) => (
                                         <option key={dado.id} value={dado.id}>
                                             {dado.nome}
                                         </option>

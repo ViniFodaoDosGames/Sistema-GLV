@@ -54,7 +54,7 @@ function verificarHorario(servico, data, inicio, funcionamento, db) {
   const almoco = (db.IntervalosAlmoco || [])[0];
   const dia = diaDaSemana(data);
   const fimDeSemana = dia === 'SABADO' || dia === 'DOMINGO';
-  const aplicaAlmoco = almoco && !(fimDeSemana && almoco.aplicaFimDeSemana === false);
+  const aplicaAlmoco = almoco && !fimDeSemana;
   if (aplicaAlmoco && sobrepoe(inicio, fim, horaParaMinutos(almoco.horaInicio), horaParaMinutos(almoco.horaFim))) {
     return 'Intervalo de almoço';
   }

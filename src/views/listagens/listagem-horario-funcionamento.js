@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '../../components/card.js';
 
 import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
+import { confirmarExclusao } from '../../components/confirmar-exclusao';
 
 import '../../custom.css';
 
@@ -33,6 +34,7 @@ function ListagemHorarioFuncionamento() {
   const [dados, setDados] = React.useState([]);
 
   async function excluir(id) {
+    if (!(await confirmarExclusao('Excluir horário de funcionamento'))) return;
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);

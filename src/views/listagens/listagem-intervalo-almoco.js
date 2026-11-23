@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '../../components/card.js';
 
 import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
+import { confirmarExclusao } from '../../components/confirmar-exclusao';
 
 import '../../custom.css';
 
@@ -33,6 +34,7 @@ function ListagemIntervaloAlmoco() {
   const [dados, setDados] = React.useState([]);
 
   async function excluir(id) {
+    if (!(await confirmarExclusao('Excluir intervalo de almoço'))) return;
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);
@@ -81,7 +83,6 @@ function ListagemIntervaloAlmoco() {
                     <th scope='col'>Lava Jato</th>
                     <th scope='col'>Horário de Início</th>
                     <th scope='col'>Horário de Término</th>
-                    <th scope='col'>Aplica no Fim de Semana</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
@@ -91,7 +92,6 @@ function ListagemIntervaloAlmoco() {
                       <td className='justify-content-center'>{dado.idLavaJato}</td>
                       <td className='justify-content-center'>{dado.horaInicio ? formatarHora(dado.horaInicio) : 'Não informado'}</td>
                       <td className='justify-content-center'>{dado.horaFim ? formatarHora(dado.horaFim) : 'Não informado'}</td>
-                      <td className='justify-content-center'>{dado.aplicaFimDeSemana ? 'Sim' : 'Não'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

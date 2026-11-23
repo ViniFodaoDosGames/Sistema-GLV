@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
+import { Navigate, useNavigate, useParams, useOutletContext } from 'react-router-dom';
 
 import Stack from '@mui/material/Stack';
 
@@ -39,9 +39,9 @@ function CadastroAgendamento() {
     const baseURL = `${BASE_URL}/Agendamentos`;
     const sessao = getSession();
     const ehCliente = sessao?.role === 'CLIENTE';
-    const telaDeVolta = sessao?.role === 'FUNCIONARIO' ? '/agendamentos' : '/listagem-agendamento';
+    const telaDeVolta = sessao?.role === 'ADMINISTRADOR' ? '/listagem-agendamento' : '/agendamentos';
 
-    const [status, setStatus] = useState(idParam == null ? 'AGUARDANDO_PAGAMENTO' : '');
+    const [status, setStatus] = useState('');
     const [walkIn, setWalkIn] = useState(false);
     const [idCliente, setIdCliente] = useState('');
     const [idVeiculo, setIdVeiculo] = useState('');
@@ -60,10 +60,12 @@ function CadastroAgendamento() {
 
     const servicoEscolhido = servicos.find((dado) => dado.id === idServico);
     const clienteDoAgendamento = ehCliente ? sessao.idCliente : idCliente;
-    const veiculosDoCliente = veiculos.filter((veiculo) =>
-        clientesVeiculos.some(
-            (ligacao) => ligacao.idCliente === clienteDoAgendamento && ligacao.idVeiculo === veiculo.id
-        )
+    const veiculosDoCliente = veiculos.filter(
+        (veiculo) =>
+            (veiculo.ativo || veiculo.id === idVeiculo) &&
+            clientesVeiculos.some(
+                (ligacao) => ligacao.idCliente === clienteDoAgendamento && ligacao.idVeiculo === veiculo.id
+            )
     );
     const diaEscolhido = walkIn && idParam == null ? hoje() : dia;
 
@@ -89,13 +91,6 @@ function CadastroAgendamento() {
         : [];
     const horasDisponiveis = podeMontarAgenda && diaEscolhido ? horariosLivres(diaEscolhido) : [];
 
-    function posicaoNaFila(dataHora) {
-        const noMesmoHorario = agendamentos.filter(
-            (dado) => dado.dataHora === dataHora && dado.status !== 'CANCELADO' && dado.id !== idParam
-        ).length;
-        return noMesmoHorario + 1;
-    }
-
     function conferirServicoEHorario() {
         if (idServico === '') {
             mensagemErro('Informe: Serviço');
@@ -120,6 +115,18 @@ function CadastroAgendamento() {
         };
     }
 
+    function pagamentoNoBalcao(valor) {
+        return {
+            forma: formaNoBalcao,
+            status: 'APROVADO',
+            valor,
+            dataHora: agora(),
+            codigoGateway: null,
+            justificativaEstorno: null,
+            idFuncionario: sessao?.idFuncionario || null,
+        };
+    }
+
     async function gravar(dados, pagamentoNovo, mensagemNovo) {
         try {
             if (idParam == null) {
@@ -128,11 +135,12 @@ function CadastroAgendamento() {
                     await axios.post(`${BASE_URL}/Pagamentos`, { ...pagamentoNovo, idAgendamento: resposta.data.id });
                 }
                 mensagemSucesso(mensagemNovo);
+                navigate(ehCliente ? `/pagamento/${resposta.data.id}` : telaDeVolta);
             } else {
                 await axios.patch(`${baseURL}/${idParam}`, dados);
                 mensagemSucesso('Agendamento alterado com sucesso!');
+                navigate(telaDeVolta);
             }
-            navigate(telaDeVolta);
         } catch (erro) {
             mensagemErro('Erro ao salvar o agendamento');
         }
@@ -144,25 +152,20 @@ function CadastroAgendamento() {
             return;
         }
         if (!conferirServicoEHorario()) return;
-        if (idParam != null && !['AGUARDANDO_PAGAMENTO', 'CONFIRMADO'].includes(status)) {
-            mensagemErro('Este agendamento não pode mais ser alterado');
-            return;
-        }
 
         const dataHora = `${diaEscolhido} ${hora}:00`;
         await gravar(
             {
                 dataHora,
-                status: idParam == null ? 'AGUARDANDO_PAGAMENTO' : status,
+                status: 'AGUARDANDO_PAGAMENTO',
                 valor: servicoEscolhido.preco,
                 walkIn: false,
-                posicaoFila: posicaoNaFila(dataHora),
                 idCliente: sessao.idCliente,
                 idVeiculo,
                 idServico,
             },
             pagamentoPendente(servicoEscolhido.preco),
-            'Agendamento feito! Agora é só pagar.'
+            'Agendamento feito! Escolha a forma de pagamento.'
         );
     }
 
@@ -203,20 +206,11 @@ function CadastroAgendamento() {
                 status: idParam == null ? 'CONFIRMADO' : status,
                 valor: servicoEscolhido.preco,
                 walkIn: true,
-                posicaoFila: posicaoNaFila(dataHora),
                 idCliente: idCliente || null,
                 idVeiculo: idVeiculoWalkIn,
                 idServico,
             },
-            {
-                forma: formaNoBalcao,
-                status: 'APROVADO',
-                valor: servicoEscolhido.preco,
-                dataHora: agora(),
-                codigoGateway: null,
-                justificativaEstorno: null,
-                idFuncionario: sessao?.idFuncionario || null,
-            },
+            pagamentoNoBalcao(servicoEscolhido.preco),
             'Walk-in registrado e pago! Já pode fazer o check-in.'
         );
     }
@@ -231,25 +225,20 @@ function CadastroAgendamento() {
             return;
         }
         if (!conferirServicoEHorario()) return;
-        if (status === '') {
-            mensagemErro('Informe: Status');
-            return;
-        }
 
         const dataHora = `${diaEscolhido} ${hora}:00`;
         await gravar(
             {
                 dataHora,
-                status,
+                status: idParam == null ? 'CONFIRMADO' : status,
                 valor: servicoEscolhido.preco,
                 walkIn: false,
-                posicaoFila: posicaoNaFila(dataHora),
                 idCliente,
                 idVeiculo,
                 idServico,
             },
-            status === 'AGUARDANDO_PAGAMENTO' ? pagamentoPendente(servicoEscolhido.preco) : null,
-            'Agendamento cadastrado com sucesso!'
+            pagamentoNoBalcao(servicoEscolhido.preco),
+            'Agendamento cadastrado e pago!'
         );
     }
 
@@ -376,7 +365,6 @@ function CadastroAgendamento() {
                         value={idServico}
                         className='form-select'
                         name='idServico'
-                        disabled={ehCliente && idParam != null}
                         onChange={(e) => {
                             setIdServico(e.target.value);
                             setDia('');
@@ -384,7 +372,7 @@ function CadastroAgendamento() {
                         }}
                     >
                         <option value=''>Selecione</option>
-                        {servicos.map((dado) => (
+                        {servicos.filter((dado) => dado.ativo || dado.id === idServico).map((dado) => (
                             <option key={dado.id} value={dado.id}>
                                 {dado.nome}
                             </option>
@@ -452,6 +440,30 @@ function CadastroAgendamento() {
         );
     }
 
+    function campoPagamentoNoBalcao() {
+        if (idParam != null) return null;
+        return (
+            <FormGroup label='Pagamento no balcão: *' htmlFor='inputFormaNoBalcao'>
+                <select
+                    id='inputFormaNoBalcao'
+                    value={formaNoBalcao}
+                    className='form-select'
+                    onChange={(e) => setFormaNoBalcao(e.target.value)}
+                >
+                    {FORMAS_NO_BALCAO.map((forma) => (
+                        <option key={forma.valor} value={forma.valor}>
+                            {forma.nome}
+                        </option>
+                    ))}
+                </select>
+            </FormGroup>
+        );
+    }
+
+    if (ehCliente && idParam != null) {
+        return <Navigate to={telaDeVolta} replace />;
+    }
+
     return (
         <div className='container'>
             <Card title={ehCliente ? 'Agendamento' : 'Cadastro de Agendamento'}>
@@ -498,22 +510,7 @@ function CadastroAgendamento() {
                                         />
                                     </FormGroup>
                                     {camposServicoDataHorario()}
-                                    {idParam == null && (
-                                        <FormGroup label='Pagamento no balcão: *' htmlFor='inputFormaNoBalcao'>
-                                            <select
-                                                id='inputFormaNoBalcao'
-                                                value={formaNoBalcao}
-                                                className='form-select'
-                                                onChange={(e) => setFormaNoBalcao(e.target.value)}
-                                            >
-                                                {FORMAS_NO_BALCAO.map((forma) => (
-                                                    <option key={forma.valor} value={forma.valor}>
-                                                        {forma.nome}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </FormGroup>
-                                    )}
+                                    {campoPagamentoNoBalcao()}
                                 </>
                             )}
 
@@ -531,7 +528,7 @@ function CadastroAgendamento() {
                                             }}
                                         >
                                             <option value=''>Selecione</option>
-                                            {clientes.map((dado) => (
+                                            {clientes.filter((dado) => usuarios.find((usuario) => usuario.id === dado.idUsuario)?.status || dado.id === idCliente).map((dado) => (
                                                 <option key={dado.id} value={dado.id}>
                                                     {nomeUsuario(dado.idUsuario)}
                                                 </option>
@@ -540,20 +537,7 @@ function CadastroAgendamento() {
                                     </FormGroup>
                                     {campoVeiculoDoCliente()}
                                     {camposServicoDataHorario()}
-                                    <FormGroup label='Status: *' htmlFor='inputStatus'>
-                                        <select
-                                            id='inputStatus'
-                                            value={status}
-                                            className='form-select'
-                                            name='status'
-                                            onChange={(e) => setStatus(e.target.value)}
-                                        >
-                                            <option value=''>Selecione</option>
-                                            <option value='AGUARDANDO_PAGAMENTO'>Aguardando pagamento</option>
-                                            <option value='CONFIRMADO'>Confirmado</option>
-                                            <option value='CONCLUIDO'>Concluído</option>
-                                        </select>
-                                    </FormGroup>
+                                    {campoPagamentoNoBalcao()}
                                 </>
                             )}
 

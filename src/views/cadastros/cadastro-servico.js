@@ -242,7 +242,7 @@ function CadastroServico() {
                                     onChange={(e) => setIdLavaJato(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    {lavaJatos.map((dado) => (
+                                    {lavaJatos.filter((dado) => dado.ativo || dado.id === idLavaJato).map((dado) => (
                                         <option key={dado.id} value={dado.id}>
                                             {dado.id}
                                         </option>

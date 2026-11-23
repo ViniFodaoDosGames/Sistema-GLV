@@ -43,6 +43,10 @@ function CadastroBloqueio() {
             mensagemErro('Informe: Horário de término');
             return;
         }
+        if (!diaInteiro && horaFim.padEnd(8, ':00') <= horaInicio.padEnd(8, ':00')) {
+            mensagemErro('O término deve ser depois do início');
+            return;
+        }
         if (!motivo.trim()) {
             mensagemErro('Informe: Motivo');
             return;
@@ -204,7 +208,7 @@ function CadastroBloqueio() {
                                     onChange={(e) => setIdServico(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    {servicos.map((dado) => (
+                                    {servicos.filter((dado) => dado.ativo || dado.id === idServico).map((dado) => (
                                         <option key={dado.id} value={dado.id}>
                                             {dado.nome}
                                         </option>

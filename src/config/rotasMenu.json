@@ -62,13 +62,13 @@
             "href": "/listagem-agendamento",
             "label": "Agendamentos",
             "idDropDown": "1",
-            "role": ["CLIENTE", "ADMINISTRADOR"]
+            "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/agendamentos",
             "label": "Todos os agendamentos",
             "idDropDown": "1",
-            "role": ["FUNCIONARIO", "ADMINISTRADOR"]
+            "role": ["CLIENTE", "FUNCIONARIO", "ADMINISTRADOR"]
         },
         {
             "href": "/listagem-veiculo",
@@ -167,7 +167,7 @@
             "role": ["ADMINISTRADOR"]
         },
         {
-            "href": "/listagem-intervalo-almoço",
+            "href": "/listagem-intervalo-almoco",
             "label": "Intervalo de almoço",
             "idDropDown": "6",
             "role": ["ADMINISTRADOR"]

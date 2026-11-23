@@ -24,6 +24,11 @@ function CadastroAdministrador() {
     const [idFuncionario, setIdFuncionario] = useState('');
     const [funcionarios, setFuncionarios] = useState([]);
     const [usuarios, setUsuarios] = useState([]);
+    const [administradores, setAdministradores] = useState([]);
+
+    const funcionariosLivres = funcionarios.filter(
+        (dado) => !administradores.some((adm) => adm.idFuncionario === dado.id && adm.id !== idParam)
+    );
 
     function nomeUsuario(idUsuario) {
         const usuario = usuarios.find((dado) => dado.id === idUsuario);
@@ -103,6 +108,14 @@ function CadastroAdministrador() {
             .catch(function (error) {
                 mensagemErro('Erro ao carregar os dados da tela');
             });
+        axios
+            .get(`${BASE_URL}/Administradores`)
+            .then((response) => {
+                setAdministradores(response.data);
+            })
+            .catch(function (error) {
+                mensagemErro('Erro ao carregar os dados da tela');
+            });
     }, []);
 
     return (
@@ -120,7 +133,7 @@ function CadastroAdministrador() {
                                     onChange={(e) => setIdFuncionario(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    {funcionarios.map((dado) => (
+                                    {funcionariosLivres.map((dado) => (
                                         <option key={dado.id} value={dado.id}>
                                             {nomeUsuario(dado.idUsuario)}
                                         </option>

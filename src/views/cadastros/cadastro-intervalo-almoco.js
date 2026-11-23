@@ -39,6 +39,17 @@ function CadastroIntervaloAlmoco() {
             mensagemErro('Informe: Lava-jato');
             return;
         }
+        if (horaFim.padEnd(8, ':00') <= horaInicio.padEnd(8, ':00')) {
+            mensagemErro('O término deve ser depois do início');
+            return;
+        }
+        if (idParam == null) {
+            const { data: intervalos } = await axios.get(baseURL);
+            if (intervalos.length > 0) {
+                mensagemErro('Já existe um intervalo de almoço cadastrado. Edite o existente.');
+                return;
+            }
+        }
 
         let data = {
             id,
@@ -54,19 +65,19 @@ function CadastroIntervaloAlmoco() {
                 })
                 .then(function (response) {
                     mensagemSucesso(`Intervalo cadastrado com sucesso!`);
-                    navigate(`/listagem-intervalo-almoço`);
+                    navigate(`/listagem-intervalo-almoco`);
                 })
                 .catch(function (error) {
                     mensagemErro('Erro ao cadastrar o intervalo');
                 });
         } else {
             await axios
-                .put(`${baseURL}/${idParam}`, data, {
+                .patch(`${baseURL}/${idParam}`, data, {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then(function (response) {
                     mensagemSucesso(`Intervalo alterado com sucesso!`);
-                    navigate(`/listagem-intervalo-almoço`);
+                    navigate(`/listagem-intervalo-almoco`);
                 })
                 .catch(function (error) {
                     mensagemErro('Erro ao alterar o intervalo');
@@ -142,7 +153,7 @@ function CadastroIntervaloAlmoco() {
                                     onChange={(e) => setIdLavaJato(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    {lavaJatos.map((dado) => (
+                                    {lavaJatos.filter((dado) => dado.ativo || dado.id === idLavaJato).map((dado) => (
                                         <option key={dado.id} value={dado.id}>
                                             {dado.id}
                                         </option>
@@ -158,7 +169,7 @@ function CadastroIntervaloAlmoco() {
                                     Salvar
                                 </button>
                                 <button
-                                    onClick={() => cancelar(`/listagem-intervalo-almoço`)}
+                                    onClick={() => cancelar(`/listagem-intervalo-almoco`)}
                                     type='button'
                                     className='btn btn-danger'
                                 >

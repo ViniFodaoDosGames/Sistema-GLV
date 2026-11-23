@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '../../components/card.js';
 
 import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
+import { confirmarExclusao } from '../../components/confirmar-exclusao';
 
 import '../../custom.css';
 
@@ -16,14 +17,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
 import { STATUS_AGENDAMENTO, formatarDataHora, formatarMoeda } from '../../config/util';
-import { getSession } from '../../auth';
 import { emUso, removerLigacoes } from '../../config/api';
+import { posicaoNaFila } from '../../config/agenda';
 const baseURL = `${BASE_URL}/Agendamentos`;
 
 
 function ListagemAgendamento() {
   const navigate = useNavigate();
-  const session = getSession();
 
   const cadastrar = () => {
     navigate(`/cadastro-agendamento`);
@@ -47,6 +47,7 @@ function ListagemAgendamento() {
       mensagemErro('Este agendamento já foi pago ou atendido e não pode ser excluído');
       return;
     }
+    if (!(await confirmarExclusao('Excluir agendamento'))) return;
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);
@@ -72,37 +73,15 @@ function ListagemAgendamento() {
  React.useEffect(() => {
    async function carregar() {
      try {
-       const [agendamentos, veiculosResponse, servicosResponse, clientesResponse, pagamentosResponse] =
+       const [agendamentos, veiculosResponse, servicosResponse, pagamentosResponse] =
          await Promise.all([
            axios.get(baseURL),
            axios.get(`${BASE_URL}/Veiculos`),
            axios.get(`${BASE_URL}/Servicos`),
-           axios.get(`${BASE_URL}/Clientes`),
            axios.get(`${BASE_URL}/Pagamentos`),
          ]);
 
-       let filtrados = agendamentos.data;
-
-       if (session?.role === 'CLIENTE') {
-         const cliente = clientesResponse.data.find(
-           (item) => String(item.idUsuario) === String(session.usuario.id)
-         );
-
-         if (!cliente) {
-           filtrados = [];
-         } else {
-           const clienteIds = new Set([
-             String(cliente.id),
-             String(cliente.id).replace('cliente-', ''),
-             String(cliente.id).replace(/^cliente-0*/, ''),
-           ]);
-           filtrados = filtrados.filter((item) =>
-             clienteIds.has(String(item.idCliente))
-           );
-         }
-       }
-
-       setDados(filtrados);
+       setDados(agendamentos.data);
        setVeiculos(veiculosResponse.data);
        setServicos(servicosResponse.data);
        setPagamentos(pagamentosResponse.data);
@@ -112,7 +91,7 @@ function ListagemAgendamento() {
    }
 
    carregar();
- }, [session?.role, session?.usuario?.id]);
+ }, []);
 
   const dadosFiltrados = dados.filter((dado) => {
     const veiculo = veiculos.find((item) => String(item.id) === String(dado.idVeiculo));
@@ -129,7 +108,7 @@ function ListagemAgendamento() {
   if (!dados) return null;
   return (
     <div className='container'>
-      <Card title={session?.role === 'CLIENTE' ? 'Agendamentos' : 'Listagem de Agendamento'}>
+      <Card title='Listagem de Agendamento'>
         <div className='row'>
           <div className='col-lg-12'>
             <div className='bs-component'>
@@ -137,7 +116,6 @@ function ListagemAgendamento() {
                 <div className='col-md-4'>
                   <input
                     className='form-control'
-                    placeholder='Buscar por veículo, serviço ou data'
                     value={busca}
                     onChange={(event) => setBusca(event.target.value)}
                   />
@@ -184,33 +162,9 @@ function ListagemAgendamento() {
                       <td className='justify-content-center'>{formatarMoeda(dado.valor)}</td>
                       <td className='justify-content-center'>{dado.walkIn ? 'Sim' : 'Não'}</td>
                       <td className='justify-content-center'>{servicos.find((s) => s.id === dado.idServico)?.nome || 'Serviço não encontrado'}</td>
-                      <td className='justify-content-center'>{dado.posicaoFila}</td>
+                      <td className='justify-content-center'>{posicaoNaFila(dado, dados) || '—'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
-                          {session?.role === 'CLIENTE' &&
-                            pagamentos.some(
-                              (pagamento) =>
-                                String(pagamento.idAgendamento) === String(dado.id) &&
-                                pagamento.status === 'PENDENTE'
-                            ) && (
-                              <button
-                                type='button'
-                                className='btn btn-primary btn-sm'
-                                onClick={() =>
-                                  navigate(
-                                    `/pagamento/pagamento/${
-                                      pagamentos.find(
-                                        (pagamento) =>
-                                          String(pagamento.idAgendamento) ===
-                                          String(dado.id)
-                                      )?.id
-                                    }`
-                                  )
-                                }
-                              >
-                                Pagar
-                              </button>
-                            )}
                           <IconButton
                             aria-label='edit'
                             onClick={() => editar(dado.id)}

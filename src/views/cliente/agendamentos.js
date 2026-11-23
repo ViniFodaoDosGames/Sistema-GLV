@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Card from '../../components/card';
+import FormGroup from '../../components/form-group';
 import Modal from '../../components/modal';
 import Paginacao from '../../components/paginacao';
 import { mensagemSucesso, mensagemErro } from '../../components/toastr';
 
 import '../../custom.css';
 
-import { carregar, alterar } from '../../config/api';
+import { carregar, alterar, inserir } from '../../config/api';
 import { obterSessao, ehFuncionario } from '../../config/sessao';
-import { formatarMoeda, STATUS_AGENDAMENTO } from '../../config/util';
+import { agora, formatarMoeda, STATUS_AGENDAMENTO, FORMA_PAGAMENTO } from '../../config/util';
 import {
   detalharAgendamento,
   podeAlterarAgendamento,
@@ -20,7 +21,7 @@ import {
   PRAZO_CANCELAMENTO_MIN,
 } from '../../config/agenda';
 
-const POR_PAGINA = 9;
+const POR_PAGINA = 12;
 
 function Agendamentos() {
   const navigate = useNavigate();
@@ -34,6 +35,8 @@ function Agendamentos() {
   const [pagina, setPagina] = useState(1);
   const [cancelando, setCancelando] = useState(null);
   const [erroCancelamento, setErroCancelamento] = useState('');
+  const [recebendo, setRecebendo] = useState(null);
+  const [formaRecebimento, setFormaRecebimento] = useState('PIX');
 
   async function buscar() {
     try {
@@ -109,6 +112,41 @@ function Agendamentos() {
     }
   }
 
+  function pedirRecebimento(agendamento) {
+    setFormaRecebimento('PIX');
+    setRecebendo(agendamento);
+  }
+
+  async function confirmarRecebimento() {
+    const agendamento = recebendo;
+    setRecebendo(null);
+    const pendente = db.Pagamentos.find((p) => p.idAgendamento === agendamento.id && p.status === 'PENDENTE');
+    const pagamento = {
+      forma: formaRecebimento,
+      status: 'APROVADO',
+      valor: agendamento.valor,
+      dataHora: agora(),
+      idFuncionario: sessao.idFuncionario,
+    };
+    try {
+      if (pendente) {
+        await alterar('Pagamentos', pendente.id, pagamento);
+      } else {
+        await inserir('Pagamentos', {
+          ...pagamento,
+          codigoGateway: null,
+          justificativaEstorno: null,
+          idAgendamento: agendamento.id,
+        });
+      }
+      await alterar('Agendamentos', agendamento.id, { status: 'CONFIRMADO' });
+      mensagemSucesso(`Pagamento de ${agendamento.info.nomeCliente} recebido. Agendamento confirmado.`);
+      buscar();
+    } catch (erro) {
+      mensagemErro('Não foi possível registrar o pagamento');
+    }
+  }
+
   return (
     <div className='container'>
       <Card title={equipe ? 'Agendamentos' : 'Meus agendamentos'}>
@@ -119,7 +157,6 @@ function Agendamentos() {
           <input
             type='search'
             className='form-control w-auto'
-            placeholder='Buscar por veículo, data, serviço ou status'
             value={busca}
             onChange={(e) => {
               setBusca(e.target.value);
@@ -177,6 +214,16 @@ function Agendamentos() {
               </p>
               <p className='mb-2'>Valor: {formatarMoeda(a.valor)}</p>
               <div className='d-flex flex-wrap gap-1'>
+                {!equipe && a.status === 'AGUARDANDO_PAGAMENTO' && (
+                  <button type='button' className='btn btn-primary btn-sm' onClick={() => navigate(`/pagamento/${a.id}`)}>
+                    Pagar
+                  </button>
+                )}
+                {equipe && a.status === 'AGUARDANDO_PAGAMENTO' && (
+                  <button type='button' className='btn btn-success btn-sm' onClick={() => pedirRecebimento(a)}>
+                    Receber
+                  </button>
+                )}
                 {['AGUARDANDO_PAGAMENTO', 'CONFIRMADO'].includes(a.status) && (
                   <button type='button' className='btn btn-danger btn-sm' onClick={() => pedirCancelamento(a)}>
                     Cancelar
@@ -223,6 +270,45 @@ function Agendamentos() {
             {equipe && cancelando.status === 'CONFIRMADO' && cancelando.idCliente && (
               <p className='mb-0'>O cliente será avisado do cancelamento.</p>
             )}
+          </>
+        )}
+      </Modal>
+
+      <Modal
+        aberto={recebendo != null}
+        titulo='Receber pagamento no balcão'
+        onFechar={() => setRecebendo(null)}
+        rodape={
+          <>
+            <button type='button' className='btn btn-secondary' onClick={() => setRecebendo(null)}>
+              Voltar
+            </button>
+            <button type='button' className='btn btn-success' onClick={confirmarRecebimento}>
+              Confirmar recebimento
+            </button>
+          </>
+        }
+      >
+        {recebendo && (
+          <>
+            <p>
+              {recebendo.info.servico.nome} de {recebendo.info.nomeCliente} do dia {recebendo.info.data} às{' '}
+              {recebendo.info.hora}: {formatarMoeda(recebendo.valor)}
+            </p>
+            <FormGroup label='Forma de pagamento: *' htmlFor='inputFormaRecebimento'>
+              <select
+                id='inputFormaRecebimento'
+                className='form-select'
+                value={formaRecebimento}
+                onChange={(e) => setFormaRecebimento(e.target.value)}
+              >
+                {['PIX', 'CARTAO', 'DINHEIRO'].map((forma) => (
+                  <option key={forma} value={forma}>
+                    {FORMA_PAGAMENTO[forma]}
+                  </option>
+                ))}
+              </select>
+            </FormGroup>
           </>
         )}
       </Modal>

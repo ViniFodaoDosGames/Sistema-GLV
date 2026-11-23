@@ -12,6 +12,7 @@ import '../../custom.css';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios';
+import { mascaraCpf, mascaraCelular, somenteDigitos, emailValido } from '../../config/util';
 
 function CadastroUsuario() {
     const { idParam } = useParams();
@@ -26,36 +27,46 @@ function CadastroUsuario() {
     const [email, setEmail] = useState('');
     const [celular, setCelular] = useState('');
     const [senha, setSenha] = useState('');
-    const [status, setStatus] = useState(false);
+    const [status, setStatus] = useState(true);
 
     async function salvar() {
         if (!nome.trim()) {
             mensagemErro('Informe: Nome');
             return;
         }
-        if (!cpf.trim()) {
-            mensagemErro('Informe: CPF');
+        if (somenteDigitos(cpf).length !== 11) {
+            mensagemErro('Informe o CPF completo');
             return;
         }
-        if (!email.trim()) {
-            mensagemErro('Informe: Email');
+        if (!emailValido(email)) {
+            mensagemErro('Informe um e-mail válido');
             return;
         }
-        if (!celular.trim()) {
-            mensagemErro('Informe: Celular');
+        if (somenteDigitos(celular).length < 10) {
+            mensagemErro('Informe o celular com DDD');
             return;
         }
-        if (!senha.trim()) {
-            mensagemErro('Informe: Senha');
+        if (senha.length < 6) {
+            mensagemErro('A senha deve ter pelo menos 6 caracteres');
+            return;
+        }
+        try {
+            const { data: usuarios } = await axios.get(baseURL);
+            if (usuarios.some((dado) => dado.id !== idParam && somenteDigitos(dado.cpf) === somenteDigitos(cpf))) {
+                mensagemErro('Já existe um usuário com este CPF');
+                return;
+            }
+        } catch (erro) {
+            mensagemErro('Erro ao conferir o CPF');
             return;
         }
 
         let data = {
             id,
             nome,
-            cpf,
+            cpf: somenteDigitos(cpf),
             email,
-            celular,
+            celular: somenteDigitos(celular),
             senha,
             status,
         };
@@ -95,9 +106,9 @@ function CadastroUsuario() {
             .then((response) => {
                 setId(response.data.id);
                 setNome(response.data.nome ?? '');
-                setCpf(response.data.cpf ?? '');
+                setCpf(mascaraCpf(response.data.cpf ?? ''));
                 setEmail(response.data.email ?? '');
-                setCelular(response.data.celular ?? '');
+                setCelular(mascaraCelular(response.data.celular ?? ''));
                 setSenha(response.data.senha ?? '');
                 setStatus(response.data.status);
             })
@@ -133,7 +144,9 @@ function CadastroUsuario() {
                                     value={cpf}
                                     className='form-control'
                                     name='cpf'
-                                    onChange={(e) => setCpf(e.target.value)}
+                                    placeholder='000.000.000-00'
+                                    inputMode='numeric'
+                                    onChange={(e) => setCpf(mascaraCpf(e.target.value))}
                                 />
                             </FormGroup>
                             <FormGroup label='Email: *' htmlFor='inputEmail'>
@@ -153,7 +166,9 @@ function CadastroUsuario() {
                                     value={celular}
                                     className='form-control'
                                     name='celular'
-                                    onChange={(e) => setCelular(e.target.value)}
+                                    placeholder='(00) 00000-0000'
+                                    inputMode='numeric'
+                                    onChange={(e) => setCelular(mascaraCelular(e.target.value))}
                                 />
                             </FormGroup>
                             <FormGroup label='Senha: *' htmlFor='inputSenha'>

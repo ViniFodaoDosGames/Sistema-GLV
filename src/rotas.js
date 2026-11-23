@@ -9,7 +9,7 @@ import ListagemCliente from "./views/listagens/listagem-cliente"
 import ListagemVeiculo from "./views/listagens/listagem-veiculo"
 import ListagemLavajato from "./views/listagens/listagem-lavajato"
 import ListagemHorarioFuncionamento from "./views/listagens/listagem-horario-funcionamento"
-import ListagemIntervaloAlmoco from "./views/listagens/listagem-intervalo-almoço"
+import ListagemIntervaloAlmoco from "./views/listagens/listagem-intervalo-almoco"
 import ListagemTipoFeriado from "./views/listagens/listagem-tipo-feriado"
 import ListagemFeriado from "./views/listagens/listagem-feriado"
 import ListagemNotificacao from "./views/listagens/listagem-notificacao"
@@ -21,6 +21,7 @@ import ListagemAgendamento from "./views/listagens/listagem-agendamento"
 import ListagemFuncionario from "./views/listagens/listagem-funcionario"
 import Login from './views/publico/login';
 import RecuperarSenha from './views/publico/recuperar-senha';
+import Registrar from './views/publico/registrar';
 import Configuracoes from './views/configuracoes';
 import Pagamento from './views/pagamento';
 import Inicio from './views/inicio';
@@ -50,7 +51,6 @@ import CadastroCliente from './views/cadastros/cadastro-cliente';
 import CadastroFuncionario from './views/cadastros/cadastro-funcionario';
 import CadastroAdministrador from './views/cadastros/cadastro-administrador';
 import CadastroAgendamento from './views/cadastros/cadastro-agendamento';
-import CadastroPagamento from './views/cadastros/cadastro-pagamento';
 import CadastroLotePonto from './views/cadastros/cadastro-lote-ponto';
 import CadastroNotificacao from './views/cadastros/cadastro-notificacao';
 
@@ -94,6 +94,7 @@ function Rotas(props) {
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/recuperar-senha' element={<RecuperarSenha />} />
+        <Route path='/registrar' element={<Registrar />} />
         <Route
           path='/configuracoes'
           element={
@@ -161,7 +162,7 @@ function Rotas(props) {
           element={<ListagemTipoFeriado />}
         />
         <Route
-          path='/listagem-intervalo-almoço/:idParam?'
+          path='/listagem-intervalo-almoco/:idParam?'
           element={<ListagemIntervaloAlmoco />}
         />
         <Route
@@ -278,10 +279,6 @@ function Rotas(props) {
         <Route
           path='/cadastro-agendamento/:idParam?'
           element={<CadastroAgendamento />}
-        />
-        <Route
-          path='/cadastro-pagamento/:idParam?'
-          element={<CadastroPagamento />}
         />
         <Route
           path='/cadastro-lote-ponto/:idParam?'

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import Card from '../../components/card';
+import Modal from '../../components/modal';
 import Paginacao from '../../components/paginacao';
 import { mensagemSucesso, mensagemErro } from '../../components/toastr';
 
@@ -10,7 +11,14 @@ import { carregar } from '../../config/api';
 import { obterSessao, PERFIS } from '../../config/sessao';
 import { hoje, formatarData, normalizarPlaca, mascaraPlaca, STATUS_AGENDAMENTO } from '../../config/util';
 import { detalharAgendamento, posicaoNaFila } from '../../config/agenda';
-import { fazerCheckin, concluirAtendimento, fazerCheckout, jaSaiu } from '../../config/operacao';
+import {
+  fazerCheckin,
+  concluirAtendimento,
+  fazerCheckout,
+  jaSaiu,
+  foraDaTolerancia,
+  marcarNaoCompareceu,
+} from '../../config/operacao';
 
 const POR_PAGINA = 10;
 
@@ -25,6 +33,7 @@ function CheckIn() {
   const [placa, setPlaca] = useState('');
   const [pagina, setPagina] = useState(1);
   const [ocupado, setOcupado] = useState(false);
+  const [marcandoFalta, setMarcandoFalta] = useState(null);
 
   async function buscar() {
     try {
@@ -86,12 +95,21 @@ function CheckIn() {
         mensagemSucesso(
           `Check-out realizado${minutos != null ? `. Tempo total de permanência: ${minutos} min` : ''}`
         );
+      } else if (acao === 'naoCompareceu') {
+        await marcarNaoCompareceu(agendamento, sessao);
+        mensagemSucesso(`Agendamento do veículo ${agendamento.info.placa} marcado como não compareceu`);
       }
       await buscar();
     } catch (erro) {
       mensagemErro('Não foi possível concluir a operação');
     }
     setOcupado(false);
+  }
+
+  function confirmarNaoCompareceu() {
+    const agendamento = marcandoFalta;
+    setMarcandoFalta(null);
+    executar('naoCompareceu', agendamento);
   }
 
   function trocarAba(novaAba) {
@@ -119,7 +137,6 @@ function CheckIn() {
           <input
             type='search'
             className='form-control w-auto'
-            placeholder='Buscar pela placa'
             value={placa}
             autoFocus
             onChange={(e) => {
@@ -203,6 +220,11 @@ function CheckIn() {
                           Check-in
                         </button>
                       )}
+                      {a.status === 'CONFIRMADO' && foraDaTolerancia(a) && (
+                        <button type='button' className='btn btn-danger btn-sm' disabled={ocupado} onClick={() => setMarcandoFalta(a)}>
+                          Não compareceu
+                        </button>
+                      )}
                       {a.status === 'EM_ANDAMENTO' && (
                         <button type='button' className='btn btn-success btn-sm' disabled={ocupado} onClick={() => executar('concluir', a)}>
                           Concluir
@@ -223,6 +245,29 @@ function CheckIn() {
 
         <Paginacao pagina={pagina} porPagina={POR_PAGINA} total={itens.length} onMudar={setPagina} />
       </Card>
+
+      <Modal
+        aberto={marcandoFalta != null}
+        titulo='Cliente não compareceu'
+        onFechar={() => setMarcandoFalta(null)}
+        rodape={
+          <>
+            <button type='button' className='btn btn-secondary' onClick={() => setMarcandoFalta(null)}>
+              Voltar
+            </button>
+            <button type='button' className='btn btn-danger' onClick={confirmarNaoCompareceu}>
+              Confirmar
+            </button>
+          </>
+        }
+      >
+        {marcandoFalta && (
+          <p>
+            Marcar {marcandoFalta.info.servico.nome} de {marcandoFalta.info.nomeCliente}, veículo {marcandoFalta.info.placa},
+            do dia {marcandoFalta.info.data} às {marcandoFalta.info.hora} como não compareceu? O pagamento não é devolvido.
+          </p>
+        )}
+      </Modal>
     </div>
   );
 }

@@ -54,7 +54,7 @@ function CadastroNotificacao() {
             return;
         }
 
-        let data = {
+        const dados = {
             id,
             canal,
             mensagem,
@@ -62,10 +62,9 @@ function CadastroNotificacao() {
             idCliente,
             idAgendamento: idAgendamento || null,
         };
-        data = JSON.stringify(data);
         if (idParam == null) {
             await axios
-                .post(baseURL, data, {
+                .post(baseURL, JSON.stringify({ ...dados, statusEnvio: 'PENDENTE' }), {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then(function (response) {
@@ -77,7 +76,7 @@ function CadastroNotificacao() {
                 });
         } else {
             await axios
-                .put(`${baseURL}/${idParam}`, data, {
+                .patch(`${baseURL}/${idParam}`, JSON.stringify(dados), {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then(function (response) {

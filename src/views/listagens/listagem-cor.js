@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '../../components/card.js';
 
 import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
+import { confirmarExclusao } from '../../components/confirmar-exclusao';
 
 import '../../custom.css';
 
@@ -37,6 +38,7 @@ function ListagemCor() {
       mensagemErro('Esta cor é usada em veículos e não pode ser excluída');
       return;
     }
+    if (!(await confirmarExclusao('Excluir cor'))) return;
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);
