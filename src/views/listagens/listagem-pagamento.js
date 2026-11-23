@@ -53,6 +53,17 @@ function ListagemPagamento() {
     );
   }
 
+  function motivoSemEstorno(pagamento) {
+    if (pagamento.status !== 'APROVADO') return null;
+    if (pagamento.forma === 'PONTOS') return 'Pago com pontos';
+    const agendamento = agendamentoDo(pagamento);
+    if (agendamento?.status === 'CANCELADO') {
+      return agendamento.idCliente ? 'Convertido em pontos' : 'Agendamento cancelado';
+    }
+    if (agendamento?.status === 'NAO_COMPARECEU') return 'Cliente não compareceu';
+    return null;
+  }
+
   async function excluir(id) {
     if (!(await confirmarExclusao('Excluir pagamento'))) return;
     let data = JSON.stringify({ id });
@@ -237,6 +248,9 @@ function ListagemPagamento() {
                               >
                                 Estornar
                               </button>
+                            )}
+                            {motivoSemEstorno(dado) && (
+                              <span className='text-muted small'>{motivoSemEstorno(dado)}</span>
                             )}
                             {dado.status === 'PENDENTE' && (
                               <IconButton

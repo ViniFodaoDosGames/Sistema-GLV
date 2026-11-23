@@ -793,15 +793,6 @@
       "idCategoriaVeiculo": "categoria-01"
     },
     {
-      "id": "c-hjXhxI_7w",
-      "placa": "ABC1236",
-      "ano": 2024,
-      "ativo": true,
-      "idCor": "l7KN3_E8AM8",
-      "idModelo": "modelo-10",
-      "idCategoriaVeiculo": "I_T41bO5RgM"
-    },
-    {
       "id": "veiculo-01",
       "placa": "ABC1D23",
       "ano": 2018,
@@ -827,6 +818,15 @@
       "idCor": "cor-01",
       "idModelo": "modelo-01",
       "idCategoriaVeiculo": "categoria-01"
+    },
+    {
+      "id": "jbCcd0_-4LM",
+      "placa": "HIJ7K86",
+      "ano": 2013,
+      "ativo": false,
+      "idCor": "cor-01",
+      "idModelo": "modelo-02",
+      "idCategoriaVeiculo": "categoria-01"
     }
   ],
   "ClientesVeiculos": [
@@ -844,11 +844,6 @@
       "idCliente": "cliente-01",
       "idVeiculo": "SnIT7MGY01M",
       "id": "WyzzMGMWNLw"
-    },
-    {
-      "idCliente": "cliente-02",
-      "idVeiculo": "c-hjXhxI_7w",
-      "id": "2u2BpZoGzi8"
     },
     {
       "idCliente": "8WPlT0GddtA",
@@ -1011,6 +1006,16 @@
       "motivo": "Evento",
       "ativo": true,
       "idServico": "servico-02"
+    },
+    {
+      "id": "j_Koa4q8CcA",
+      "data": "2026-12-15",
+      "diaInteiro": true,
+      "horaInicio": null,
+      "horaFim": null,
+      "motivo": "Natal",
+      "ativo": true,
+      "idServico": "servico-01"
     }
   ],
   "Agendamentos": [
@@ -1191,7 +1196,7 @@
     },
     {
       "dataHora": "2026-11-24 08:00:00",
-      "status": "AGUARDANDO_PAGAMENTO",
+      "status": "CANCELADO",
       "valor": 40,
       "walkIn": false,
       "idCliente": "cliente-01",
@@ -1228,17 +1233,27 @@
       "idVeiculo": "0_8VP6puA-w",
       "idServico": "servico-01",
       "id": "gRKDD_dx5yQ"
+    },
+    {
+      "dataHora": "2026-11-24 08:15:00",
+      "status": "CONFIRMADO",
+      "valor": 40,
+      "walkIn": false,
+      "idCliente": "cliente-01",
+      "idVeiculo": "veiculo-01",
+      "idServico": "servico-01",
+      "id": "hcv4mvlQzAo"
     }
   ],
   "Pagamentos": [
     {
       "id": "pagamento-02",
       "forma": "CARTAO",
-      "status": "APROVADO",
+      "status": "ESTORNADO",
       "valor": 80,
       "dataHora": "2026-09-30 19:00:00",
       "codigoGateway": "GW-0002",
-      "justificativaEstorno": null,
+      "justificativaEstorno": "Tempo limite de espera atingido",
       "idAgendamento": "agendamento-02",
       "idFuncionario": "funcionario-01"
     },
@@ -1387,17 +1402,6 @@
     },
     {
       "forma": "PIX",
-      "status": "PENDENTE",
-      "valor": 80,
-      "dataHora": null,
-      "codigoGateway": null,
-      "justificativaEstorno": null,
-      "idFuncionario": null,
-      "idAgendamento": "Lb9ahzadGEE",
-      "id": "NVg9tS3lJQk"
-    },
-    {
-      "forma": "PIX",
       "status": "APROVADO",
       "valor": 40,
       "dataHora": "2026-11-23 19:24:16",
@@ -1406,6 +1410,17 @@
       "idFuncionario": "funcionario-02",
       "idAgendamento": "gRKDD_dx5yQ",
       "id": "Ot0ZNt_lq4M"
+    },
+    {
+      "forma": "PIX",
+      "status": "APROVADO",
+      "valor": 40,
+      "dataHora": "2026-11-23 20:38:15",
+      "codigoGateway": "GW-1795477095362",
+      "justificativaEstorno": null,
+      "idFuncionario": null,
+      "idAgendamento": "hcv4mvlQzAo",
+      "id": "05-lEEbMAJo"
     }
   ],
   "LotesPontos": [
