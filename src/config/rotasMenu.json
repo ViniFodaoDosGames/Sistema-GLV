@@ -60,13 +60,13 @@
     "linksCadastros": [
         {
             "href": "/listagem-agendamento",
-            "label": "Agendamentos",
+            "label": "Listagem Agendamento",
             "idDropDown": "1",
             "role": ["ADMINISTRADOR"]
         },
         {
             "href": "/agendamentos",
-            "label": "Todos os agendamentos",
+            "label": "Agendamentos",
             "idDropDown": "1",
             "role": ["CLIENTE", "FUNCIONARIO", "ADMINISTRADOR"]
         },
