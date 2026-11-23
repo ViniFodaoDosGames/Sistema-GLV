@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { emUso } from '../../config/api';
 import { formatarMoeda } from '../../config/util';
 const baseURL = `${BASE_URL}/Servicos`;
 
@@ -33,6 +34,10 @@ function ListagemServico() {
   const [dados, setDados] = React.useState([]);
 
   async function excluir(id) {
+    if (await emUso([['Agendamentos', 'idServico'], ['Bloqueios', 'idServico']], id)) {
+      mensagemErro('Este serviço tem agendamentos ou bloqueios e não pode ser excluído');
+      return;
+    }
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);

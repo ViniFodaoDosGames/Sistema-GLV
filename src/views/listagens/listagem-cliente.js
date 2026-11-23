@@ -16,6 +16,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
 import { formatarDataHora } from '../../config/util';
+import { emUso, removerLigacoes } from '../../config/api';
 const baseURL = `${BASE_URL}/Clientes`;
 
 
@@ -33,6 +34,10 @@ function ListagemCliente() {
   const [dados, setDados] = React.useState([]);
 
   async function excluir(id) {
+    if (await emUso([['Agendamentos', 'idCliente'], ['LotesPontos', 'idCliente'], ['Notificacoes', 'idCliente']], id)) {
+      mensagemErro('Este cliente tem agendamentos, pontos ou notificações e não pode ser excluído');
+      return;
+    }
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);
@@ -40,7 +45,8 @@ function ListagemCliente() {
       .delete(url, data, {
         headers: { 'Content-Type': 'application/json' },
       })
-      .then(function (response) {
+      .then(async function (response) {
+        await removerLigacoes('ClientesVeiculos', 'idCliente', id);
         mensagemSucesso(`Cliente excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {

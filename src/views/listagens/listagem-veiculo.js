@@ -16,6 +16,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
 import { getSession } from '../../auth';
+import { emUso, removerLigacoes } from '../../config/api';
 const baseURL = `${BASE_URL}/Veiculos`;
 
 
@@ -33,7 +34,7 @@ function ListagemVeiculo() {
 
   const [dados, setDados] = React.useState([]);
   const [tabelas, setTabelas] = React.useState({
-    Cores: [], Modelos: [], Marcas: [], CategoriasVeiculo: [], Clientes: [], Usuarios: [], ClientesVeiculos: [], Agendamentos: [],
+    Cores: [], Modelos: [], Marcas: [], CategoriasVeiculo: [], Clientes: [], Usuarios: [], ClientesVeiculos: [],
   });
   const ehCliente = session?.role === 'CLIENTE';
 
@@ -51,7 +52,7 @@ function ListagemVeiculo() {
   }
 
   async function excluir(id) {
-    if (tabelas.Agendamentos.some((agendamento) => agendamento.idVeiculo === id)) {
+    if (await emUso([['Agendamentos', 'idVeiculo']], id)) {
       mensagemErro('Este veículo tem agendamentos e não pode ser excluído');
       return;
     }
@@ -63,10 +64,7 @@ function ListagemVeiculo() {
         headers: { 'Content-Type': 'application/json' },
       })
       .then(async function (response) {
-        const ligacoes = tabelas.ClientesVeiculos.filter((ligacao) => ligacao.idVeiculo === id);
-        for (const ligacao of ligacoes) {
-          await axios.delete(`${BASE_URL}/ClientesVeiculos/${ligacao.id}`);
-        }
+        await removerLigacoes('ClientesVeiculos', 'idVeiculo', id);
         mensagemSucesso(`Veículo excluído com sucesso!`);
         setDados(
           dados.filter((dado) => {
@@ -82,7 +80,7 @@ function ListagemVeiculo() {
  React.useEffect(() => {
    async function carregarVeiculos() {
      try {
-       const [veiculosResponse, clientesResponse, vinculosResponse, cores, modelos, marcas, categorias, usuarios, agendamentos] =
+       const [veiculosResponse, clientesResponse, vinculosResponse, cores, modelos, marcas, categorias, usuarios] =
          await Promise.all([
            axios.get(baseURL),
            axios.get(`${BASE_URL}/Clientes`),
@@ -92,7 +90,6 @@ function ListagemVeiculo() {
            axios.get(`${BASE_URL}/Marcas`),
            axios.get(`${BASE_URL}/CategoriasVeiculo`),
            axios.get(`${BASE_URL}/Usuarios`),
-           axios.get(`${BASE_URL}/Agendamentos`),
          ]);
 
        setTabelas({
@@ -103,7 +100,6 @@ function ListagemVeiculo() {
          Clientes: clientesResponse.data,
          Usuarios: usuarios.data,
          ClientesVeiculos: vinculosResponse.data,
-         Agendamentos: agendamentos.data,
        });
 
        let veiculos = veiculosResponse.data;
