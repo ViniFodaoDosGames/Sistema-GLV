@@ -169,7 +169,7 @@ function CadastroFeriado() {
                                     onChange={(e) => setIdTipoFeriado(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    {tiposFeriado.map((dado) => (
+                                    {tiposFeriado.filter((dado) => dado.ativo || dado.id === idTipoFeriado).map((dado) => (
                                         <option key={dado.id} value={dado.id}>
                                             {dado.nome}
                                         </option>
@@ -185,7 +185,7 @@ function CadastroFeriado() {
                                     onChange={(e) => setIdLavaJato(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    {lavaJatos.map((dado) => (
+                                    {lavaJatos.filter((dado) => dado.ativo || dado.id === idLavaJato).map((dado) => (
                                         <option key={dado.id} value={dado.id}>
                                             {dado.id}
                                         </option>

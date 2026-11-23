@@ -53,9 +53,13 @@ function Relatorios() {
   );
   const faturamento = pagamentosAprovados.reduce((total, p) => total + Number(p.valor), 0);
 
-  const pontosGerados = db.LotesPontos
-    .filter((l) => noPeriodo(l.geradoEm))
-    .reduce((total, l) => total + Number(l.quantidade), 0);
+  const lotesDoPeriodo = db.LotesPontos.filter((l) => noPeriodo(l.geradoEm));
+
+  function somarPontos(tipo) {
+    return lotesDoPeriodo
+      .filter((l) => l.tipo === tipo)
+      .reduce((total, l) => total + Number(l.quantidade), 0);
+  }
 
   const agendamentosPorServico = db.Servicos.map((s) => ({
     rotulo: s.nome,
@@ -92,7 +96,8 @@ function Relatorios() {
           <Indicador titulo='Agendamentos' valor={agendamentos.length} />
           <Indicador titulo='Atendidos' valor={atendidos} />
           <Indicador titulo='Faturamento' valor={formatarMoeda(faturamento)} />
-          <Indicador titulo='Pontos gerados' valor={pontosGerados} />
+          <Indicador titulo='Pontos de fidelidade' valor={somarPontos('FIDELIDADE')} />
+          <Indicador titulo='Pontos de compensação' valor={somarPontos('COMPENSACAO')} />
         </div>
 
         <GraficoBarras titulo='Agendamentos por serviço' itens={agendamentosPorServico} />

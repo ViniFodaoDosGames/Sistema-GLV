@@ -45,6 +45,15 @@ function CadastroHorarioFuncionamento() {
             mensagemErro('Informe: Lava-jato');
             return;
         }
+        if (aberto && horaFechamento.padEnd(8, ':00') <= horaAbertura.padEnd(8, ':00')) {
+            mensagemErro('O fechamento deve ser depois da abertura');
+            return;
+        }
+        const { data: horarios } = await axios.get(baseURL);
+        if (horarios.some((dado) => dado.diaSemana === diaSemana && dado.id !== idParam)) {
+            mensagemErro('Este dia da semana já tem horário cadastrado. Edite o existente.');
+            return;
+        }
 
         let data = {
             id,
@@ -182,7 +191,7 @@ function CadastroHorarioFuncionamento() {
                                     onChange={(e) => setIdLavaJato(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    {lavaJatos.map((dado) => (
+                                    {lavaJatos.filter((dado) => dado.ativo || dado.id === idLavaJato).map((dado) => (
                                         <option key={dado.id} value={dado.id}>
                                             {dado.id}
                                         </option>

@@ -8,8 +8,12 @@ import {
 } from './agenda';
 import { mensagemAlert } from '../components/toastr';
 
+export function foraDaTolerancia(agendamento) {
+  return minutosAteHorario(agendamento) < -TOLERANCIA_MIN;
+}
+
 export async function fazerCheckin(agendamento, observacao, sessao) {
-  if (minutosAteHorario(agendamento) < -TOLERANCIA_MIN) {
+  if (foraDaTolerancia(agendamento)) {
     mensagemAlert(`Check-in fora da tolerância de ${TOLERANCIA_MIN} minutos`);
   }
   await inserir('LogsMovimentacao', {
@@ -59,6 +63,11 @@ export async function registrarAjuste(agendamento, observacao, sessao) {
     idAgendamento: agendamento.id,
     idFuncionario: sessao.idFuncionario,
   });
+}
+
+export async function marcarNaoCompareceu(agendamento, sessao) {
+  await alterar('Agendamentos', agendamento.id, { status: 'NAO_COMPARECEU' });
+  await registrarAjuste(agendamento, 'Cliente não compareceu', sessao);
 }
 
 export function jaSaiu(agendamento, logs) {

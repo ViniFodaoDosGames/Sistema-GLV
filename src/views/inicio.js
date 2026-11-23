@@ -7,7 +7,7 @@ import { obterSessao, PERFIS } from '../config/sessao';
 function Inicio() {
   const sessao = obterSessao();
 
-  if (sessao.perfil === PERFIS.CLIENTE) return <Navigate to='/listagem-agendamento' replace />;
+  if (sessao.perfil === PERFIS.CLIENTE) return <Navigate to='/agendamentos' replace />;
   if (sessao.perfil === PERFIS.FUNCIONARIO) return <Navigate to='/agendamentos' replace />;
   if (sessao.perfil === PERFIS.ADMIN) return <Navigate to='/relatorios' replace />;
 

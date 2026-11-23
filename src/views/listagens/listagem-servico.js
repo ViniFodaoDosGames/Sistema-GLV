@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '../../components/card.js';
 
 import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
+import { confirmarExclusao } from '../../components/confirmar-exclusao';
 
 import '../../custom.css';
 
@@ -38,6 +39,7 @@ function ListagemServico() {
       mensagemErro('Este serviço tem agendamentos ou bloqueios e não pode ser excluído');
       return;
     }
+    if (!(await confirmarExclusao('Excluir serviço'))) return;
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);

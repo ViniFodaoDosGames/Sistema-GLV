@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '../../components/card.js';
 
 import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
+import { confirmarExclusao } from '../../components/confirmar-exclusao';
 
 import '../../custom.css';
 
@@ -45,6 +46,7 @@ function ListagemModelo() {
       mensagemErro('Este modelo é usado em veículos e não pode ser excluído');
       return;
     }
+    if (!(await confirmarExclusao('Excluir modelo'))) return;
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);

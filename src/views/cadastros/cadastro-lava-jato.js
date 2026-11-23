@@ -44,6 +44,13 @@ function CadastroLavaJato() {
             mensagemErro('Informe: Validade dos pontos de compensação (dias)');
             return;
         }
+        if (idParam == null) {
+            const { data: lavaJatos } = await axios.get(baseURL);
+            if (lavaJatos.length > 0) {
+                mensagemErro('Já existe um lava-jato cadastrado. Edite o existente.');
+                return;
+            }
+        }
 
         let data = {
             id,

@@ -5,6 +5,7 @@ import Card from '../components/card';
 import { mensagemErro, mensagemSucesso } from '../components/toastr';
 import { BASE_URL } from '../config/axios';
 import { STATUS_AGENDAMENTO, formatarData, formatarHora, formatarMoeda } from '../config/util';
+import { custoResgate } from '../config/agenda';
 import { getSession } from '../auth';
 import '../custom.css';
 
@@ -18,13 +19,18 @@ function Pagamento() {
     params.tipo === 'pagamento' ? params.id : params.idPagamento;
   const navigate = useNavigate();
   const session = getSession();
+  const telaDeVolta = session?.role === 'ADMINISTRADOR' ? '/listagem-agendamento' : '/agendamentos';
   const [agendamento, setAgendamento] = useState(null);
   const [veiculo, setVeiculo] = useState(null);
   const [servico, setServico] = useState(null);
+  const [lavaJato, setLavaJato] = useState(null);
   const [pagamento, setPagamento] = useState(null);
   const [saldoPontos, setSaldoPontos] = useState(0);
   const [forma, setForma] = useState('PIX');
   const [carregando, setCarregando] = useState(true);
+
+  const custoPontos = custoResgate(servico, lavaJato);
+  const semPontosSuficientes = session?.role !== 'CLIENTE' || !custoPontos || saldoPontos < custoPontos;
 
   useEffect(() => {
     async function carregar() {
@@ -52,6 +58,7 @@ function Pagamento() {
           vinculosResponse,
           pagamentosResponse,
           lotesResponse,
+          lavaJatosResponse,
         ] = await Promise.all([
           axios.get(`${BASE_URL}/Agendamentos/${idAgendamento}`),
           axios.get(`${BASE_URL}/Veiculos`),
@@ -60,6 +67,7 @@ function Pagamento() {
           axios.get(`${BASE_URL}/ClientesVeiculos`),
           axios.get(`${BASE_URL}/Pagamentos`),
           axios.get(`${BASE_URL}/LotesPontos`),
+          axios.get(`${BASE_URL}/LavaJatos`),
         ]);
 
         const dado = agendamentoResponse.data;
@@ -109,9 +117,14 @@ function Pagamento() {
             (item) => String(item.id) === String(dado.idVeiculo)
           ) || null
         );
-        setServico(
+        const servicoDoAgendamento =
           servicosResponse.data.find(
             (item) => String(item.id) === String(dado.idServico)
+          ) || null;
+        setServico(servicoDoAgendamento);
+        setLavaJato(
+          lavaJatosResponse.data.find(
+            (item) => item.id === servicoDoAgendamento?.idLavaJato
           ) || null
         );
         setPagamento(
@@ -141,10 +154,7 @@ function Pagamento() {
     if (!agendamento) return;
 
     const valor = Number(agendamento.valor || pagamento?.valor || 0);
-    if (
-      forma === 'PONTOS' &&
-      (session?.role !== 'CLIENTE' || saldoPontos < valor)
-    ) {
+    if (forma === 'PONTOS' && semPontosSuficientes) {
       mensagemErro('Saldo insuficiente de pontos para este pagamento.');
       return;
     }
@@ -194,7 +204,7 @@ function Pagamento() {
           String(cliente.id).replace('cliente-', ''),
           String(cliente.id).replace(/^cliente-0*/, ''),
         ]);
-        let restante = valor;
+        let restante = custoPontos;
         const lotes = lotesResponse.data
           .filter(
             (item) =>
@@ -225,7 +235,7 @@ function Pagamento() {
       }
 
       mensagemSucesso('Pagamento realizado com sucesso.');
-      navigate('/listagem-agendamento');
+      navigate(telaDeVolta);
     } catch (error) {
       mensagemErro(error.message || 'Não foi possível realizar o pagamento.');
     }
@@ -263,6 +273,8 @@ function Pagamento() {
               <dd className='col-sm-8'>{formatarMoeda(valor)}</dd>
               <dt className='col-sm-4'>Saldo de pontos</dt>
               <dd className='col-sm-8'>{saldoPontos}</dd>
+              <dt className='col-sm-4'>Custo em pontos</dt>
+              <dd className='col-sm-8'>{custoPontos}</dd>
             </dl>
           </div>
           <div className='col-lg-5'>
@@ -279,19 +291,16 @@ function Pagamento() {
                   className={`btn ${
                     forma === opcao.value ? 'btn-primary' : 'btn-outline-primary'
                   }`}
-                  disabled={
-                    opcao.value === 'PONTOS' &&
-                    (session?.role !== 'CLIENTE' || saldoPontos < valor)
-                  }
+                  disabled={opcao.value === 'PONTOS' && semPontosSuficientes}
                   onClick={() => setForma(opcao.value)}
                 >
                   {opcao.label}
                 </button>
               ))}
             </div>
-            {forma === 'PONTOS' && saldoPontos < valor && (
+            {session?.role === 'CLIENTE' && custoPontos > 0 && saldoPontos < custoPontos && (
               <div className='alert alert-warning mt-3 mb-0'>
-                Seus pontos não cobrem integralmente este serviço.
+                Faltam {custoPontos - saldoPontos} pontos para pagar com pontos.
               </div>
             )}
             <div className='d-flex gap-2 mt-4'>
@@ -300,7 +309,7 @@ function Pagamento() {
                 className='btn btn-primary'
                 onClick={confirmarPagamento}
                 disabled={
-                  agendamento.status === 'CONFIRMADO' ||
+                  agendamento.status !== 'AGUARDANDO_PAGAMENTO' ||
                   pagamento?.status === 'APROVADO'
                 }
               >
@@ -309,7 +318,7 @@ function Pagamento() {
               <button
                 type='button'
                 className='btn btn-secondary'
-                onClick={() => navigate('/listagem-agendamento')}
+                onClick={() => navigate(telaDeVolta)}
               >
                 Cancelar
               </button>

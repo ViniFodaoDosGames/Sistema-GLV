@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '../../components/card.js';
 
 import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
+import { confirmarExclusao } from '../../components/confirmar-exclusao';
 
 import '../../custom.css';
 
@@ -15,6 +16,8 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
+import { obterSessao } from '../../config/sessao';
+import { nomeFuncionario } from '../../config/agenda';
 const baseURL = `${BASE_URL}/Administradores`;
 
 
@@ -30,8 +33,20 @@ function ListagemAdministrador() {
   };
 
   const [dados, setDados] = React.useState([]);
+  const [funcionarios, setFuncionarios] = React.useState([]);
+  const [usuarios, setUsuarios] = React.useState([]);
 
   async function excluir(id) {
+    const administrador = dados.find((dado) => dado.id === id);
+    if (administrador && administrador.idFuncionario === obterSessao().idFuncionario) {
+      mensagemErro('Você não pode excluir o seu próprio acesso de administrador');
+      return;
+    }
+    if (dados.length === 1) {
+      mensagemErro('O sistema precisa ter pelo menos um administrador');
+      return;
+    }
+    if (!(await confirmarExclusao('Excluir administrador'))) return;
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);
@@ -56,6 +71,12 @@ function ListagemAdministrador() {
    axios.get(baseURL).then((response) => {
      setDados(response.data);
    });
+   axios.get(`${BASE_URL}/Funcionarios`).then((response) => {
+     setFuncionarios(response.data);
+   });
+   axios.get(`${BASE_URL}/Usuarios`).then((response) => {
+     setUsuarios(response.data);
+   });
  }, []);
 
   if (!dados) return null;
@@ -76,15 +97,15 @@ function ListagemAdministrador() {
                 <thead>
                   <tr>
                     <th scope='col'>Funcionário</th>
-                    <th scope='col'>Matrícula</th>
                     <th scope='col'>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.idFuncionario}</td>
-                      <td className='justify-content-center'>{dado.id}</td>
+                      <td className='justify-content-center'>
+                        {nomeFuncionario(dado.idFuncionario, { Funcionarios: funcionarios, Usuarios: usuarios })}
+                      </td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

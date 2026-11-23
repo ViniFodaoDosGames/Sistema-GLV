@@ -74,6 +74,9 @@ function Login() {
             <button type='submit' className='btn btn-success w-100'>
               Entrar
             </button>
+            <p className='text-center mt-3 mb-0'>
+              Não tem conta? <Link to='/registrar'>Cadastre-se</Link>
+            </p>
           </form>
         </div>
       </div>

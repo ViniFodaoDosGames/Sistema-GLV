@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '../../components/card.js';
 
 import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
+import { confirmarExclusao } from '../../components/confirmar-exclusao';
 
 import '../../custom.css';
 
@@ -31,12 +32,16 @@ function ListagemFuncionario() {
   };
 
   const [dados, setDados] = React.useState([]);
+  const [usuarios, setUsuarios] = React.useState([]);
+
+  const nomeDoUsuario = (idUsuario) => usuarios.find((usuario) => usuario.id === idUsuario)?.nome || '-';
 
   async function excluir(id) {
     if (await emUso([['Administradores', 'idFuncionario'], ['Pagamentos', 'idFuncionario'], ['LogsMovimentacao', 'idFuncionario']], id)) {
       mensagemErro('Este funcionário tem pagamentos, registros no log ou é administrador e não pode ser excluído');
       return;
     }
+    if (!(await confirmarExclusao('Excluir funcionário'))) return;
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);
@@ -61,6 +66,9 @@ function ListagemFuncionario() {
    axios.get(baseURL).then((response) => {
      setDados(response.data);
    });
+   axios.get(`${BASE_URL}/Usuarios`).then((response) => {
+     setUsuarios(response.data);
+   });
  }, []);
 
   if (!dados) return null;
@@ -80,7 +88,6 @@ function ListagemFuncionario() {
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Matrícula</th>
                     <th scope='col'>Usuário</th>
                     <th scope='col'>Ações</th>
                   </tr>
@@ -88,8 +95,7 @@ function ListagemFuncionario() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.id}</td>
-                      <td className='justify-content-center'>{dado.idUsuario}</td>
+                      <td className='justify-content-center'>{nomeDoUsuario(dado.idUsuario)}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
                           <IconButton

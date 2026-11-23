@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '../../components/card.js';
 
 import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
+import { confirmarExclusao } from '../../components/confirmar-exclusao';
 
 import '../../custom.css';
 
@@ -37,6 +38,7 @@ function ListagemTipoFeriado() {
       mensagemErro('Este tipo é usado em feriados e não pode ser excluído');
       return;
     }
+    if (!(await confirmarExclusao('Excluir tipo de feriado'))) return;
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);

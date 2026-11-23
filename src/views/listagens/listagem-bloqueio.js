@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '../../components/card.js';
 
 import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
+import { confirmarExclusao } from '../../components/confirmar-exclusao';
 
 import '../../custom.css';
 
@@ -31,8 +32,12 @@ function ListagemBloqueio() {
   };
 
   const [dados, setDados] = React.useState([]);
+  const [servicos, setServicos] = React.useState([]);
+
+  const nomeDoServico = (idServico) => servicos.find((servico) => servico.id === idServico)?.nome || '-';
 
   async function excluir(id) {
+    if (!(await confirmarExclusao('Excluir bloqueio'))) return;
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);
@@ -56,6 +61,9 @@ function ListagemBloqueio() {
  React.useEffect(() => {
    axios.get(baseURL).then((response) => {
      setDados(response.data);
+   });
+   axios.get(`${BASE_URL}/Servicos`).then((response) => {
+     setServicos(response.data);
    });
  }, []);
 
@@ -89,7 +97,7 @@ function ListagemBloqueio() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.idServico}</td>
+                      <td className='justify-content-center'>{nomeDoServico(dado.idServico)}</td>
                       <td className='justify-content-center'>{formatarData(dado.data)}</td>
                       <td className='justify-content-center'>{formatarHora(dado.horaInicio)}</td>
                       <td className='justify-content-center'>{formatarHora(dado.horaFim)}</td>

@@ -12,6 +12,7 @@ import '../../custom.css';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios';
+import { carregar } from '../../config/api';
 
 function CadastroCliente() {
     const { idParam } = useParams();
@@ -23,6 +24,15 @@ function CadastroCliente() {
     const [id, setId] = useState('');
     const [idUsuario, setIdUsuario] = useState('');
     const [usuarios, setUsuarios] = useState([]);
+    const [clientes, setClientes] = useState([]);
+    const [funcionarios, setFuncionarios] = useState([]);
+
+    const usuariosLivres = usuarios.filter(
+        (dado) =>
+            (dado.status || dado.id === idUsuario) &&
+            !clientes.some((cliente) => cliente.idUsuario === dado.id && cliente.id !== idParam) &&
+            !funcionarios.some((funcionario) => funcionario.idUsuario === dado.id)
+    );
 
     async function salvar() {
         if (idUsuario === '') {
@@ -49,7 +59,7 @@ function CadastroCliente() {
                 });
         } else {
             await axios
-                .put(`${baseURL}/${idParam}`, data, {
+                .patch(`${baseURL}/${idParam}`, data, {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then(function (response) {
@@ -81,10 +91,11 @@ function CadastroCliente() {
     }, [idParam]);
 
     useEffect(() => {
-        axios
-            .get(`${BASE_URL}/Usuarios`)
-            .then((response) => {
-                setUsuarios(response.data);
+        carregar(['Usuarios', 'Clientes', 'Funcionarios'])
+            .then((dados) => {
+                setUsuarios(dados.Usuarios);
+                setClientes(dados.Clientes);
+                setFuncionarios(dados.Funcionarios);
             })
             .catch(function (error) {
                 mensagemErro('Erro ao carregar os dados da tela');
@@ -106,7 +117,7 @@ function CadastroCliente() {
                                     onChange={(e) => setIdUsuario(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    {usuarios.map((dado) => (
+                                    {usuariosLivres.map((dado) => (
                                         <option key={dado.id} value={dado.id}>
                                             {dado.nome}
                                         </option>

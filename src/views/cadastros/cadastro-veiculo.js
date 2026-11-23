@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
+import { Navigate, useNavigate, useParams, useOutletContext } from 'react-router-dom';
 
 import Stack from '@mui/material/Stack';
 
@@ -38,6 +38,7 @@ function CadastroVeiculo() {
     const [usuarios, setUsuarios] = useState([]);
     const [clientesVeiculos, setClientesVeiculos] = useState([]);
     const [donoEscolhido, setDonoEscolhido] = useState(null);
+    const [ligacoesCarregadas, setLigacoesCarregadas] = useState(false);
 
     const ehCliente = sessao?.role === 'CLIENTE';
     const ligacaoAtual = clientesVeiculos.find((dado) => dado.idVeiculo === idParam);
@@ -67,7 +68,14 @@ function CadastroVeiculo() {
     const anoAtual = new Date().getFullYear();
     const modeloEscolhido = modelos.find((dado) => dado.id === idModelo);
     const marcaEscolhida = idMarca !== '' ? idMarca : modeloEscolhido?.idMarca || '';
-    const modelosDaMarca = modelos.filter((dado) => dado.idMarca === marcaEscolhida);
+    const modelosDaMarca = modelos.filter(
+        (dado) => dado.idMarca === marcaEscolhida && (dado.ativo || dado.id === idModelo)
+    );
+    const marcasAtivas = marcas.filter((dado) => dado.ativo || dado.id === marcaEscolhida);
+    const coresAtivas = cores.filter((dado) => dado.ativo || dado.id === idCor);
+    const clientesAtivos = clientes.filter(
+        (dado) => usuarios.find((usuario) => usuario.id === dado.idUsuario)?.status || dado.id === dono
+    );
     const categoriaDoModelo = categorias.find((dado) => dado.id === modeloEscolhido?.idCategoriaVeiculo);
     const anosDoModelo = [];
     if (modeloEscolhido) {
@@ -80,6 +88,16 @@ function CadastroVeiculo() {
     async function salvar() {
         if (!placaValida(placa)) {
             mensagemErro('Placa inválida. Use o formato ABC1234 ou ABC1D23');
+            return;
+        }
+        try {
+            const { data: todos } = await axios.get(baseURL);
+            if (todos.some((dado) => dado.id !== idParam && normalizarPlaca(dado.placa) === normalizarPlaca(placa))) {
+                mensagemErro('Placa já cadastrada');
+                return;
+            }
+        } catch (erro) {
+            mensagemErro('Erro ao conferir a placa');
             return;
         }
         if (marcaEscolhida === '') {
@@ -213,11 +231,22 @@ function CadastroVeiculo() {
             .get(`${BASE_URL}/ClientesVeiculos`)
             .then((response) => {
                 setClientesVeiculos(response.data);
+                setLigacoesCarregadas(true);
             })
             .catch(function (error) {
                 mensagemErro('Erro ao carregar os dados da tela');
             });
     }, []);
+
+    const veiculoDeOutroCliente =
+        ehCliente &&
+        idParam != null &&
+        ligacoesCarregadas &&
+        !clientesVeiculos.some((dado) => dado.idVeiculo === idParam && dado.idCliente === sessao.idCliente);
+
+    if (veiculoDeOutroCliente) {
+        return <Navigate to='/listagem-veiculo' replace />;
+    }
 
     return (
         <div className='container'>
@@ -245,7 +274,7 @@ function CadastroVeiculo() {
                                         onChange={(e) => setDonoEscolhido(e.target.value)}
                                     >
                                         <option value=''>Sem dono</option>
-                                        {clientes.map((dado) => (
+                                        {clientesAtivos.map((dado) => (
                                             <option key={dado.id} value={dado.id}>
                                                 {nomeDoCliente(dado)}
                                             </option>
@@ -266,7 +295,7 @@ function CadastroVeiculo() {
                                     }}
                                 >
                                     <option value=''>Selecione</option>
-                                    {marcas.map((dado) => (
+                                    {marcasAtivas.map((dado) => (
                                         <option key={dado.id} value={dado.id}>
                                             {dado.nome}
                                         </option>
@@ -329,7 +358,7 @@ function CadastroVeiculo() {
                                     onChange={(e) => setIdCor(e.target.value)}
                                 >
                                     <option value=''>Selecione</option>
-                                    {cores.map((dado) => (
+                                    {coresAtivas.map((dado) => (
                                         <option key={dado.id} value={dado.id}>
                                             {dado.nome}
                                         </option>

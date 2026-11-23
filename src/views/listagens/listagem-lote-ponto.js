@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '../../components/card.js';
 
 import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
+import { confirmarExclusao } from '../../components/confirmar-exclusao';
 
 import '../../custom.css';
 
@@ -32,12 +33,20 @@ function ListagemLotePontos() {
   };
 
   const [dados, setDados] = React.useState([]);
+  const [clientes, setClientes] = React.useState([]);
+  const [usuarios, setUsuarios] = React.useState([]);
+
+  function nomeDoCliente(idCliente) {
+    const cliente = clientes.find((item) => item.id === idCliente);
+    return usuarios.find((usuario) => usuario.id === cliente?.idUsuario)?.nome || '-';
+  }
 
   async function excluir(id) {
     if (await emUso([['PagamentosLotesPontos', 'idLotePontos']], id)) {
       mensagemErro('Estes pontos já foram usados em um pagamento e não podem ser excluídos');
       return;
     }
+    if (!(await confirmarExclusao('Excluir lote de pontos'))) return;
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);
@@ -61,6 +70,12 @@ function ListagemLotePontos() {
  React.useEffect(() => {
    axios.get(baseURL).then((response) => {
      setDados(response.data);
+   });
+   axios.get(`${BASE_URL}/Clientes`).then((response) => {
+     setClientes(response.data);
+   });
+   axios.get(`${BASE_URL}/Usuarios`).then((response) => {
+     setUsuarios(response.data);
    });
  }, []);
 
@@ -93,7 +108,7 @@ function ListagemLotePontos() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.idCliente}</td>
+                      <td className='justify-content-center'>{nomeDoCliente(dado.idCliente)}</td>
                       <td className='justify-content-center'>{TIPO_LOTE_PONTOS[dado.tipo] || dado.tipo}</td>
                     <td className='justify-content-center'>{dado.quantidade}</td>
                       <td className='justify-content-center'>{dado.saldo}</td>

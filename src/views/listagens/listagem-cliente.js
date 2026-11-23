@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '../../components/card.js';
 
 import { mensagemSucesso, mensagemErro } from '../../components/toastr.js';
+import { confirmarExclusao } from '../../components/confirmar-exclusao';
 
 import '../../custom.css';
 
@@ -32,12 +33,16 @@ function ListagemCliente() {
   };
 
   const [dados, setDados] = React.useState([]);
+  const [usuarios, setUsuarios] = React.useState([]);
+
+  const nomeDoUsuario = (idUsuario) => usuarios.find((usuario) => usuario.id === idUsuario)?.nome || '-';
 
   async function excluir(id) {
     if (await emUso([['Agendamentos', 'idCliente'], ['LotesPontos', 'idCliente'], ['Notificacoes', 'idCliente']], id)) {
       mensagemErro('Este cliente tem agendamentos, pontos ou notificações e não pode ser excluído');
       return;
     }
+    if (!(await confirmarExclusao('Excluir cliente'))) return;
     let data = JSON.stringify({ id });
     let url = `${baseURL}/${id}`;
     console.log(url);
@@ -63,6 +68,9 @@ function ListagemCliente() {
    axios.get(baseURL).then((response) => {
      setDados(response.data);
    });
+   axios.get(`${BASE_URL}/Usuarios`).then((response) => {
+     setUsuarios(response.data);
+   });
  }, []);
 
   if (!dados) return null;
@@ -82,7 +90,6 @@ function ListagemCliente() {
               <table className='table table-hover justify-content-center'>
                 <thead>
                   <tr>
-                    <th scope='col'>Código</th>
                     <th scope='col'>Usuário</th>
                     <th scope='col'>Data de Aceitação dos Termos</th>
                     <th scope='col'>Ações</th>
@@ -91,8 +98,7 @@ function ListagemCliente() {
                 <tbody>
                   {dados.map((dado) => (
                     <tr key={dado.id}>
-                      <td className='justify-content-center'>{dado.id}</td>
-                      <td className='justify-content-center'>{dado.idUsuario}</td>
+                      <td className='justify-content-center'>{nomeDoUsuario(dado.idUsuario)}</td>
                       <td className='justify-content-center'>{formatarDataHora(dado.dataAceiteTermos)}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
