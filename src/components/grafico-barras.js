@@ -26,6 +26,8 @@ function GraficoBarras({ titulo, itens, formatar = (v) => v }) {
                   height: 16,
                   background: COR_BARRA,
                   borderRadius: '0 4px 4px 0',
+                  printColorAdjust: 'exact',
+                  WebkitPrintColorAdjust: 'exact',
                 }}
               />
             </div>
@@ -33,7 +35,7 @@ function GraficoBarras({ titulo, itens, formatar = (v) => v }) {
           </div>
         ))}
       {maior > 0 && (
-        <details className='mt-1'>
+        <details className='mt-1 no-print'>
           <summary>Ver tabela</summary>
           <table className='table table-sm'>
             <tbody>
