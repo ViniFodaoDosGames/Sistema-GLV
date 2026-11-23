@@ -18,7 +18,7 @@ import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
 import { STATUS_AGENDAMENTO, formatarDataHora, formatarMoeda } from '../../config/util';
 import { emUso, removerLigacoes } from '../../config/api';
-import { posicaoNaFila } from '../../config/agenda';
+import { posicaoNaFila, cancelarExpirados } from '../../config/agenda';
 const baseURL = `${BASE_URL}/Agendamentos`;
 
 
@@ -80,6 +80,10 @@ function ListagemAgendamento() {
            axios.get(`${BASE_URL}/Servicos`),
            axios.get(`${BASE_URL}/Pagamentos`),
          ]);
+       if (await cancelarExpirados(agendamentos.data, pagamentosResponse.data)) {
+         carregar();
+         return;
+       }
 
        setDados(agendamentos.data);
        setVeiculos(veiculosResponse.data);
@@ -165,12 +169,14 @@ function ListagemAgendamento() {
                       <td className='justify-content-center'>{posicaoNaFila(dado, dados) || '—'}</td>
                       <td>
                         <Stack spacing={1} padding={0} direction='row' >
-                          <IconButton
-                            aria-label='edit'
-                            onClick={() => editar(dado.id)}
-                          >
-                            <EditIcon />
-                          </IconButton>
+                          {['AGUARDANDO_PAGAMENTO', 'CONFIRMADO'].includes(dado.status) && (
+                            <IconButton
+                              aria-label='edit'
+                              onClick={() => editar(dado.id)}
+                            >
+                              <EditIcon />
+                            </IconButton>
+                          )}
                           <IconButton
                             aria-label='delete'
                             onClick={() => excluir(dado.id)}

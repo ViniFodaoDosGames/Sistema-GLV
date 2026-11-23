@@ -90,11 +90,19 @@ function CadastroVeiculo() {
             mensagemErro('Placa inválida. Use o formato ABC1234 ou ABC1D23');
             return;
         }
+        let veiculoSemDono = null;
         try {
             const { data: todos } = await axios.get(baseURL);
-            if (todos.some((dado) => dado.id !== idParam && normalizarPlaca(dado.placa) === normalizarPlaca(placa))) {
-                mensagemErro('Placa já cadastrada');
-                return;
+            const mesmaPlaca = todos.find(
+                (dado) => dado.id !== idParam && normalizarPlaca(dado.placa) === normalizarPlaca(placa)
+            );
+            if (mesmaPlaca) {
+                const temDono = clientesVeiculos.some((ligacao) => ligacao.idVeiculo === mesmaPlaca.id);
+                if (idParam != null || temDono) {
+                    mensagemErro('Placa já cadastrada');
+                    return;
+                }
+                veiculoSemDono = mesmaPlaca;
             }
         } catch (erro) {
             mensagemErro('Erro ao conferir a placa');
@@ -127,7 +135,20 @@ function CadastroVeiculo() {
             idCategoriaVeiculo: modeloEscolhido.idCategoriaVeiculo,
         };
         data = JSON.stringify(data);
-        if (idParam == null) {
+        if (veiculoSemDono) {
+            await axios
+                .put(`${baseURL}/${veiculoSemDono.id}`, data, {
+                    headers: { 'Content-Type': 'application/json' },
+                })
+                .then(async function (response) {
+                    await ligarAoDono(veiculoSemDono.id);
+                    mensagemSucesso(`Veículo cadastrado com sucesso!`);
+                    navigate(`/listagem-veiculo`);
+                })
+                .catch(function (error) {
+                    mensagemErro('Erro ao cadastrar o veículo');
+                });
+        } else if (idParam == null) {
             await axios
                 .post(baseURL, data, {
                     headers: { 'Content-Type': 'application/json' },

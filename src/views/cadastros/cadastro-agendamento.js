@@ -138,7 +138,7 @@ function CadastroAgendamento() {
                 navigate(ehCliente ? `/pagamento/${resposta.data.id}` : telaDeVolta);
             } else {
                 await axios.patch(`${baseURL}/${idParam}`, dados);
-                mensagemSucesso('Agendamento alterado com sucesso!');
+                mensagemSucesso('Agendamento remarcado com sucesso!');
                 navigate(telaDeVolta);
             }
         } catch (erro) {
@@ -203,10 +203,10 @@ function CadastroAgendamento() {
         await gravar(
             {
                 dataHora,
-                status: idParam == null ? 'CONFIRMADO' : status,
+                status: 'CONFIRMADO',
                 valor: servicoEscolhido.preco,
                 walkIn: true,
-                idCliente: idCliente || null,
+                idCliente: null,
                 idVeiculo: idVeiculoWalkIn,
                 idServico,
             },
@@ -230,7 +230,7 @@ function CadastroAgendamento() {
         await gravar(
             {
                 dataHora,
-                status: idParam == null ? 'CONFIRMADO' : status,
+                status: 'CONFIRMADO',
                 valor: servicoEscolhido.preco,
                 walkIn: false,
                 idCliente,
@@ -242,8 +242,19 @@ function CadastroAgendamento() {
         );
     }
 
+    async function salvarRemarcacao() {
+        if (!['AGUARDANDO_PAGAMENTO', 'CONFIRMADO'].includes(status)) {
+            mensagemErro('Só dá para remarcar agendamentos aguardando pagamento ou confirmados');
+            return;
+        }
+        if (!conferirServicoEHorario()) return;
+        await gravar({ dataHora: `${diaEscolhido} ${hora}:00` });
+    }
+
     async function salvar() {
-        if (ehCliente) {
+        if (idParam != null) {
+            await salvarRemarcacao();
+        } else if (ehCliente) {
             await salvarComoCliente();
         } else if (walkIn) {
             await salvarWalkIn();
@@ -342,7 +353,7 @@ function CadastroAgendamento() {
                     value={idVeiculo}
                     className='form-select'
                     name='idVeiculo'
-                    disabled={semCliente}
+                    disabled={semCliente || idParam != null}
                     onChange={(e) => setIdVeiculo(e.target.value)}
                 >
                     <option value=''>{semCliente ? 'Escolha o cliente primeiro' : 'Selecione'}</option>
@@ -365,6 +376,7 @@ function CadastroAgendamento() {
                         value={idServico}
                         className='form-select'
                         name='idServico'
+                        disabled={idParam != null}
                         onChange={(e) => {
                             setIdServico(e.target.value);
                             setDia('');
@@ -466,7 +478,7 @@ function CadastroAgendamento() {
 
     return (
         <div className='container'>
-            <Card title={ehCliente ? 'Agendamento' : 'Cadastro de Agendamento'}>
+            <Card title={idParam != null ? 'Remarcar agendamento' : ehCliente ? 'Agendamento' : 'Cadastro de Agendamento'}>
                 <div className='row'>
                     <div className='col-lg-12'>
                         <div className='bs-component'>
@@ -503,6 +515,7 @@ function CadastroAgendamento() {
                                         <input
                                             type='text'
                                             id='inputPlacaWalkIn'
+                                            disabled={idParam != null}
                                             value={placaWalkIn}
                                             className='form-control'
                                             placeholder='ABC1D23'
@@ -522,6 +535,7 @@ function CadastroAgendamento() {
                                             value={idCliente}
                                             className='form-select'
                                             name='idCliente'
+                                            disabled={idParam != null}
                                             onChange={(e) => {
                                                 setIdCliente(e.target.value);
                                                 setIdVeiculo('');

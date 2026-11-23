@@ -9,22 +9,19 @@ import { confirmarExclusao } from '../../components/confirmar-exclusao';
 
 import '../../custom.css';
 
-import { useNavigate } from 'react-router-dom';
-
 import Stack from '@mui/material/Stack';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
-import { STATUS_PAGAMENTO, FORMA_PAGAMENTO, formatarDataHora, formatarMoeda } from '../../config/util';
+import { agora, STATUS_PAGAMENTO, FORMA_PAGAMENTO, formatarDataHora, formatarMoeda } from '../../config/util';
 import { getSession } from '../../auth';
-import { nomeFuncionario } from '../../config/agenda';
+import { nomeFuncionario, pagamentoExpirado, cancelarExpirados } from '../../config/agenda';
 const baseURL = `${BASE_URL}/Pagamentos`;
 
 
 function ListagemPagamento() {
-  const navigate = useNavigate();
   const session = getSession();
   const ehCliente = session?.role === 'CLIENTE';
 
@@ -33,6 +30,28 @@ function ListagemPagamento() {
   const [equipe, setEquipe] = React.useState({ Funcionarios: [], Usuarios: [] });
   const [estornando, setEstornando] = React.useState(null);
   const [justificativa, setJustificativa] = React.useState('');
+  const [recebendo, setRecebendo] = React.useState(null);
+  const [formaRecebimento, setFormaRecebimento] = React.useState('PIX');
+
+  const agendamentoDo = (pagamento) => agendamentos.find((item) => item.id === pagamento.idAgendamento);
+
+  function podeReceber(pagamento) {
+    const agendamento = agendamentoDo(pagamento);
+    return (
+      pagamento.status === 'PENDENTE' &&
+      agendamento?.status === 'AGUARDANDO_PAGAMENTO' &&
+      !pagamentoExpirado(agendamento)
+    );
+  }
+
+  function podeEstornar(pagamento) {
+    const agendamento = agendamentoDo(pagamento);
+    return (
+      pagamento.status === 'APROVADO' &&
+      pagamento.forma !== 'PONTOS' &&
+      !['CANCELADO', 'NAO_COMPARECEU'].includes(agendamento?.status)
+    );
+  }
 
   async function excluir(id) {
     if (!(await confirmarExclusao('Excluir pagamento'))) return;
@@ -56,6 +75,33 @@ function ListagemPagamento() {
       });
   }
 
+  function pedirRecebimento(pagamento) {
+    setFormaRecebimento('PIX');
+    setRecebendo(pagamento);
+  }
+
+  async function confirmarRecebimento() {
+    const pagamento = recebendo;
+    setRecebendo(null);
+    const alteracao = {
+      forma: formaRecebimento,
+      status: 'APROVADO',
+      dataHora: agora(),
+      idFuncionario: session.idFuncionario,
+    };
+    try {
+      await axios.patch(`${baseURL}/${pagamento.id}`, alteracao);
+      await axios.patch(`${BASE_URL}/Agendamentos/${pagamento.idAgendamento}`, { status: 'CONFIRMADO' });
+      mensagemSucesso('Pagamento recebido. Agendamento confirmado.');
+      setDados(dados.map((item) => (item.id === pagamento.id ? { ...item, ...alteracao } : item)));
+      setAgendamentos(
+        agendamentos.map((item) => (item.id === pagamento.idAgendamento ? { ...item, status: 'CONFIRMADO' } : item))
+      );
+    } catch (erro) {
+      mensagemErro('Não foi possível registrar o pagamento');
+    }
+  }
+
   function pedirEstorno(pagamento) {
     setJustificativa('');
     setEstornando(pagamento);
@@ -71,7 +117,7 @@ function ListagemPagamento() {
     setEstornando(null);
     try {
       await axios.patch(`${baseURL}/${pagamento.id}`, { status: 'ESTORNADO', justificativaEstorno: motivo });
-      const agendamento = agendamentos.find((item) => item.id === pagamento.idAgendamento);
+      const agendamento = agendamentoDo(pagamento);
       if (agendamento && ['AGUARDANDO_PAGAMENTO', 'CONFIRMADO'].includes(agendamento.status)) {
         await axios.patch(`${BASE_URL}/Agendamentos/${agendamento.id}`, { status: 'CANCELADO' });
       }
@@ -97,6 +143,10 @@ function ListagemPagamento() {
            axios.get(`${BASE_URL}/Funcionarios`),
            axios.get(`${BASE_URL}/Usuarios`),
          ]);
+       if (await cancelarExpirados(agendamentosResponse.data, pagamentos.data)) {
+         carregar();
+         return;
+       }
        setEquipe({ Funcionarios: funcionariosResponse.data, Usuarios: usuariosResponse.data });
 
        let pagamentosFiltrados = pagamentos.data;
@@ -170,16 +220,16 @@ function ListagemPagamento() {
                       {!ehCliente && (
                         <td>
                           <Stack spacing={1} padding={0} direction='row' >
-                            {dado.status === 'PENDENTE' && (
+                            {podeReceber(dado) && (
                               <button
                                 type='button'
-                                className='btn btn-primary btn-sm'
-                                onClick={() => navigate(`/pagamento/pagamento/${dado.id}`)}
+                                className='btn btn-success btn-sm'
+                                onClick={() => pedirRecebimento(dado)}
                               >
-                                Pagar
+                                Receber
                               </button>
                             )}
-                            {dado.status === 'APROVADO' && dado.forma !== 'PONTOS' && (
+                            {podeEstornar(dado) && (
                               <button
                                 type='button'
                                 className='btn btn-warning btn-sm'
@@ -207,6 +257,42 @@ function ListagemPagamento() {
           </div>
         </div>
       </Card>
+
+      <Modal
+        aberto={recebendo != null}
+        titulo='Receber pagamento no balcão'
+        onFechar={() => setRecebendo(null)}
+        rodape={
+          <>
+            <button type='button' className='btn btn-secondary' onClick={() => setRecebendo(null)}>
+              Voltar
+            </button>
+            <button type='button' className='btn btn-success' onClick={confirmarRecebimento}>
+              Confirmar recebimento
+            </button>
+          </>
+        }
+      >
+        {recebendo && (
+          <>
+            <p>Receber {formatarMoeda(recebendo.valor)} e confirmar o agendamento?</p>
+            <FormGroup label='Forma de pagamento: *' htmlFor='inputFormaRecebimento'>
+              <select
+                id='inputFormaRecebimento'
+                className='form-select'
+                value={formaRecebimento}
+                onChange={(e) => setFormaRecebimento(e.target.value)}
+              >
+                {['PIX', 'CARTAO', 'DINHEIRO'].map((forma) => (
+                  <option key={forma} value={forma}>
+                    {FORMA_PAGAMENTO[forma]}
+                  </option>
+                ))}
+              </select>
+            </FormGroup>
+          </>
+        )}
+      </Modal>
 
       <Modal
         aberto={estornando != null}

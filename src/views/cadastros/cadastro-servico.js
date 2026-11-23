@@ -37,24 +37,24 @@ function CadastroServico() {
             mensagemErro('Informe: Nome');
             return;
         }
-        if (preco === '') {
-            mensagemErro('Informe: Preço');
+        if (!(Number(preco) > 0)) {
+            mensagemErro('O preço deve ser maior que zero');
             return;
         }
-        if (pontosGerados === '') {
-            mensagemErro('Informe: Pontos gerados');
+        if (!(Number(pontosGerados) > 0)) {
+            mensagemErro('Os pontos gerados devem ser maiores que zero');
             return;
         }
-        if (tempoDuracao === '') {
-            mensagemErro('Informe: Duração (min)');
+        if (!(Number(tempoDuracao) > 0)) {
+            mensagemErro('A duração deve ser maior que zero');
             return;
         }
-        if (tempoIntervalo === '') {
-            mensagemErro('Informe: Intervalo (min)');
+        if (tempoIntervalo === '' || Number(tempoIntervalo) < 0) {
+            mensagemErro('Informe o intervalo (zero ou mais minutos)');
             return;
         }
-        if (vagas === '') {
-            mensagemErro('Informe: Vagas');
+        if (!Number.isInteger(Number(vagas)) || Number(vagas) < 1) {
+            mensagemErro('Informe pelo menos 1 vaga');
             return;
         }
         if (!descricao.trim()) {
