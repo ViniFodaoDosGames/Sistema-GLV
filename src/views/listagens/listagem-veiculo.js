@@ -17,7 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import { BASE_URL } from '../../config/axios.js';
 import { getSession } from '../../auth';
-import { emUso, removerLigacoes } from '../../config/api';
+import { emUso, removerLigacoes, alterar } from '../../config/api';
 const baseURL = `${BASE_URL}/Veiculos`;
 
 
@@ -52,9 +52,35 @@ function ListagemVeiculo() {
     return cliente ? nomeEm('Usuarios', cliente.idUsuario) : 'Sem dono';
   }
 
+  async function removerDoCliente(id) {
+    const { data: agendamentos } = await axios.get(`${BASE_URL}/Agendamentos`);
+    const emAberto = agendamentos.some(
+      (agendamento) =>
+        agendamento.idVeiculo === id &&
+        ['AGUARDANDO_PAGAMENTO', 'CONFIRMADO', 'EM_ANDAMENTO'].includes(agendamento.status)
+    );
+    if (emAberto) {
+      mensagemErro('Este veículo tem agendamento em aberto. Cancele antes de excluir.');
+      return;
+    }
+    if (!(await confirmarExclusao('Excluir veículo'))) return;
+    try {
+      await alterar('Veiculos', id, { ativo: false });
+      await removerLigacoes('ClientesVeiculos', 'idVeiculo', id);
+      mensagemSucesso('Veículo excluído com sucesso!');
+      setDados(dados.filter((dado) => dado.id !== id));
+    } catch (erro) {
+      mensagemErro('Erro ao excluir o veículo');
+    }
+  }
+
   async function excluir(id) {
+    if (ehCliente) {
+      await removerDoCliente(id);
+      return;
+    }
     if (await emUso([['Agendamentos', 'idVeiculo']], id)) {
-      mensagemErro('Este veículo tem agendamentos e não pode ser excluído');
+      mensagemErro('Este veículo tem histórico de agendamentos (inclusive cancelados) e não pode ser excluído. Para tirá-lo de uso, edite e desmarque Ativo.');
       return;
     }
     if (!(await confirmarExclusao('Excluir veículo'))) return;

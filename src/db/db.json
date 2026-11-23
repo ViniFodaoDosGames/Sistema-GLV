@@ -814,7 +814,7 @@
       "id": "veiculo-02",
       "placa": "DEF4G56",
       "ano": 2021,
-      "ativo": true,
+      "ativo": false,
       "idCor": "cor-02",
       "idModelo": "modelo-02",
       "idCategoriaVeiculo": "categoria-01"
@@ -834,11 +834,6 @@
       "id": "1",
       "idCliente": "cliente-01",
       "idVeiculo": "veiculo-01"
-    },
-    {
-      "id": "2",
-      "idCliente": "cliente-01",
-      "idVeiculo": "veiculo-02"
     },
     {
       "id": "3",
@@ -1044,7 +1039,7 @@
     {
       "id": "agendamento-03",
       "dataHora": "2026-10-02 11:00:00",
-      "status": "CONFIRMADO",
+      "status": "NAO_COMPARECEU",
       "valor": 40,
       "walkIn": true,
       "posicaoFila": 1,
@@ -1098,7 +1093,7 @@
     },
     {
       "dataHora": "2026-12-08 17:00:00",
-      "status": "CONFIRMADO",
+      "status": "CANCELADO",
       "valor": 40,
       "walkIn": false,
       "posicaoFila": 1,
@@ -1109,7 +1104,7 @@
     },
     {
       "dataHora": "2026-11-28 10:45:00",
-      "status": "CONFIRMADO",
+      "status": "CANCELADO",
       "valor": 80,
       "walkIn": false,
       "posicaoFila": 1,
@@ -1223,6 +1218,16 @@
       "idVeiculo": "0_8VP6puA-w",
       "idServico": "servico-02",
       "id": "Lb9ahzadGEE"
+    },
+    {
+      "dataHora": "2026-11-24 13:00:00",
+      "status": "CONFIRMADO",
+      "valor": 40,
+      "walkIn": false,
+      "idCliente": "8WPlT0GddtA",
+      "idVeiculo": "0_8VP6puA-w",
+      "idServico": "servico-01",
+      "id": "gRKDD_dx5yQ"
     }
   ],
   "Pagamentos": [
@@ -1390,6 +1395,17 @@
       "idFuncionario": null,
       "idAgendamento": "Lb9ahzadGEE",
       "id": "NVg9tS3lJQk"
+    },
+    {
+      "forma": "PIX",
+      "status": "APROVADO",
+      "valor": 40,
+      "dataHora": "2026-11-23 19:24:16",
+      "codigoGateway": null,
+      "justificativaEstorno": null,
+      "idFuncionario": "funcionario-02",
+      "idAgendamento": "gRKDD_dx5yQ",
+      "id": "Ot0ZNt_lq4M"
     }
   ],
   "LotesPontos": [
@@ -1472,6 +1488,26 @@
       "idCliente": "cliente-01",
       "idAgendamento": "h52J7O_5fUQ",
       "id": "0ckMVdYrj_E"
+    },
+    {
+      "tipo": "COMPENSACAO",
+      "quantidade": 200,
+      "saldo": 200,
+      "geradoEm": "2026-11-23",
+      "expiraEm": "2027-02-21",
+      "idCliente": "cliente-01",
+      "idAgendamento": "QXwae-iLHXU",
+      "id": "NrtvM4Nkwvg"
+    },
+    {
+      "tipo": "COMPENSACAO",
+      "quantidade": 400,
+      "saldo": 400,
+      "geradoEm": "2026-11-23",
+      "expiraEm": "2027-02-21",
+      "idCliente": "cliente-01",
+      "idAgendamento": "Q3DFiKk4pb0",
+      "id": "CR1O0xoLmhA"
     }
   ],
   "PagamentosLotesPontos": [
@@ -1587,6 +1623,30 @@
       "idAgendamento": "h52J7O_5fUQ",
       "idFuncionario": "funcionario-01",
       "id": "EKCftUznLyA"
+    },
+    {
+      "tipo": "SAIDA",
+      "dataHora": "2026-11-23 19:21:14",
+      "observacao": "Check-out realizado",
+      "idAgendamento": "agendamento-02",
+      "idFuncionario": "funcionario-01",
+      "id": "ZqXlYJMTHGQ"
+    },
+    {
+      "tipo": "SAIDA",
+      "dataHora": "2026-11-23 19:21:15",
+      "observacao": "Check-out realizado",
+      "idAgendamento": "h52J7O_5fUQ",
+      "idFuncionario": "funcionario-01",
+      "id": "haXJMWotU-Y"
+    },
+    {
+      "tipo": "AJUSTE",
+      "dataHora": "2026-11-23 19:21:26",
+      "observacao": "Cliente não compareceu",
+      "idAgendamento": "agendamento-03",
+      "idFuncionario": "funcionario-01",
+      "id": "ZT3v-_3bLdU"
     }
   ],
   "Notificacoes": [
@@ -1652,6 +1712,24 @@
       "idAgendamento": "agendamento-05",
       "statusEnvio": "PENDENTE",
       "id": "Uh_rGF8Q9sM"
+    },
+    {
+      "canal": "WHATSAPP",
+      "mensagem": "Seu agendamento foi cancelado e você recebeu 200 pontos de compensação.",
+      "dataHora": "2026-11-23 19:20:55",
+      "idCliente": "cliente-01",
+      "idAgendamento": "QXwae-iLHXU",
+      "statusEnvio": "PENDENTE",
+      "id": "MPYO3s-hYLY"
+    },
+    {
+      "canal": "WHATSAPP",
+      "mensagem": "Seu agendamento foi cancelado e você recebeu 400 pontos de compensação.",
+      "dataHora": "2026-11-23 19:20:57",
+      "idCliente": "cliente-01",
+      "idAgendamento": "Q3DFiKk4pb0",
+      "statusEnvio": "PENDENTE",
+      "id": "BQNwuoOrfKY"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
