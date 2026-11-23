@@ -11,7 +11,7 @@
     },
     {
       "id": "usuario-02",
-      "nome": "usuario-02",
+      "nome": "Fernando",
       "cpf": "11111111102",
       "email": "usuario02@email.com",
       "celular": "32999999902",
@@ -38,7 +38,7 @@
     },
     {
       "id": "usuario-05",
-      "nome": "usuario-05",
+      "nome": "Gabriel",
       "cpf": "11111111105",
       "email": "usuario05@email.com",
       "celular": "32999999905",
@@ -53,6 +53,24 @@
       "celular": "32999999906",
       "senha": "senha_6",
       "status": true
+    },
+    {
+      "id": "ScL2GVfz7fw",
+      "nome": "Teste",
+      "cpf": "12345678900",
+      "email": "email@email.com",
+      "celular": "00000000000",
+      "senha": "123456",
+      "status": true
+    },
+    {
+      "nome": "max",
+      "cpf": "11111111107",
+      "email": "email@email.com",
+      "celular": "00000000000",
+      "senha": "123456",
+      "status": true,
+      "id": "XyzLlh64emU"
     }
   ],
   "Funcionarios": [
@@ -97,27 +115,62 @@
       "id": "cliente-02",
       "idUsuario": "usuario-04",
       "dataAceiteTermos": "2026-09-01 10:00:00"
+    },
+    {
+      "idUsuario": "XyzLlh64emU",
+      "dataAceiteTermos": "2026-11-23 17:09:16",
+      "id": "8WPlT0GddtA"
     }
   ],
   "Cores": [
     {
       "id": "cor-01",
-      "nome": "preto",
+      "nome": "Preto",
       "ativo": true
     },
     {
       "id": "cor-02",
-      "nome": "branco",
+      "nome": "Branco",
       "ativo": true
     },
     {
       "id": "cor-03",
-      "nome": "prata",
+      "nome": "Prata",
       "ativo": true
     },
     {
-      "id": "l7KN3_E8AM8",
+      "id": "cor-04",
       "nome": "Azul",
+      "ativo": true
+    },
+    {
+      "id": "cor-05",
+      "nome": "Vermelho",
+      "ativo": true
+    },
+    {
+      "id": "cor-06",
+      "nome": "Cinza",
+      "ativo": true
+    },
+    {
+      "id": "cor-07",
+      "nome": "Verde",
+      "ativo": true
+    },
+    {
+      "id": "cor-08",
+      "nome": "Amarelo",
+      "ativo": true
+    },
+    {
+      "id": "cor-09",
+      "nome": "Laranja",
+      "ativo": true
+    },
+    {
+      "id": "cor-10",
+      "nome": "Roxo",
       "ativo": true
     }
   ],
@@ -765,6 +818,15 @@
       "idCor": "cor-02",
       "idModelo": "modelo-02",
       "idCategoriaVeiculo": "categoria-01"
+    },
+    {
+      "id": "0_8VP6puA-w",
+      "placa": "ABC1237",
+      "ano": 2011,
+      "ativo": true,
+      "idCor": "cor-01",
+      "idModelo": "modelo-01",
+      "idCategoriaVeiculo": "categoria-01"
     }
   ],
   "ClientesVeiculos": [
@@ -792,13 +854,18 @@
       "idCliente": "cliente-02",
       "idVeiculo": "c-hjXhxI_7w",
       "id": "2u2BpZoGzi8"
+    },
+    {
+      "idCliente": "8WPlT0GddtA",
+      "idVeiculo": "0_8VP6puA-w",
+      "id": "AO4qQvThX9k"
     }
   ],
   "LavaJatos": [
     {
       "id": "lavajato-01",
       "totalPosicoes": 3,
-      "fatorFidelidade": 10,
+      "fatorFidelidade": 5,
       "validadePontosFidelidade": 180,
       "validadePontosCompensacao": 90,
       "ativo": true
@@ -869,12 +936,6 @@
       "horaFim": "13:00:00",
       "idLavaJato": "lavajato-01",
       "aplicaFimDeSemana": true
-    },
-    {
-      "id": "intervalo-02",
-      "horaInicio": "",
-      "horaFim": "",
-      "idLavaJato": "lavajato-01"
     }
   ],
   "TiposFeriado": [
@@ -994,7 +1055,7 @@
     {
       "id": "agendamento-05",
       "dataHora": "2026-11-23 14:00:00",
-      "status": "EM_ANDAMENTO",
+      "status": "CONCLUIDO",
       "valor": 80,
       "walkIn": false,
       "posicaoFila": 2,
@@ -1026,7 +1087,7 @@
     },
     {
       "dataHora": "2026-12-10 13:15:00",
-      "status": "CONFIRMADO",
+      "status": "CANCELADO",
       "valor": 80,
       "walkIn": false,
       "posicaoFila": 1,
@@ -1058,17 +1119,6 @@
       "id": "Q3DFiKk4pb0"
     },
     {
-      "dataHora": "2026-11-25 13:15:00",
-      "status": "AGUARDANDO_PAGAMENTO",
-      "valor": 40,
-      "walkIn": false,
-      "posicaoFila": 1,
-      "idCliente": "cliente-02",
-      "idVeiculo": "veiculo-03",
-      "idServico": "servico-01",
-      "id": "g2NXRw7DvhQ"
-    },
-    {
       "dataHora": "2026-12-05 11:15:00",
       "status": "CONFIRMADO",
       "valor": 40,
@@ -1078,6 +1128,101 @@
       "idVeiculo": "SnIT7MGY01M",
       "idServico": "servico-01",
       "id": "bQHyVs2gIl8"
+    },
+    {
+      "dataHora": "2026-11-28 09:45:00",
+      "status": "CONFIRMADO",
+      "valor": 80,
+      "walkIn": false,
+      "posicaoFila": 1,
+      "idCliente": "cliente-02",
+      "idVeiculo": "veiculo-03",
+      "idServico": "servico-02",
+      "id": "Zo6HxfkqCOk"
+    },
+    {
+      "dataHora": "2026-11-25 11:00:00",
+      "status": "CONFIRMADO",
+      "valor": 40,
+      "walkIn": false,
+      "posicaoFila": 1,
+      "idCliente": "cliente-02",
+      "idVeiculo": "veiculo-03",
+      "idServico": "servico-01",
+      "id": "UiKqtBKX9I4"
+    },
+    {
+      "dataHora": "2026-11-24 13:00:00",
+      "status": "CONFIRMADO",
+      "valor": 40,
+      "walkIn": false,
+      "posicaoFila": 1,
+      "idCliente": "cliente-01",
+      "idVeiculo": "veiculo-01",
+      "idServico": "servico-01",
+      "id": "EJolQenpqL0"
+    },
+    {
+      "dataHora": "2026-11-23 15:30:00",
+      "status": "CONFIRMADO",
+      "valor": 40,
+      "walkIn": false,
+      "posicaoFila": 1,
+      "idCliente": "cliente-01",
+      "idVeiculo": "veiculo-01",
+      "idServico": "servico-01",
+      "id": "h52J7O_5fUQ"
+    },
+    {
+      "dataHora": "2026-11-23 15:30:00",
+      "status": "CONCLUIDO",
+      "valor": 40,
+      "walkIn": false,
+      "posicaoFila": 2,
+      "idCliente": "cliente-01",
+      "idVeiculo": "SnIT7MGY01M",
+      "idServico": "servico-01",
+      "id": "V8gnw6XMWVM"
+    },
+    {
+      "dataHora": "2026-11-23 16:00:00",
+      "status": "CONFIRMADO",
+      "valor": 40,
+      "walkIn": false,
+      "idCliente": "cliente-01",
+      "idVeiculo": "SnIT7MGY01M",
+      "idServico": "servico-01",
+      "id": "KMTvJp_a3AI"
+    },
+    {
+      "dataHora": "2026-11-24 08:00:00",
+      "status": "AGUARDANDO_PAGAMENTO",
+      "valor": 40,
+      "walkIn": false,
+      "idCliente": "cliente-01",
+      "idVeiculo": "SnIT7MGY01M",
+      "idServico": "servico-01",
+      "id": "R325lbO3iUo"
+    },
+    {
+      "dataHora": "2026-11-23 17:15:00",
+      "status": "AGUARDANDO_PAGAMENTO",
+      "valor": 40,
+      "walkIn": false,
+      "idCliente": "8WPlT0GddtA",
+      "idVeiculo": "0_8VP6puA-w",
+      "idServico": "servico-01",
+      "id": "SoqCjjIx-jw"
+    },
+    {
+      "dataHora": "2026-11-24 08:00:00",
+      "status": "CANCELADO",
+      "valor": 80,
+      "walkIn": false,
+      "idCliente": "8WPlT0GddtA",
+      "idVeiculo": "0_8VP6puA-w",
+      "idServico": "servico-02",
+      "id": "Lb9ahzadGEE"
     }
   ],
   "Pagamentos": [
@@ -1160,17 +1305,6 @@
     },
     {
       "forma": "PIX",
-      "status": "PENDENTE",
-      "valor": 40,
-      "dataHora": null,
-      "codigoGateway": null,
-      "justificativaEstorno": null,
-      "idFuncionario": null,
-      "idAgendamento": "g2NXRw7DvhQ",
-      "id": "32_02z6_mZc"
-    },
-    {
-      "forma": "PIX",
       "status": "APROVADO",
       "valor": 40,
       "dataHora": "2026-11-22 17:43:12",
@@ -1179,6 +1313,94 @@
       "idFuncionario": null,
       "idAgendamento": "bQHyVs2gIl8",
       "id": "XZid_Z9JEjA"
+    },
+    {
+      "forma": "PIX",
+      "status": "APROVADO",
+      "valor": 80,
+      "dataHora": "2026-11-23 11:11:02",
+      "codigoGateway": "GW-1795443062272",
+      "justificativaEstorno": null,
+      "idFuncionario": null,
+      "idAgendamento": "Zo6HxfkqCOk",
+      "id": "j4jvPQNpqbY"
+    },
+    {
+      "forma": "PONTOS",
+      "status": "APROVADO",
+      "valor": 40,
+      "dataHora": "2026-11-23 14:45:15",
+      "codigoGateway": null,
+      "justificativaEstorno": null,
+      "idFuncionario": null,
+      "idAgendamento": "UiKqtBKX9I4",
+      "id": "Iou-pu5lwSU"
+    },
+    {
+      "forma": "CARTAO",
+      "status": "APROVADO",
+      "valor": 40,
+      "dataHora": "2026-11-23 15:37:46",
+      "codigoGateway": null,
+      "justificativaEstorno": null,
+      "idFuncionario": "funcionario-02",
+      "idAgendamento": "EJolQenpqL0",
+      "id": "QEtBYh8lbKU"
+    },
+    {
+      "forma": "PONTOS",
+      "status": "APROVADO",
+      "valor": 40,
+      "dataHora": "2026-11-23 15:58:11",
+      "codigoGateway": null,
+      "justificativaEstorno": null,
+      "idFuncionario": null,
+      "idAgendamento": "h52J7O_5fUQ",
+      "id": "c2TdmwN08hc"
+    },
+    {
+      "forma": "PIX",
+      "status": "APROVADO",
+      "valor": 40,
+      "dataHora": "2026-11-23 15:49:26",
+      "codigoGateway": null,
+      "justificativaEstorno": null,
+      "idFuncionario": "funcionario-02",
+      "idAgendamento": "KMTvJp_a3AI",
+      "id": "DX8TaK3ulJ4"
+    },
+    {
+      "forma": "PIX",
+      "status": "PENDENTE",
+      "valor": 40,
+      "dataHora": null,
+      "codigoGateway": null,
+      "justificativaEstorno": null,
+      "idFuncionario": null,
+      "idAgendamento": "R325lbO3iUo",
+      "id": "EYC_m1DD_LM"
+    },
+    {
+      "forma": "PIX",
+      "status": "PENDENTE",
+      "valor": 40,
+      "dataHora": null,
+      "codigoGateway": null,
+      "justificativaEstorno": null,
+      "idFuncionario": null,
+      "idAgendamento": "SoqCjjIx-jw",
+      "id": "E3cTwN3FsLQ"
+    },
+    {
+      "forma": "PIX",
+      "status": "PENDENTE",
+      "valor": 80,
+      "dataHora": null,
+      "codigoGateway": null,
+      "justificativaEstorno": null,
+      "idFuncionario": null,
+      "idAgendamento": "Lb9ahzadGEE",
+      "id": "NVg9tS3lJQk"
     }
   ],
   "LotesPontos": [
@@ -1196,7 +1418,7 @@
       "id": "lote-02",
       "tipo": "COMPENSACAO",
       "quantidade": 20,
-      "saldo": 20,
+      "saldo": 0,
       "geradoEm": "2026-09-20",
       "expiraEm": "2026-12-19",
       "idCliente": "cliente-02",
@@ -1205,7 +1427,7 @@
     {
       "tipo": "FIDELIDADE",
       "quantidade": 80,
-      "saldo": 80,
+      "saldo": 60,
       "geradoEm": "2026-11-22",
       "expiraEm": "2027-05-21",
       "idCliente": "cliente-02",
@@ -1221,6 +1443,36 @@
       "idCliente": "cliente-02",
       "idAgendamento": "wxu0Gt5aIrM",
       "id": "4OH01x9f8bA"
+    },
+    {
+      "tipo": "COMPENSACAO",
+      "quantidade": 400,
+      "saldo": 200,
+      "geradoEm": "2026-11-23",
+      "expiraEm": "2027-02-21",
+      "idCliente": "cliente-01",
+      "idAgendamento": "69H7R7-pvxk",
+      "id": "qy965U6pprQ"
+    },
+    {
+      "tipo": "FIDELIDADE",
+      "quantidade": 80,
+      "saldo": 80,
+      "geradoEm": "2026-11-23",
+      "expiraEm": "2027-05-22",
+      "idCliente": "cliente-02",
+      "idAgendamento": "agendamento-05",
+      "id": "pjRkg_b0tWw"
+    },
+    {
+      "tipo": "FIDELIDADE",
+      "quantidade": 40,
+      "saldo": 40,
+      "geradoEm": "2026-11-23",
+      "expiraEm": "2027-05-22",
+      "idCliente": "cliente-01",
+      "idAgendamento": "V8gnw6XMWVM",
+      "id": "5ZBjZhKKU_4"
     }
   ],
   "PagamentosLotesPontos": [
@@ -1228,6 +1480,24 @@
       "id": "pagamento-lote-01",
       "idPagamento": "pagamento-03",
       "idLotePontos": "lote-01"
+    },
+    {
+      "idPagamento": "Iou-pu5lwSU",
+      "idLotePontos": "lote-02",
+      "quantidadeUtilizada": 20,
+      "id": "DBHhBciuX0Y"
+    },
+    {
+      "idPagamento": "Iou-pu5lwSU",
+      "idLotePontos": "A4kZjYWaxG0",
+      "quantidadeUtilizada": 20,
+      "id": "XCFNpD3YBFM"
+    },
+    {
+      "idPagamento": "c2TdmwN08hc",
+      "idLotePontos": "qy965U6pprQ",
+      "quantidadeUtilizada": 200,
+      "id": "Nb4J5wu4tZQ"
     }
   ],
   "LogsMovimentacao": [
@@ -1286,6 +1556,30 @@
       "idAgendamento": "agendamento-05",
       "idFuncionario": "funcionario-02",
       "id": "1ESWpDYQo4s"
+    },
+    {
+      "tipo": "ENTRADA",
+      "dataHora": "2026-11-23 15:17:59",
+      "observacao": "Check-in realizado",
+      "idAgendamento": "V8gnw6XMWVM",
+      "idFuncionario": "funcionario-02",
+      "id": "JFtA1hWsq7M"
+    },
+    {
+      "tipo": "SAIDA",
+      "dataHora": "2026-11-23 15:25:50",
+      "observacao": "Check-out realizado",
+      "idAgendamento": "agendamento-05",
+      "idFuncionario": "funcionario-03",
+      "id": "174kgio6Wro"
+    },
+    {
+      "tipo": "SAIDA",
+      "dataHora": "2026-11-23 15:25:50",
+      "observacao": "Check-out realizado",
+      "idAgendamento": "V8gnw6XMWVM",
+      "idFuncionario": "funcionario-03",
+      "id": "c1YUxts3c74"
     }
   ],
   "Notificacoes": [
@@ -1333,6 +1627,24 @@
       "idAgendamento": "wxu0Gt5aIrM",
       "statusEnvio": "PENDENTE",
       "id": "cW2szdWLZhA"
+    },
+    {
+      "canal": "WHATSAPP",
+      "mensagem": "Seu agendamento foi cancelado e você recebeu 800 pontos de compensação.",
+      "dataHora": "2026-11-23 15:11:05",
+      "idCliente": "cliente-01",
+      "idAgendamento": "69H7R7-pvxk",
+      "statusEnvio": "PENDENTE",
+      "id": "0VlQGwys5vc"
+    },
+    {
+      "canal": "WHATSAPP",
+      "mensagem": "Seu veículo está pronto! Você ganhou 80 pontos.",
+      "dataHora": "2026-11-23 15:25:46",
+      "idCliente": "cliente-02",
+      "idAgendamento": "agendamento-05",
+      "statusEnvio": "PENDENTE",
+      "id": "Uh_rGF8Q9sM"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
