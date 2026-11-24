@@ -199,6 +199,7 @@ function CadastroAgendamento() {
             return;
         }
 
+        const dono = clientesVeiculos.find((ligacao) => ligacao.idVeiculo === idVeiculoWalkIn);
         const dataHora = `${diaEscolhido} ${hora}:00`;
         await gravar(
             {
@@ -206,7 +207,7 @@ function CadastroAgendamento() {
                 status: 'CONFIRMADO',
                 valor: servicoEscolhido.preco,
                 walkIn: true,
-                idCliente: null,
+                idCliente: dono ? dono.idCliente : null,
                 idVeiculo: idVeiculoWalkIn,
                 idServico,
             },
