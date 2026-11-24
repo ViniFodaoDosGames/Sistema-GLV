@@ -1243,6 +1243,26 @@
       "idVeiculo": "veiculo-01",
       "idServico": "servico-01",
       "id": "hcv4mvlQzAo"
+    },
+    {
+      "dataHora": "2026-11-23 21:15:00",
+      "status": "EM_ANDAMENTO",
+      "valor": 40,
+      "walkIn": true,
+      "idCliente": "cliente-01",
+      "idVeiculo": "veiculo-01",
+      "idServico": "servico-01",
+      "id": "oRUhUYMNzUg"
+    },
+    {
+      "dataHora": "2026-11-23 21:15:00",
+      "status": "CONFIRMADO",
+      "valor": 80,
+      "walkIn": true,
+      "idCliente": "cliente-01",
+      "idVeiculo": "veiculo-01",
+      "idServico": "servico-02",
+      "id": "XY9T1otDim0"
     }
   ],
   "Pagamentos": [
@@ -1421,6 +1441,28 @@
       "idFuncionario": null,
       "idAgendamento": "hcv4mvlQzAo",
       "id": "05-lEEbMAJo"
+    },
+    {
+      "forma": "PIX",
+      "status": "APROVADO",
+      "valor": 40,
+      "dataHora": "2026-11-23 20:56:21",
+      "codigoGateway": null,
+      "justificativaEstorno": null,
+      "idFuncionario": "funcionario-03",
+      "idAgendamento": "oRUhUYMNzUg",
+      "id": "ucUNEVv-6Bo"
+    },
+    {
+      "forma": "DINHEIRO",
+      "status": "APROVADO",
+      "valor": 80,
+      "dataHora": "2026-11-23 21:08:29",
+      "codigoGateway": null,
+      "justificativaEstorno": null,
+      "idFuncionario": "funcionario-03",
+      "idAgendamento": "XY9T1otDim0",
+      "id": "cCGmbYaOrB4"
     }
   ],
   "LotesPontos": [
@@ -1662,6 +1704,14 @@
       "idAgendamento": "agendamento-03",
       "idFuncionario": "funcionario-01",
       "id": "ZT3v-_3bLdU"
+    },
+    {
+      "tipo": "ENTRADA",
+      "dataHora": "2026-11-23 20:57:20",
+      "observacao": "Check-in realizado",
+      "idAgendamento": "oRUhUYMNzUg",
+      "idFuncionario": "funcionario-03",
+      "id": "MZ6q7mevWaA"
     }
   ],
   "Notificacoes": [
